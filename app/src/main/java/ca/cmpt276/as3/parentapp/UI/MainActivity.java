@@ -1,5 +1,7 @@
 package ca.cmpt276.as3.parentapp.UI;
 
+import android.graphics.Canvas;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -28,5 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
     }
+
+
 
 }
