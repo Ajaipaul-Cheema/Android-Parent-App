@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-<<<<<<<<< Temporary merge branch 1
+
     <Button
         android:id="@+id/flipCoin"
         android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-=========
+
 
 
     <ImageView
@@ -63,6 +63,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bgMainMenu" />
->>>>>>>>> Temporary merge branch 2
+
 
 </android.support.constraint.ConstraintLayout>
