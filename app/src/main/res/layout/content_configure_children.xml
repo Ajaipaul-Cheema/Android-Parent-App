@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+    <Button
+        android:id="@+id/btnAddChild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Child"
+        app:layout_constraintBottom_toTopOf="@+id/btnEditChild"
+        app:layout_constraintEnd_toEndOf="@+id/btnEditChild"
+        app:layout_constraintStart_toStartOf="@+id/btnEditChild" />
+
+    <Button
+        android:id="@+id/btnRemoveChild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="200dp"
+        android:text="Remove Child"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnEditChild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Child"
+        app:layout_constraintBottom_toTopOf="@+id/btnRemoveChild"
+        app:layout_constraintEnd_toEndOf="@+id/btnRemoveChild"
+        app:layout_constraintStart_toStartOf="@+id/btnRemoveChild" />
 </android.support.constraint.ConstraintLayout>
