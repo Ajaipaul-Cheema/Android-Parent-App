@@ -1,21 +1,14 @@
 package ca.cmpt276.as3.parentapp.UI;
 
-import android.graphics.Canvas;
-import android.graphics.Path;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
+import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityMainBinding;
 
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +22,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
+
+        launchFlipCoin();
+        launchTimeoutTimer();
+        launchConfigureChildren();
+    }
+
+    private void launchFlipCoin() {
+        Button launchGame = findViewById(R.id.flipCoin);
+        launchGame.setOnClickListener(v -> {
+            Intent i = FlipCoinActivity.makeLaunchIntent(MainActivity.this);
+            startActivity(i);
+        });
+    }
+
+    private void launchTimeoutTimer() {
+        Button launchGame = findViewById(R.id.timeoutTimer);
+        launchGame.setOnClickListener(v -> {
+            Intent i = TimeoutTimerActivity.makeLaunchIntent(MainActivity.this);
+            startActivity(i);
+        });
+    }
+
+    private void launchConfigureChildren() {
+        Button launchGame = findViewById(R.id.configureChildren);
+        launchGame.setOnClickListener(v -> {
+            Intent i = ConfigureChildrenActivity.makeLaunchIntent(MainActivity.this);
+            startActivity(i);
+        });
     }
 
 
