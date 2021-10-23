@@ -31,4 +31,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bgMainMenu" />
 
+
 </android.support.constraint.ConstraintLayout>
