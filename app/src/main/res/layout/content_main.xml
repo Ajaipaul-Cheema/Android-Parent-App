@@ -6,6 +6,39 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+<<<<<<<<< Temporary merge branch 1
+    <Button
+        android:id="@+id/flipCoin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Flip Coin"
+        app:layout_constraintBottom_toBottomOf="@+id/timeoutTimer"
+        app:layout_constraintEnd_toStartOf="@+id/timeoutTimer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/timeoutTimer" />
+
+    <Button
+        android:id="@+id/timeoutTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="100dp"
+        android:text="Timeout Timer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/configureChildren"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Configure Children"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+=========
 
 
     <ImageView
@@ -30,6 +63,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bgMainMenu" />
-
+>>>>>>>>> Temporary merge branch 2
 
 </android.support.constraint.ConstraintLayout>
