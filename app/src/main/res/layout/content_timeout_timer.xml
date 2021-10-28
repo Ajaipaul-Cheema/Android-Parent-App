@@ -56,4 +56,32 @@
         android:text="Default Timer Settings"
         android:textColor="@color/black"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvCustomTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="Enter Custom Time Here"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/editCustomText"
+        android:layout_width="157dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:ems="3"
+        android:inputType="numberSigned" />
 </RelativeLayout>
