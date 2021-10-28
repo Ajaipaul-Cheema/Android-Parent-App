@@ -32,4 +32,28 @@
         android:layout_marginTop="-4dp"
         android:layout_toEndOf="@+id/btn_start_and_pause_timer"
         android:text="Reset" />
+
+    <Spinner
+        android:id="@+id/spinDropDownChoices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:minHeight="48dp" />
+
+    <TextView
+        android:id="@+id/tvDropDownTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="Default Timer Settings"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
 </RelativeLayout>
