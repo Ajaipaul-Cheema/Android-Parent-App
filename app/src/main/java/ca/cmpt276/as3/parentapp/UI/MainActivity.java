@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         launchHelp.setOnClickListener(v -> {
             Intent i = ConfigureChildrenActivity.makeLaunchIntent(MainActivity.this);
             startActivity(i);
+
         });
     }
 

@@ -24,6 +24,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
+
     }
 
 }
