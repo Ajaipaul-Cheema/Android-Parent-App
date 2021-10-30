@@ -2,7 +2,9 @@ package ca.cmpt276.as3.parentapp.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -10,6 +12,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import ca.cmpt276.as3.parentapp.R;
@@ -18,6 +24,8 @@ import ca.cmpt276.as3.parentapp.databinding.ActivityConfigureChildrenBinding;
 public class ConfigureChildrenActivity extends AppCompatActivity {
 
     ArrayList<String> childrenNames = new ArrayList<>();
+    private static final String NAME_PREF = "NamePrefs";
+    private static final String NAMES_PREF = "NamesSizePref";
     ListView childrenList;
     EditText childName;
     Button addChild, removeChild, editChild;
@@ -36,6 +44,11 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         ca.cmpt276.as3.parentapp.databinding.ActivityConfigureChildrenBinding binding = ActivityConfigureChildrenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        // load in children data
+        loadChildrenData();
 
         // get id's of buttons, listview and edit text
         childrenList = findViewById(R.id.listChildren);
@@ -44,11 +57,15 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         removeChild = findViewById(R.id.btnRemoveChild);
         editChild = findViewById(R.id.btnEditChild);
 
+        // populate list of children
         populateChildrenList();
 
         handleAddChildButton();
         handleEditChildButton();
         handleRemoveChildButton();
+
+        // save children data
+        saveChildrenData();
     }
 
     private void populateChildrenList() {
@@ -63,11 +80,34 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         });
     }
 
+    private void saveChildrenData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(NAMES_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(childrenNames);
+        editor.putString(NAME_PREF, json);
+        editor.apply();
+    }
+
+    private void loadChildrenData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(NAMES_PREF, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(NAME_PREF, null);
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        childrenNames = gson.fromJson(json, type);
+
+        if (childrenNames == null) {
+            childrenNames = new ArrayList<>();
+        }
+    }
+
     private void handleAddChildButton() {
         addChild.setOnClickListener(v -> {
             addChild();
             // clear edit text after adding name
             childName.getText().clear();
+            saveChildrenData();
         });
     }
 
@@ -76,6 +116,7 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
             editChild();
             // clear edit text after editing name
             childName.getText().clear();
+            saveChildrenData();
         });
     }
 
@@ -84,6 +125,7 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
             removeChild();
             // clear edit text after removing name
             childName.getText().clear();
+            saveChildrenData();
         });
     }
 
