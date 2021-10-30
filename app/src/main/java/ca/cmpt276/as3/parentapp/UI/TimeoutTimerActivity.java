@@ -8,6 +8,7 @@ import ca.cmpt276.as3.parentapp.R;
 
 
 import android.os.CountDownTimer;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.cmpt276.as3.parentapp.databinding.ActivityTimeoutTimerBinding;
 
@@ -45,8 +47,10 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         binding = ActivityTimeoutTimerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
 
+
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setUpDropDownList();
         setUpTimer();
     }
@@ -157,6 +161,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                Toast.makeText(TimeoutTimerActivity.this, "DONE", Toast.LENGTH_SHORT).show();
                 isTimerRunning = false;
                 startPauseButton.setText("Start");
                 startPauseButton.setVisibility(View.VISIBLE);
@@ -187,6 +192,8 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         timerText.setText(updatedTextStr);
 
     }
+
+
 
 
 }
