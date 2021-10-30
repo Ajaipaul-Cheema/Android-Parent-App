@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import ca.cmpt276.as3.parentapp.databinding.ActivityFlipCoinBinding;
@@ -22,9 +23,9 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         binding = ActivityFlipCoinBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setSupportActionBar(binding.toolbar);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
 }
