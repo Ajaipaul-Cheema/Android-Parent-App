@@ -3,7 +3,12 @@
     <string name="title_activity_flip_coin">Flip Coin</string>
     <string name="title_activity_configure_children">Configure Children</string>
     <string name="title_activity_timeout_timer">Timeout Timer</string>
-    
+    <string name="remove_child">Remove Child</string>
+    <string name="name">Name:</string>
+    <string name="edit_child">Edit Child</string>
+    <string name="enter_name_here">Enter Name Here</string>
+    <string name="add_child">Add Child</string>
+
     <string-array name="Timer_Choices">
         <item>10 Minutes</item>
         <item>5 Minutes</item>
