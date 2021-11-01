@@ -3,36 +3,38 @@ package ca.cmpt276.as3.parentapp.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import ca.cmpt276.as3.parentapp.R;
-
-
 import android.os.CountDownTimer;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
+import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityTimeoutTimerBinding;
 
 public class TimeoutTimerActivity extends AppCompatActivity {
-    private long defaultTime = 600000;
 
+    private EditText customTime;
+    private ImageButton useCustomTime;
     private TextView timerText;
     private Button startPauseButton;
     private Button resetButton;
     private Spinner dropDownMenu;
 
-    private CountDownTimer countDownTimer;
+    private static CountDownTimer countDownTimer;
 
     private boolean isTimerRunning;
-
-    private long timeLeftInTimer = defaultTime;
+    private long startTime;
+    private long endTime;
+    private long timeLeftInTimer;
 
     private ActivityTimeoutTimerBinding binding;
 
@@ -46,17 +48,45 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 
         binding = ActivityTimeoutTimerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
+        customTime = findViewById(R.id.editCustomText);
+        useCustomTime = findViewById(R.id.useCustomTime);
+        timerText = findViewById(R.id.tv_timer);
+        startPauseButton = findViewById(R.id.btn_start_and_pause_timer);
+        resetButton = findViewById(R.id.btn_reset);
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        handleCustomTimeCheckButton();
         setUpDropDownList();
         setUpTimer();
     }
 
+    private void handleCustomTimeCheckButton() {
+        useCustomTime.setOnClickListener(v -> {
+            dropDownMenu.setSelection(0);
+            String inputTime = customTime.getText().toString();
+            if (inputTime.isEmpty()) {
+                Toast.makeText(TimeoutTimerActivity.this, "Custom time must be non-empty!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            long milliSecsInput = Long.parseLong(inputTime) * 60000;
+            if (milliSecsInput == 0) {
+                Toast.makeText(TimeoutTimerActivity.this, "Enter a positive number of mins!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            setTime(milliSecsInput);
+            customTime.setText("");
+        });
+    }
+
+    private void setTime(long milliSecs) {
+        startTime = milliSecs;
+        resetCountdown();
+    }
+
     //  https://stackoverflow.com/questions/12108893/set-onclicklistener-for-spinner-item
-    private void setUpDropDownList(){
+    private void setUpDropDownList() {
         dropDownMenu = findViewById(R.id.spinDropDownChoices);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
@@ -65,93 +95,107 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropDownMenu.setAdapter(adapter);
 
-       dropDownMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-           @Override
-           public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-               String selectedTime =adapterView.getItemAtPosition(i).toString();
-               if(selectedTime.equals("10 Minutes")){
-                   defaultTime = 600000;
-                   if (isTimerRunning){
-                       pauseCountdown();
-                   }
-                   resetCountdown();
-               }
-               else if(selectedTime.equals("5 Minutes")){
-                   defaultTime = 300000;
-                   if (isTimerRunning){
-                       pauseCountdown();
-                   }
-                   resetCountdown();
-               }
-               else if(selectedTime.equals("3 Minutes")){
-                   defaultTime = 180000;
-                   if (isTimerRunning){
-                       pauseCountdown();
-                   }
-                   resetCountdown();
-               }
-               else if(selectedTime.equals("2 Minutes")){
-                   defaultTime = 120000;
-                   if (isTimerRunning){
-                       pauseCountdown();
-                   }
-                   resetCountdown();
-               }
-               else if(selectedTime.equals("1 Minute")){
-                   defaultTime = 60000;
-                   if (isTimerRunning){
-                       pauseCountdown();
-                   }
-                   resetCountdown();
-               }
-           }
+        dropDownMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedTime = adapterView.getItemAtPosition(i).toString();
 
-           @Override
-           public void onNothingSelected(AdapterView<?> adapterView) {
+                switch (selectedTime) {
+                    case "10 Minutes":
+                        startTime = 600000;
+                        if (isTimerRunning) {
+                            pauseCountdown();
+                        }
+                        resetCountdown();
+                        break;
+                    case "5 Minutes":
+                        startTime = 300000;
+                        if (isTimerRunning) {
+                            pauseCountdown();
+                        }
+                        resetCountdown();
+                        break;
+                    case "3 Minutes":
+                        startTime = 180000;
+                        if (isTimerRunning) {
+                            pauseCountdown();
+                        }
+                        resetCountdown();
+                        break;
+                    case "2 Minutes":
+                        startTime = 120000;
+                        if (isTimerRunning) {
+                            pauseCountdown();
+                        }
+                        resetCountdown();
+                        break;
+                    case "1 Minute":
+                        startTime = 60000;
+                        if (isTimerRunning) {
+                            pauseCountdown();
+                        }
+                        resetCountdown();
+                        break;
 
-           }
-       });
+                    default:
+                        assert true;
+
+                }
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
-
 
     //  https://www.youtube.com/watch?v=zmjfAcnosS0 <- very helpful in this process
     private void setUpTimer() {
-
-        timerText = findViewById(R.id.tv_timer);
-        startPauseButton = findViewById(R.id.btn_start_and_pause_timer);
-        resetButton = findViewById(R.id.btn_reset);
         resetButton.setVisibility(View.INVISIBLE);
 
         startPauseButton.setOnClickListener(v -> {
+            dropDownMenu.setSelection(0);
             if (isTimerRunning) {
+                customTime.setVisibility(View.VISIBLE);
+                useCustomTime.setVisibility(View.VISIBLE);
                 // Pause Button pressed
                 pauseCountdown();
             } else {
-                startCountdown();
+                customTime.setVisibility(View.VISIBLE);
+                useCustomTime.setVisibility(View.VISIBLE);
+                if(timeLeftInTimer <= 0) {
+                    Toast.makeText(this,"Choose a timer option to begin with.", Toast.LENGTH_SHORT).show();
+                } else {
+                    startCountdown();
+                }
+
             }
         });
 
-        resetButton.setOnClickListener(v -> {
-            resetCountdown();
-        });
+        resetButton.setOnClickListener(v -> resetCountdown());
         changeTimerText();
     }
 
-    private void pauseCountdown(){
+    private void pauseCountdown() {
         countDownTimer.cancel();
         isTimerRunning = false;
         startPauseButton.setText("Start");
         resetButton.setVisibility(View.VISIBLE);
+        customTime.setVisibility(View.VISIBLE);
+        useCustomTime.setVisibility(View.VISIBLE);
     }
 
-    private void resetCountdown(){
-        timeLeftInTimer = defaultTime;
+    private void resetCountdown() {
+        timeLeftInTimer = startTime;
         changeTimerText();
         resetButton.setVisibility(View.INVISIBLE);
         startPauseButton.setVisibility(View.VISIBLE);
     }
 
     private void startCountdown() {
+        endTime = System.currentTimeMillis() + timeLeftInTimer;
         countDownTimer = new CountDownTimer(timeLeftInTimer, 1000) {
             @Override
             public void onTick(long l) {
@@ -161,11 +205,15 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Toast.makeText(TimeoutTimerActivity.this, "DONE", Toast.LENGTH_SHORT).show();
-                isTimerRunning = false;
-                startPauseButton.setText("Start");
-                startPauseButton.setVisibility(View.VISIBLE);
-                resetButton.setVisibility(View.VISIBLE);
+                if(isTimerRunning) {
+                    Toast.makeText(TimeoutTimerActivity.this, "DONE", Toast.LENGTH_SHORT).show();
+                    isTimerRunning = false;
+                    startPauseButton.setText("Start");
+                    startPauseButton.setVisibility(View.VISIBLE);
+                    resetButton.setVisibility(View.VISIBLE);
+                    customTime.setVisibility(View.VISIBLE);
+                    useCustomTime.setVisibility(View.VISIBLE);
+                }
             }
         }.start();
 
@@ -176,24 +224,20 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         isTimerRunning = true;
     }
 
+
     private void changeTimerText() {
-        int mins = (int) (timeLeftInTimer / 1000) / 60;
+        int hours = (int) (timeLeftInTimer / 1000) / 3600;
+        int mins = (int) ((timeLeftInTimer / 1000) % 3600) / 60;
         int secs = (int) (timeLeftInTimer / 1000) % 60;
+
         String updatedTextStr;
-        updatedTextStr = "" + mins + ":";
-
-        // case where seconds are <10, add a 0 so timer is 09, 08, not 9,8 etc.
-        if (secs < 10) {
-            updatedTextStr += "0";
+        if (hours > 0) {
+            updatedTextStr = String.format(Locale.getDefault(), "%d:%02d:%02d", hours, mins, secs);
+        } else {
+            updatedTextStr = String.format(Locale.getDefault(), "%02d:%02d", mins, secs);
         }
-        updatedTextStr += secs;
-
 
         timerText.setText(updatedTextStr);
 
     }
-
-
-
-
 }
