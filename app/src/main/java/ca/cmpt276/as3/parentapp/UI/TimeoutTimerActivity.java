@@ -1,9 +1,15 @@
 package ca.cmpt276.as3.parentapp.UI;
 
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,12 +28,18 @@ import ca.cmpt276.as3.parentapp.databinding.ActivityTimeoutTimerBinding;
 
 public class TimeoutTimerActivity extends AppCompatActivity {
 
+
     private EditText customTime;
     private ImageButton useCustomTime;
     private TextView timerText;
     private Button startPauseButton;
     private Button resetButton;
     private Spinner dropDownMenu;
+    private static final String timer_Prefs = "timer_prefs";
+    private static final String timeStart = "startTime";
+    private static final String timeLeft = "millisLeft";
+    private static final String timeRunning = "timerRunning";
+    private static final String timeAtEnd = "endTime";
 
     private static CountDownTimer countDownTimer;
 
@@ -35,6 +47,9 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     private long startTime;
     private long endTime;
     private long timeLeftInTimer;
+
+    private Vibrator timerVibrator;
+    private MediaPlayer alarmSound;
 
     private ActivityTimeoutTimerBinding binding;
 
@@ -78,6 +93,49 @@ public class TimeoutTimerActivity extends AppCompatActivity {
             setTime(milliSecsInput);
             customTime.setText("");
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences prefs = getSharedPreferences(timer_Prefs, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putLong(timeStart, startTime);
+        editor.putLong(timeLeft, timeLeftInTimer);
+        editor.putBoolean(timeRunning, isTimerRunning);
+        editor.putLong(timeAtEnd, endTime);
+
+        editor.apply();
+
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences prefs = getSharedPreferences(timer_Prefs, MODE_PRIVATE);
+        startTime = prefs.getLong(timeStart, 600000);
+        timeLeftInTimer = prefs.getLong(timeLeft, startTime);
+        isTimerRunning = prefs.getBoolean(timeRunning, false);
+
+        changeTimerText();
+
+        if (isTimerRunning) {
+            endTime = prefs.getLong("endTime", 0);
+            timeLeftInTimer = endTime - System.currentTimeMillis();
+            if (timeLeftInTimer < 0) {
+                timeLeftInTimer = 0;
+                isTimerRunning = false;
+                changeTimerText();
+                startPauseButton.setText("Start");
+                startPauseButton.setVisibility(View.VISIBLE);
+            } else {
+                startCountdown();
+            }
+        }
     }
 
     private void setTime(long milliSecs) {
@@ -165,8 +223,8 @@ public class TimeoutTimerActivity extends AppCompatActivity {
             } else {
                 customTime.setVisibility(View.VISIBLE);
                 useCustomTime.setVisibility(View.VISIBLE);
-                if(timeLeftInTimer <= 0) {
-                    Toast.makeText(this,"Choose a timer option to begin with.", Toast.LENGTH_SHORT).show();
+                if (timeLeftInTimer <= 0) {
+                    Toast.makeText(this, "Choose a timer option to begin with.", Toast.LENGTH_SHORT).show();
                 } else {
                     startCountdown();
                 }
@@ -194,6 +252,28 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         startPauseButton.setVisibility(View.VISIBLE);
     }
 
+    private void vibrateDevice() {
+        timerVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
+        if (!timerVibrator.hasVibrator()) {
+            return;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            timerVibrator.vibrate(
+                    VibrationEffect.createOneShot(11000, VibrationEffect.DEFAULT_AMPLITUDE)
+            );
+        } else {
+            long[] timerPattern = {0, 5500, 20, 5500};
+            timerVibrator.vibrate(timerPattern, -1);
+        }
+
+    }
+
+    private void playAlarmSound() {
+        alarmSound = MediaPlayer.create(TimeoutTimerActivity.this, R.raw.best_wake_up_tone);
+        alarmSound.start();
+    }
+
     private void startCountdown() {
         endTime = System.currentTimeMillis() + timeLeftInTimer;
         countDownTimer = new CountDownTimer(timeLeftInTimer, 1000) {
@@ -205,7 +285,9 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                if(isTimerRunning) {
+                if (isTimerRunning) {
+                    playAlarmSound();
+                    vibrateDevice();
                     Toast.makeText(TimeoutTimerActivity.this, "DONE", Toast.LENGTH_SHORT).show();
                     isTimerRunning = false;
                     startPauseButton.setText("Start");
@@ -214,6 +296,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                     customTime.setVisibility(View.VISIBLE);
                     useCustomTime.setVisibility(View.VISIBLE);
                 }
+
             }
         }.start();
 
@@ -223,7 +306,6 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         resetButton.setVisibility(View.INVISIBLE);
         isTimerRunning = true;
     }
-
 
     private void changeTimerText() {
         int hours = (int) (timeLeftInTimer / 1000) / 3600;
