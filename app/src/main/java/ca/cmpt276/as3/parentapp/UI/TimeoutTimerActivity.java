@@ -32,6 +32,8 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     private EditText customTime;
     private ImageButton useCustomTime;
     private TextView timerText;
+    private TextView spinnerTitle;
+    private TextView customChoiceTitle;
     private Button startPauseButton;
     private Button resetButton;
     private Spinner dropDownMenu;
@@ -78,6 +80,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     }
 
     private void handleCustomTimeCheckButton() {
+        customChoiceTitle = findViewById(R.id.tvCustomTitle);
         useCustomTime.setOnClickListener(v -> {
             dropDownMenu.setSelection(0);
             String inputTime = customTime.getText().toString();
@@ -122,6 +125,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         isTimerRunning = prefs.getBoolean(timeRunning, false);
 
         changeTimerText();
+        changeVisibilityPostClick();
 
         if (isTimerRunning) {
             endTime = prefs.getLong("endTime", 0);
@@ -130,8 +134,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                 timeLeftInTimer = 0;
                 isTimerRunning = false;
                 changeTimerText();
-                startPauseButton.setText("Start");
-                startPauseButton.setVisibility(View.VISIBLE);
+                changeVisibilityPostClick();
             } else {
                 startCountdown();
             }
@@ -145,6 +148,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 
     //  https://stackoverflow.com/questions/12108893/set-onclicklistener-for-spinner-item
     private void setUpDropDownList() {
+        spinnerTitle = findViewById(R.id.tvDropDownTitle);
         dropDownMenu = findViewById(R.id.spinDropDownChoices);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
@@ -239,17 +243,13 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     private void pauseCountdown() {
         countDownTimer.cancel();
         isTimerRunning = false;
-        startPauseButton.setText("Start");
-        resetButton.setVisibility(View.VISIBLE);
-        customTime.setVisibility(View.VISIBLE);
-        useCustomTime.setVisibility(View.VISIBLE);
+        changeVisibilityPostClick();
     }
 
     private void resetCountdown() {
         timeLeftInTimer = startTime;
         changeTimerText();
-        resetButton.setVisibility(View.INVISIBLE);
-        startPauseButton.setVisibility(View.VISIBLE);
+        changeVisibilityPostClick();
     }
 
     private void vibrateDevice() {
@@ -288,23 +288,17 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                 if (isTimerRunning) {
                     playAlarmSound();
                     vibrateDevice();
-                    Toast.makeText(TimeoutTimerActivity.this, "DONE", Toast.LENGTH_SHORT).show();
                     isTimerRunning = false;
-                    startPauseButton.setText("Start");
-                    startPauseButton.setVisibility(View.VISIBLE);
-                    resetButton.setVisibility(View.VISIBLE);
-                    customTime.setVisibility(View.VISIBLE);
-                    useCustomTime.setVisibility(View.VISIBLE);
+                    changeVisibilityPostClick();
                 }
 
             }
         }.start();
 
         // Update button to pause because timer is currently running
-        // change boolean to true as timer is now running, hide reset
-        startPauseButton.setText("Pause");
-        resetButton.setVisibility(View.INVISIBLE);
+        // change boolean to true as timer is now running, hide rese
         isTimerRunning = true;
+        changeVisibilityPostClick();
     }
 
     private void changeTimerText() {
@@ -320,6 +314,39 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         }
 
         timerText.setText(updatedTextStr);
+
+    }
+
+    private void changeVisibilityPostClick() {
+        if (isTimerRunning) {
+            customTime.setVisibility(View.INVISIBLE);
+            useCustomTime.setVisibility(View.INVISIBLE);
+            customChoiceTitle.setVisibility(View.INVISIBLE);
+            resetButton.setVisibility(View.INVISIBLE);
+            spinnerTitle.setVisibility(View.INVISIBLE);
+            dropDownMenu.setVisibility(View.INVISIBLE);
+            startPauseButton.setText("Pause");
+        } else {
+            customTime.setVisibility(View.VISIBLE);
+            spinnerTitle.setVisibility(View.VISIBLE);
+            customChoiceTitle.setVisibility(View.VISIBLE);
+            useCustomTime.setVisibility(View.VISIBLE);
+            dropDownMenu.setVisibility(View.VISIBLE);
+            startPauseButton.setText("Start");
+
+            if (timeLeftInTimer < 1000) {
+                startPauseButton.setVisibility(View.INVISIBLE);
+            } else {
+                startPauseButton.setVisibility(View.VISIBLE);
+            }
+
+            if (timeLeftInTimer < startTime) {
+                resetButton.setVisibility(View.VISIBLE);
+            } else {
+                resetButton.setVisibility(View.INVISIBLE);
+            }
+        }
+
 
     }
 }
