@@ -1,8 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:toss="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:orientation="vertical">
+    <Button
+        android:id="@+id/viewButton"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="View History"/>
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Child Name:"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <Spinner
+            android:id="@+id/sp_child"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:spinnerMode="dialog"
+            android:layout_weight="1"
+            android:clickable="false"
+            />
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="Start Flip"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="30sp"
+        android:textColor="@color/teal_200"
+        android:gravity="center"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
 
-</android.support.constraint.ConstraintLayout>
+        <ca.cmpt276.as3.parentapp.UI.TossImageView
+            android:id="@+id/tiv"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/front"
+            toss:circleCount="@integer/toss_default_circleCount"
+            toss:duration="@integer/toss_default_duration"
+            toss:frontDrawable="@drawable/front"
+            toss:result="front"
+            toss:reverseDrawable="@drawable/reverse"
+            toss:startOffset="@integer/toss_default_startOffset"
+            toss:xAxisDirection="clockwise"
+            toss:yAxisDirection="none"
+            toss:zAxisDirection="none" />
+    </RelativeLayout>
+</android.support.v7.widget.LinearLayoutCompat>
