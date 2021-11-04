@@ -15,18 +15,14 @@
             android:name=".UI.TimeoutTimerActivity"
             android:exported="true"
             android:label="@string/title_activity_timeout_timer"
-            android:theme="@style/Theme.ParentApp.NoActionBar"
-            android:parentActivityName=".UI.MainActivity"/>
+            android:theme="@style/Theme.ParentApp.NoActionBar" />
         <activity
             android:name=".UI.ConfigureChildrenActivity"
-            android:parentActivityName=".UI.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing"
             android:label="@string/title_activity_configure_children"
             android:theme="@style/Theme.ParentApp.NoActionBar" />
         <activity
             android:name=".UI.FlipCoinActivity"
-            android:parentActivityName=".UI.MainActivity"
             android:exported="true"
             android:label="@string/title_activity_flip_coin"
             android:theme="@style/Theme.ParentApp.NoActionBar" />
@@ -41,6 +37,9 @@
 
             </intent-filter>
         </activity>
+        <activity
+            android:name=".UI.HistoryRecords"
+            android:exported="false" />
     </application>
 
 </manifest>
