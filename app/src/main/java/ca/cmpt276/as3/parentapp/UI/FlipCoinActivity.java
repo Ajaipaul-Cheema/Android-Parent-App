@@ -135,15 +135,15 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         mTossImageView.cleareOtherAnimation();
 
-        TranslateAnimation translateAnimation0 = new TranslateAnimation(0, 0, 0, -400);
-        translateAnimation0.setDuration(3000);
-        TranslateAnimation translateAnimation1 = new TranslateAnimation(0, 0, 0, 400);
-        translateAnimation1.setDuration(3000);
-        translateAnimation1.setStartOffset(3000);
+        TranslateAnimation translateAnimation0 = new TranslateAnimation(0, 0, 0, -200);
+        translateAnimation0.setDuration(2000);
+        TranslateAnimation translateAnimation1 = new TranslateAnimation(0, 0, 0, 200);
+        translateAnimation1.setDuration(2000);
+        translateAnimation1.setStartOffset(500);
 
         mTossImageView.setInterpolator(new DecelerateInterpolator())
-                .setDuration(6000)
-                .setCircleCount(40)
+                .setDuration(1000)
+                .setCircleCount(5)
                 .setXAxisDirection(TossAnimation.DIRECTION_CLOCKWISE)
                 .setYAxisDirection(TossAnimation.DIRECTION_NONE)
                 .setZAxisDirection(TossAnimation.DIRECTION_NONE)
