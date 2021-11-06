@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="120dp"
         android:text="View History"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:layout_marginTop="15dp"/>
 
     <TextView
         android:id="@+id/tvChildChoice"
@@ -35,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="130dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="65dp"
         android:gravity="center"
         android:text="Start Flip"
         android:textColor="@color/black"
@@ -46,19 +47,19 @@
         android:layout_width="125dp"
         android:layout_height="52dp"
         android:layout_marginLeft="115dp"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="420dp"
         android:layout_marginRight="20dp"
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
-    <ca.cmpt276.as3.parentapp.UI.TossImageView
+    <ca.cmpt276.parentapp.UI.TossImageView
         android:id="@+id/tiv"
         android:layout_width="400px"
         android:layout_height="400px"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="205dp"
         android:src="@drawable/front"
         toss:circleCount="@integer/toss_default_circleCount"
         toss:duration="@integer/toss_default_duration"
@@ -75,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="520dp"
+        android:layout_marginTop="465dp"
         android:gravity="center"
         android:text="Choose Heads"
         android:textColor="@color/black"
@@ -87,7 +88,7 @@
         android:layout_height="wrap_content"
         android:text="Choose Tails"
         android:layout_marginLeft="185dp"
-        android:layout_marginTop="520dp"
+        android:layout_marginTop="465dp"
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="16sp"/>

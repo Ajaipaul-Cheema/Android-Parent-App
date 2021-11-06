@@ -4,45 +4,33 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvChildResult"
-        android:layout_width="158dp"
-        android:layout_height="40dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="245dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="8dp"
-        android:text="Result"
-        android:textColor="#000000"
-        android:textSize="17sp" />
+        android:id="@+id/tvChildName"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="20dp"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/tvFlipTime"
-        android:layout_width="197dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="73dp"
-        android:layout_marginTop="34dp"
-        android:layout_marginEnd="141dp"
-        android:text="Time"
-        android:textColor="#000000"
-        android:textSize="17sp" />
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="115dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/tvChildName"
-        android:layout_width="201dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="73dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="137dp"
-        android:text="Name"
-        android:textColor="#000000"
-        android:textSize="17sp" />
+        android:id="@+id/tvChildResult"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="230dp"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:textColor="@color/black"/>
 
 </RelativeLayout>
