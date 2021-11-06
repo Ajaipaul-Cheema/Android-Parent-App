@@ -17,4 +17,6 @@
         <item>2 Minutes</item>
         <item>1 Minute</item>
     </string-array>
+    <string name="title_activity_history_flip_view">HistoryFlipView</string>
+
 </resources>

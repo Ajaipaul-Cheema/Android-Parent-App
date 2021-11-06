@@ -47,6 +47,8 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+
+
         // load in children data
         loadChildrenData();
 
@@ -90,12 +92,15 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
     }
 
     private void loadChildrenData() {
+
         SharedPreferences sharedPreferences = getSharedPreferences(NAMES_PREF, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(NAME_PREF, null);
         Type type = new TypeToken<ArrayList<String>>() {
         }.getType();
         childrenNames = gson.fromJson(json, type);
+
+
 
         if (childrenNames == null) {
             childrenNames = new ArrayList<>();
@@ -164,5 +169,7 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
             childAdapter.notifyDataSetChanged();
         }
     }
+
+
 
 }

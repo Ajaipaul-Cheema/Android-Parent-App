@@ -21,7 +21,11 @@
         <entry key="..\:/Users/ajaip/AndroidStudioProjects/parentApp/app/src/main/res/layout/fragment_second.xml" value="0.14673913043478262" />
         <entry key="..\:/Users/ajaip/AndroidStudioProjects/parentApp/app/src/main/res/layout/notification_timer.xml" value="0.22" />
         <entry key="..\:/Users/ajaip/AndroidStudioProjects/parentApp/app/src/main/res/menu/menu_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_history_flip_view.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/content_configure_children.xml" value="0.29891304347826086" />
+        <entry key="app/src/main/res/layout/content_flip_coin.xml" value="0.24547101449275363" />
+        <entry key="app/src/main/res/layout/content_history_flip_view.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.23958333333333334" />
       </map>
     </option>
   </component>
