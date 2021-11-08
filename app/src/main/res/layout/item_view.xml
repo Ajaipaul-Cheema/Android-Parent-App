@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,19 +8,35 @@
         android:id="@+id/tvChildName"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="3dp"
         android:layout_weight="1"
-        android:layout_marginLeft="20dp"
-        android:textSize="12sp"
         android:gravity="center"
-        android:textColor="@color/black" />
+        android:text="Matt picked: "
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvChildChoice"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="3dp"
+        android:layout_toRightOf="@+id/tvChildName"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Heads"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tvFlipTime"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginLeft="115dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"
         android:layout_weight="1"
         android:gravity="center"
+        android:text="Nov 07 @ 16:26"
         android:textColor="@color/black"
         android:textSize="12sp" />
 
@@ -27,10 +44,21 @@
         android:id="@+id/tvChildResult"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_toLeftOf="@+id/resultImage"
         android:layout_weight="1"
-        android:layout_marginLeft="230dp"
-        android:textSize="12sp"
         android:gravity="center"
-        android:textColor="@color/black"/>
+        android:text="Result: Heads"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/resultImage"
+        android:layout_width="36dp"
+        android:layout_height="46dp"
+        android:layout_marginRight="40dp"
+        android:layout_toLeftOf="@+id/tvFlipTime"
+        android:layout_weight="1"
+        android:gravity="center"
+        app:srcCompat="@drawable/ic_baseline_check_24" />
 
 </RelativeLayout>

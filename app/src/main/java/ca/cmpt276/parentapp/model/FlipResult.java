@@ -3,6 +3,8 @@ package ca.cmpt276.parentapp.model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import ca.cmpt276.as3.parentapp.R;
+
 public class FlipResult {
 
     private String name;
@@ -27,11 +29,21 @@ public class FlipResult {
         return dateTimeCustom;
     }
 
+    public int getIcon(){
+
+        if (tossedResult == guessedCoin){
+            return R.drawable.ic_baseline_check_24;
+        }
+        else{
+            return R.drawable.ic_outline_cancel_24;
+        }
+    }
+
     public String getNameOfChild() {
         return name;
     }
 
-    public String getChoiceCoinString(){
+    public String getFlippedResultString(){
         if (tossedResult == 1){
             return "Heads";
         }
@@ -40,14 +52,13 @@ public class FlipResult {
         }
     }
 
-
-    public String isGuessedCorrectly() {
-        if(tossedResult == guessedCoin){
-            return "WON";
+    public String getChildChoiceString(){
+        if (guessedCoin == 1){
+            return "Heads";
         }
         else{
-            return "LOST";
+            return "Tails";
         }
-
     }
+
 }
