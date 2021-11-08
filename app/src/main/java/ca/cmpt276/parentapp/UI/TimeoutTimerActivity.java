@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -85,6 +86,9 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 
         binding = ActivityTimeoutTimerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+
         customTime = findViewById(R.id.editCustomText);
         useCustomTime = findViewById(R.id.useCustomTime);
         timerText = findViewById(R.id.tv_timer);
@@ -96,8 +100,15 @@ public class TimeoutTimerActivity extends AppCompatActivity {
             startService(new Intent(getBaseContext(), BroadcastReceiver.class));
         }
 
+
+
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#C19A6B"));
+        getSupportActionBar().setBackgroundDrawable(colorDrawable);
+
 
         handleCustomTimeCheckButton();
         setUpDropDownList();

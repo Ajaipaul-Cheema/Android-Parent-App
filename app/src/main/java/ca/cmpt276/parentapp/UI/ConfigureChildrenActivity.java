@@ -3,6 +3,8 @@ package ca.cmpt276.parentapp.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -51,6 +53,12 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+
+        // https://www.geeksforgeeks.org/how-to-change-the-color-of-action-bar-in-an-android-app/
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#C19A6B"));
+        actionBar.setBackgroundDrawable(colorDrawable);
 
 
 

@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:foregroundTint="#C19A6B"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+    <!--https://www.google.com/url?sa=i&url=https%3A%2F%2Falamancefinearts.com%2Ftime-is-of-the-essence%2F&psig=AOvVaw2qGyVTFdDjFC_1pPNL7VF-&ust=1636417618678000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCODN2OjAh_QCFQAAAAAdAAAAABAD-->
+    <ImageView
+        android:id="@+id/hourglass"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/hourglass" />
 
     <TextView
         android:id="@+id/tv_timer"
@@ -21,7 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_timer"
         android:layout_centerHorizontal="true"
-        android:text="Start" />
+        android:backgroundTint="@color/button_color"
+        android:text="Start"
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/btn_reset"
@@ -31,7 +45,9 @@
         android:layout_marginStart="-89dp"
         android:layout_marginTop="-4dp"
         android:layout_toEndOf="@+id/btn_start_and_pause_timer"
-        android:text="Reset" />
+        android:backgroundTint="@color/button_color"
+        android:text="Reset"
+        android:textColor="@color/white" />
 
     <Spinner
         android:id="@+id/spinDropDownChoices"
@@ -62,14 +78,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:text="Enter Custom Time Here"
-        android:layout_alignParentEnd="true"
         android:textColor="@color/black"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editCustomText"
@@ -95,6 +111,8 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="173dp"
         android:layout_marginBottom="15dp"
-        app:srcCompat="@android:drawable/checkbox_on_background" />
+        android:foregroundTint="#C19A6B"
+        app:srcCompat="@android:drawable/checkbox_on_background"
+        />
 
 </RelativeLayout>

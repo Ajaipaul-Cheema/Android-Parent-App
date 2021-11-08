@@ -7,14 +7,30 @@
     xmlns:toss="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+    <!-- https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.publicdomainpictures.net%2Fen%2Fview-image.php%3Fimage%3D154620%26picture%3Dfloral-frame-background-4&psig=AOvVaw3bzPzA1MVdaNOyAY-0KSe_&ust=1636422383311000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKiQ88nSh_QCFQAAAAAdAAAAABAO -->
+    <ImageView
+        android:id="@+id/frame"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/frame" />
+
     <Button
         android:id="@+id/viewButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="139dp"
         android:layout_marginLeft="120dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="141dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/button_color"
         android:text="View History"
-        android:textSize="16sp"
-        android:layout_marginTop="15dp"/>
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tvChildChoice"
@@ -35,11 +51,16 @@
         android:id="@+id/btnFlipCoin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="150dp"
         android:layout_marginLeft="130dp"
         android:layout_marginTop="65dp"
+        android:layout_marginEnd="152dp"
         android:gravity="center"
         android:text="Start Flip"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/button_color"
         android:textSize="16sp" />
 
     <TextView
@@ -75,22 +96,32 @@
         android:id="@+id/btnChooseHeads"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="45dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="465dp"
+        android:layout_marginBottom="85dp"
         android:gravity="center"
         android:text="Choose Heads"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/button_color"
         android:textSize="16sp" />
 
     <Button
         android:id="@+id/btnChooseTails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Tails"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="185dp"
         android:layout_marginTop="465dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginBottom="85dp"
         android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="16sp"/>
+        android:text="Choose Tails"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/button_color"
+        android:textSize="16sp" />
 
 </RelativeLayout>
