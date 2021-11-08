@@ -9,8 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,12 +78,16 @@ public class HistoryFlipView extends AppCompatActivity {
             currentResult = resultManager.getResult().get(position);
 
             TextView childName = itemView.findViewById(R.id.tvChildName);
-            TextView timeFlip = itemView.findViewById(R.id.tvChildResult);
-            TextView flipResult = itemView.findViewById(R.id.tvFlipTime);
+            TextView timeFlip = itemView.findViewById(R.id.tvFlipTime);
+            TextView flipResult = itemView.findViewById(R.id.tvChildResult);
+            TextView childChoice = itemView.findViewById(R.id.tvChildChoice);
+            ImageView resultImage = itemView.findViewById(R.id.resultImage);
 
-            childName.setText(currentResult.getNameOfChild() + " Picked");
+            childName.setText(currentResult.getNameOfChild() + " Picked: ");
+            childChoice.setText(currentResult.getChildChoiceString());
             timeFlip.setText(currentResult.getTimeString());
-            flipResult.setText(currentResult.getChoiceCoinString()+" - "+ currentResult.isGuessedCorrectly());
+            flipResult.setText(currentResult.getFlippedResultString());
+            resultImage.setImageResource(currentResult.getIcon());
 
 
             return itemView;
