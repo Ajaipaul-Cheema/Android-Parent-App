@@ -1,79 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:toss="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
     <!-- https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.publicdomainpictures.net%2Fen%2Fview-image.php%3Fimage%3D154620%26picture%3Dfloral-frame-background-4&psig=AOvVaw3bzPzA1MVdaNOyAY-0KSe_&ust=1636422383311000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKiQ88nSh_QCFQAAAAAdAAAAABAO -->
     <ImageView
         android:id="@+id/frame"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/frame" />
+        app:srcCompat="@drawable/frame"
+        android:contentDescription="@string/background_image" />
 
     <Button
         android:id="@+id/viewButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="120dp"
-        android:layout_marginTop="13dp"
-        android:textColor="@color/white"
         android:backgroundTint="@color/button_color"
-        android:text="View History"
-        android:textSize="16sp" />
+        android:text="@string/view_history"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFlipCoin" />
 
     <TextView
         android:id="@+id/tvChildChoice"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_below="@+id/btnFlipCoin"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="91dp"
-        android:layout_marginLeft="90dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="90dp"
+        android:layout_width="180dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="110dp"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnFlipCoin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="60dp"
-        android:gravity="center"
-        android:text="Start Flip"
-        android:textColor="@color/white"
         android:backgroundTint="@color/button_color"
-        android:textSize="16sp" />
+        android:text="@string/start_flip"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnChooseTails"
+        app:layout_constraintStart_toStartOf="@+id/btnChooseHeads"
+        app:layout_constraintTop_toBottomOf="@+id/tvChildChoice"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.674" />
 
     <TextView
         android:id="@+id/tv_result"
-        android:layout_width="125dp"
-        android:layout_height="52dp"
-        android:layout_marginLeft="115dp"
-        android:layout_marginTop="420dp"
-        android:layout_marginRight="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/viewButton"
+        app:layout_constraintEnd_toStartOf="@+id/btnChooseTails"
+        app:layout_constraintStart_toEndOf="@+id/btnChooseHeads"
+        app:layout_constraintTop_toTopOf="@+id/btnFlipCoin" />
 
     <ca.cmpt276.parentapp.UI.TossImageView
         android:id="@+id/tiv"
-        android:layout_width="400px"
-        android:layout_height="400px"
+        android:layout_width="140dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnFlipCoin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvChildChoice"
+        app:layout_constraintVertical_bias="1.0"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="205dp"
+        android:contentDescription="@string/coin_image"
         android:src="@drawable/front"
+
         toss:circleCount="@integer/toss_default_circleCount"
         toss:duration="@integer/toss_default_duration"
         toss:frontDrawable="@drawable/front"
@@ -88,24 +103,29 @@
         android:id="@+id/btnChooseHeads"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="470dp"
-        android:gravity="center"
-        android:text="Choose Heads"
-        android:textColor="@color/white"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
         android:backgroundTint="@color/button_color"
-        android:textSize="16sp" />
+        android:text="@string/choose_heads"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFlipCoin"
+        app:layout_constraintTop_toTopOf="@+id/viewButton" />
 
     <Button
         android:id="@+id/btnChooseTails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="185dp"
-        android:layout_marginTop="470dp"
-        android:gravity="center"
-        android:text="Choose Tails"
-        android:textColor="@color/white"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
         android:backgroundTint="@color/button_color"
-        android:textSize="16sp" />
+        android:gravity="center"
+        android:text="@string/choose_tails"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFlipCoin"
+        app:layout_constraintTop_toTopOf="@+id/viewButton" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
