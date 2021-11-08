@@ -12,7 +12,6 @@
         android:layout_marginLeft="3dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Matt picked: "
         android:textColor="@color/black"
         android:textSize="14sp" />
 
@@ -24,7 +23,6 @@
         android:layout_toRightOf="@+id/tvChildName"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Heads"
         android:textColor="@color/black"
         android:textSize="14sp" />
 
@@ -36,7 +34,6 @@
         android:layout_marginRight="8dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Nov 07 @ 16:26"
         android:textColor="@color/black"
         android:textSize="12sp" />
 
@@ -44,10 +41,8 @@
         android:id="@+id/tvChildResult"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_toLeftOf="@+id/resultImage"
-        android:layout_weight="1"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Result: Heads"
         android:textColor="@color/black"
         android:textSize="14sp" />
 
@@ -55,9 +50,7 @@
         android:id="@+id/resultImage"
         android:layout_width="36dp"
         android:layout_height="46dp"
-        android:layout_marginRight="40dp"
-        android:layout_toLeftOf="@+id/tvFlipTime"
-        android:layout_weight="1"
+        android:layout_toRightOf="@+id/tvChildResult"
         android:gravity="center"
         app:srcCompat="@drawable/ic_baseline_check_24" />
 

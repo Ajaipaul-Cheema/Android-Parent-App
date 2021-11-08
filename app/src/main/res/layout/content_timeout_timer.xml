@@ -7,7 +7,6 @@
     android:foregroundTint="#C19A6B"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
     <!--https://www.google.com/url?sa=i&url=https%3A%2F%2Falamancefinearts.com%2Ftime-is-of-the-essence%2F&psig=AOvVaw2qGyVTFdDjFC_1pPNL7VF-&ust=1636417618678000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCODN2OjAh_QCFQAAAAAdAAAAABAD-->
     <ImageView
         android:id="@+id/hourglass"

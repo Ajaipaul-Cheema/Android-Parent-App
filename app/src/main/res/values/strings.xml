@@ -27,5 +27,11 @@
     <string name="start_string">Start</string>
     <string name="children_turn_string">"'s turn to pick!"</string>
     <string name="choose_head_or_tail_str">Please choose Heads or Tails</string>
+    <string name="view_history">View History</string>
+    <string name="start_flip">Start Flip</string>
+    <string name="choose_heads">Choose Heads</string>
+    <string name="choose_tails">Choose Tails</string>
+    <string name="coin_image">coin image</string>
+    <string name="background_image">background_image</string>
 
 </resources>
