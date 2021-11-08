@@ -17,6 +17,10 @@ import java.util.Set;
 
 import ca.cmpt276.as3.parentapp.R;
 
+/**
+ * The TossImageView class
+ *
+ */
 public class TossImageView extends android.support.v7.widget.AppCompatImageView {
 
     public static final int DIRECTION_NONE = 0; // Does not change in that direction

@@ -18,5 +18,14 @@
         <item>1 Minute</item>
     </string-array>
     <string name="title_activity_history_flip_view">HistoryFlipView</string>
+    <string name="results_heads">Heads</string>
+    <string name="results_tails">Tails</string>
+    <string name="empty_time_error_text">Custom time must be non-empty!</string>
+    <string name="negative_time_error">Enter a positive number of mins!</string>
+    <string name="no_time_inputted_string">Choose a timer option to begin with.</string>
+    <string name="pause_string">Pause</string>
+    <string name="start_string">Start</string>
+    <string name="children_turn_string">"'s turn to pick!"</string>
+    <string name="choose_head_or_tail_str">Please choose Heads or Tails</string>
 
 </resources>

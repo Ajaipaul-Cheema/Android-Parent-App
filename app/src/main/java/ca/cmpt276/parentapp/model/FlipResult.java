@@ -32,8 +32,7 @@ public class FlipResult {
         String timeStr = timeFlip.format(formatTime);
         LocalDateTime date = timeFlip;
         DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("MMM dd");
-        String dateTimeCustom = date.format(formatDate) + " @ " + timeStr;
-        return dateTimeCustom;
+        return date.format(formatDate) + " @ " + timeStr;
     }
 
     public int getIcon(){

@@ -11,6 +11,12 @@ import java.sql.Time;
 
 import ca.cmpt276.parentapp.UI.TimeoutTimerActivity;
 
+/**
+ * NotificationReceiver class uses a
+ * BroadcastReceiver to register an
+ * action button which will dismiss
+ * the timers sounds.
+ */
 public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {

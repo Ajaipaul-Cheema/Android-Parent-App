@@ -13,10 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityConfigureChildrenBinding;
 
@@ -59,8 +62,6 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         ColorDrawable colorDrawable
                 = new ColorDrawable(Color.parseColor("#C19A6B"));
         actionBar.setBackgroundDrawable(colorDrawable);
-
-
 
         // load in children data
         loadChildrenData();
@@ -179,7 +180,6 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
             childAdapter.notifyDataSetChanged();
         }
     }
-
 
 
 }

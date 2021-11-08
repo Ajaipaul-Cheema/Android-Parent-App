@@ -13,18 +13,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
+
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Random;
+
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityFlipCoinBinding;
 import ca.cmpt276.parentapp.model.FlipResult;
 import ca.cmpt276.parentapp.model.FlipResultManager;
+
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -78,7 +82,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         childNameChoice = findViewById(R.id.tvChildChoice);
         if (childrenNames.size() > 0) {
-            childNameChoice.setText(childrenNames.get(childIdx) + "'s turn to pick!");
+            childNameChoice.setText(childrenNames.get(childIdx) + getString(R.string.children_turn_string));
         }
 
         mTossImageView = findViewById(R.id.tiv);
@@ -113,7 +117,7 @@ public class FlipCoinActivity extends AppCompatActivity {
                 coinToss();
             } else if (playerCoinChoice == -1) {
                 resultManager.saveFlipHistory(this);
-                Toast.makeText(this, "Please choose Heads or Tails", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.choose_head_or_tail_str), Toast.LENGTH_SHORT).show();
             } else {
                 resultManager.saveFlipHistory(this);
                 coinToss();
@@ -175,11 +179,11 @@ public class FlipCoinActivity extends AppCompatActivity {
                         resultOfFlip.setVisibility(View.VISIBLE);
                         childNameChoice.setVisibility(View.VISIBLE);
                         if (tossResult == 1) {
-                            resultOfFlip.setText("Heads");
+                            resultOfFlip.setText(R.string.results_heads);
                         } else {
-                            resultOfFlip.setText("Tails");
+                            resultOfFlip.setText(R.string.results_tails);
                         }
-                        childNameChoice.setText(childrenNames.get(childIdx) + "'s turn to pick!");
+                        childNameChoice.setText(childrenNames.get(childIdx) + getString(R.string.children_turn_string));
                     }
                 }, 2000);
             }

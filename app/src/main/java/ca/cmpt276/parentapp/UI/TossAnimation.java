@@ -5,6 +5,10 @@ import android.graphics.Matrix;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
+/**
+ * The TossAnimation class
+ */
+
 public class TossAnimation extends Animation {
 
     public static final int DIRECTION_NONE = 0; // Does not change in that direction

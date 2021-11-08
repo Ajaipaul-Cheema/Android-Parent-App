@@ -121,12 +121,12 @@ public class TimeoutTimerActivity extends AppCompatActivity {
             dropDownMenu.setSelection(0);
             String inputTime = customTime.getText().toString();
             if (inputTime.isEmpty()) {
-                Toast.makeText(TimeoutTimerActivity.this, "Custom time must be non-empty!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TimeoutTimerActivity.this, getString(R.string.empty_time_error_text), Toast.LENGTH_SHORT).show();
                 return;
             }
             long milliSecsInput = Long.parseLong(inputTime) * 60000;
             if (milliSecsInput == 0) {
-                Toast.makeText(TimeoutTimerActivity.this, "Enter a positive number of mins!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TimeoutTimerActivity.this, getString(R.string.negative_time_error), Toast.LENGTH_SHORT).show();
                 return;
             }
             setTime(milliSecsInput);
@@ -251,7 +251,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         });
     }
 
-    //  https://www.youtube.com/watch?v=zmjfAcnosS0 <- very helpful in this process
+    //  https://www.youtube.com/watch?v=zmjfAcnosS0
     private void setUpTimer() {
         resetButton.setVisibility(View.INVISIBLE);
 
@@ -266,7 +266,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                 customTime.setVisibility(View.VISIBLE);
                 useCustomTime.setVisibility(View.VISIBLE);
                 if (timeLeftInTimer <= 0) {
-                    Toast.makeText(this, "Choose a timer option to begin with.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.no_time_inputted_string), Toast.LENGTH_SHORT).show();
                 } else {
                     startCountdown();
                 }
@@ -400,14 +400,14 @@ public class TimeoutTimerActivity extends AppCompatActivity {
             resetButton.setVisibility(View.INVISIBLE);
             spinnerTitle.setVisibility(View.INVISIBLE);
             dropDownMenu.setVisibility(View.INVISIBLE);
-            startPauseButton.setText("Pause");
+            startPauseButton.setText(R.string.pause_string);
         } else {
             customTime.setVisibility(View.VISIBLE);
             spinnerTitle.setVisibility(View.VISIBLE);
             customChoiceTitle.setVisibility(View.VISIBLE);
             useCustomTime.setVisibility(View.VISIBLE);
             dropDownMenu.setVisibility(View.VISIBLE);
-            startPauseButton.setText("Start");
+            startPauseButton.setText(R.string.start_string);
 
             if (timeLeftInTimer < 1000) {
                 startPauseButton.setVisibility(View.INVISIBLE);
