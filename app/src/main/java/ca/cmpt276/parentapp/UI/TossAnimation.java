@@ -6,7 +6,10 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
 /**
- * The TossAnimation class
+ * The TossAnimation class set an animation effect,
+ * Can adjust the animation time, adjust the number of turns of the coin,
+ * Can adjust the direction of the coin from the outside.
+ * also can set the front and back of the coin toss.
  */
 
 public class TossAnimation extends Animation {
