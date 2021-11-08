@@ -38,6 +38,7 @@ public class HistoryFlipView extends AppCompatActivity {
         binding = ActivityHistoryFlipViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         populateListView();
     }

@@ -15,23 +15,27 @@
             android:name="ca.cmpt276.parentapp.UI.HistoryFlipView"
             android:exported="true"
             android:label="@string/title_activity_history_flip_view"
-            android:theme="@style/Theme.ParentApp.NoActionBar" />
+            android:theme="@style/Theme.ParentApp.NoActionBar"
+            android:parentActivityName="ca.cmpt276.parentapp.UI.FlipCoinActivity"/>
         <activity
             android:name="ca.cmpt276.parentapp.UI.TimeoutTimerActivity"
             android:exported="true"
             android:label="@string/title_activity_timeout_timer"
-            android:theme="@style/Theme.ParentApp.NoActionBar" />
+            android:theme="@style/Theme.ParentApp.NoActionBar"
+            android:parentActivityName="ca.cmpt276.parentapp.UI.MainActivity"/>
         <activity
             android:name="ca.cmpt276.parentapp.UI.ConfigureChildrenActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/title_activity_configure_children"
-            android:theme="@style/Theme.ParentApp.NoActionBar" />
+            android:theme="@style/Theme.ParentApp.NoActionBar"
+            android:parentActivityName="ca.cmpt276.parentapp.UI.MainActivity" />
         <activity
             android:name="ca.cmpt276.parentapp.UI.FlipCoinActivity"
             android:exported="true"
             android:label="@string/title_activity_flip_coin"
-            android:theme="@style/Theme.ParentApp.NoActionBar" />
+            android:theme="@style/Theme.ParentApp.NoActionBar"
+            android:parentActivityName="ca.cmpt276.parentapp.UI.MainActivity"/>
         <activity
             android:name="ca.cmpt276.parentapp.UI.MainActivity"
             android:exported="true"
@@ -43,6 +47,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name="ca.cmpt276.parentapp.model.NotificationReceiver"></receiver>
     </application>
 
 </manifest>

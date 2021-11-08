@@ -56,6 +56,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         binding = ActivityFlipCoinBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         loadData(this);
         resultManager = FlipResultManager.getInstance();
