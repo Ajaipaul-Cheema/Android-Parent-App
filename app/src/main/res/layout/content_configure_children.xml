@@ -5,6 +5,17 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
+    <!--https://www.vectorstock.com/royalty-free-vector/old-brown-paper-notebook-vector-1049105-->
+    <ImageView
+        android:id="@+id/nametag"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/notepad" />
+
     <Button
         android:id="@+id/btnAddChild"
         android:layout_width="wrap_content"
@@ -12,32 +23,40 @@
         android:layout_marginEnd="250dp"
         android:layout_marginBottom="550dp"
         android:text="@string/add_child"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/button_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.238"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.503" />
 
     <Button
         android:id="@+id/btnRemoveChild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="220dp"
+        android:layout_marginEnd="144dp"
         android:text="@string/remove_child"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/button_color"
         app:layout_constraintBottom_toBottomOf="@+id/btnEditChild"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnEditChild" />
+        app:layout_constraintTop_toTopOf="@+id/btnEditChild"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnEditChild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="296dp"
         android:text="@string/edit_child"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/button_color"
         app:layout_constraintBottom_toBottomOf="@+id/btnAddChild"
-        app:layout_constraintEnd_toEndOf="@+id/btnRemoveChild"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnAddChild" />
+        app:layout_constraintTop_toTopOf="@+id/btnAddChild"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/editChildName"
@@ -75,9 +94,9 @@
         android:choiceMode="singleChoice"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"/>
+        app:layout_constraintVertical_bias="0.975" />
 
 </android.support.constraint.ConstraintLayout>

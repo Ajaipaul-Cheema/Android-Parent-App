@@ -3,6 +3,8 @@ package ca.cmpt276.parentapp.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -57,6 +59,10 @@ public class FlipCoinActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#C19A6B"));
+        getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         loadData(this);
         resultManager = FlipResultManager.getInstance();
