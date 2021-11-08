@@ -19,8 +19,13 @@ import ca.cmpt276.as3.parentapp.R;
 
 /**
  * The TossImageView class
- *
+ * Can design the parameters of the animation,
+ * including the number of rotations, rotation direction, animation time, delay time,
+ * Can set the coin to draw a parabola,
+ * Can set the movement trajectory of the coin parabola X axis, Y axis and Z axis,
+ * and return the result of tossing the coin to FlipCoinActivity through the callback function.
  */
+
 public class TossImageView extends android.support.v7.widget.AppCompatImageView {
 
     public static final int DIRECTION_NONE = 0; // Does not change in that direction

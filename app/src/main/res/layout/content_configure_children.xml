@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -20,29 +21,26 @@
         android:id="@+id/btnAddChild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="550dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/button_color"
         android:text="@string/add_child"
         android:textColor="@color/white"
-        android:layout_marginLeft="20dp"
-        android:backgroundTint="@color/button_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/editChildName"
+        app:layout_constraintEnd_toEndOf="@+id/editChildName"
+        app:layout_constraintStart_toStartOf="@+id/editChildName"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.503" />
+        app:layout_constraintVertical_bias="0.13" />
 
     <Button
         android:id="@+id/btnRemoveChild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="20dp"
+        android:backgroundTint="@color/button_color"
         android:text="@string/remove_child"
         android:textColor="@color/white"
-        android:backgroundTint="@color/button_color"
         app:layout_constraintBottom_toBottomOf="@+id/btnEditChild"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAddChild"
         app:layout_constraintTop_toTopOf="@+id/btnEditChild"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -50,12 +48,12 @@
         android:id="@+id/btnEditChild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/button_color"
         android:text="@string/edit_child"
         android:textColor="@color/white"
-        android:backgroundTint="@color/button_color"
         app:layout_constraintBottom_toBottomOf="@+id/btnAddChild"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddChild"
         app:layout_constraintTop_toTopOf="@+id/btnAddChild"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -63,27 +61,25 @@
         android:id="@+id/editChildName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginBottom="450dp"
         android:ems="10"
         android:hint="@string/enter_name_here"
         android:inputType="textPersonName"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="200dp"
         android:text="@string/name"
-        android:textSize="16sp"
         android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/editChildName"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editChildName"
+        app:layout_constraintHorizontal_bias="0.83"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editChildName" />
 
@@ -91,13 +87,26 @@
         android:id="@+id/listChildren"
         android:layout_width="match_parent"
         android:layout_height="523dp"
-        android:layout_marginTop="650dp"
         android:choiceMode="singleChoice"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.975" />
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="162dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="95dp" />
 
 </android.support.constraint.ConstraintLayout>
