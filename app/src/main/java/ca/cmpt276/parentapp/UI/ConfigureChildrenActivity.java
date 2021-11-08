@@ -11,16 +11,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityConfigureChildrenBinding;
 
+
+/**
+ * The ConfigureChildrenActivity contains
+ * the user-inputted children names. Names
+ * can be added, editted and deleted from this
+ * activity. The names are saved/loaded between application
+ * uses.
+ */
 public class ConfigureChildrenActivity extends AppCompatActivity {
 
     ArrayList<String> childrenNames = new ArrayList<>();

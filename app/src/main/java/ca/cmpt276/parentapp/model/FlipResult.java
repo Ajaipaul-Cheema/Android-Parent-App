@@ -5,6 +5,13 @@ import java.time.format.DateTimeFormatter;
 
 import ca.cmpt276.as3.parentapp.R;
 
+/**
+ * The FlipResult class holds information about a
+ * child's flip of the coin. Data such as child name,
+ * child guess, time of flip and result of flip are included
+ * in the class. Class also contains methods to get
+ * this information
+ */
 public class FlipResult {
 
     private String name;

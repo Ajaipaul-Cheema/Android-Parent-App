@@ -2,13 +2,16 @@ package ca.cmpt276.parentapp.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
-
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityMainBinding;
 
+/**
+ * MainActivity class is the 'hub' of the application,
+ * the class contains methods which allows user access
+ * to other methods.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;

@@ -12,22 +12,22 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import ca.cmpt276.as3.parentapp.databinding.ActivityHistoryFlipViewBinding;
-
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.parentapp.model.FlipResult;
 import ca.cmpt276.parentapp.model.FlipResultManager;
 
+
+/**
+ * HistoryFlipView class populates the
+ * listview which contains the history of
+ * flipped coins. Information shown includes
+ * child name, chosen face, correct face and time.
+ */
 public class HistoryFlipView extends AppCompatActivity {
 
-    private static final String INDEX_PREF = "index_pref";
-    private static final String CHILDREN_INDEX_PREF = "children_index_pref";
     private ActivityHistoryFlipViewBinding binding;
     private List<FlipResult> myFlips = new ArrayList<>();
     private FlipResult currentResult;
@@ -76,7 +76,7 @@ public class HistoryFlipView extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.item_view,parent,false);
             }
 
-            currentResult = resultManager.getResult().get(position);
+            currentResult = resultManager.getFlipHistoryList().get(position);
 
             TextView childName = itemView.findViewById(R.id.tvChildName);
             TextView timeFlip = itemView.findViewById(R.id.tvFlipTime);

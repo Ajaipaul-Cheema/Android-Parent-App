@@ -10,6 +10,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * The FlipResultManager class stores a collection of
+ * Flip Results. It contains a List that contains the results,
+ * and the class also includes methods to add to, get, and iterate
+ * the list. History of flips are saved between app runs.
+ */
 public class FlipResultManager implements Iterable<FlipResult> {
 
     private static final String FLIP_RESULT_PREF = "Flip_Result_Pref";
@@ -31,10 +37,6 @@ public class FlipResultManager implements Iterable<FlipResult> {
 
     public void add(FlipResult toss) {
         flipHistoryList.add(toss);
-    }
-
-    public ArrayList<FlipResult> getResult() {
-        return flipHistoryList;
     }
 
     public ArrayList<FlipResult> getFlipHistoryList() {

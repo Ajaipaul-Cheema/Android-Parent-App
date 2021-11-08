@@ -33,6 +33,12 @@ import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityTimeoutTimerBinding;
 import ca.cmpt276.parentapp.model.NotificationReceiver;
 
+/**
+ * The TimeoutTimerActivity is a timer which
+ * plays a sound, vibrates and shows a notifcation on
+ * expiry. Default times include 1,2,3,5,10
+ * as well as functionality for user-input.
+ */
 public class TimeoutTimerActivity extends AppCompatActivity {
 
     private static final String NOTIFICATION_CHANNEL_NAME = "Dismiss Timer";
