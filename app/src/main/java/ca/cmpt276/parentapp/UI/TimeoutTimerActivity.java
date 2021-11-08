@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -76,6 +78,11 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#C19A6B"));
+        getSupportActionBar().setBackgroundDrawable(colorDrawable);
+
 
         handleCustomTimeCheckButton();
         setUpDropDownList();

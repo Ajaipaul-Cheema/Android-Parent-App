@@ -5,6 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<!-- https://www.google.com/url?sa=i&url=https%3A%2F%2Fcrello.com%2Funlimited%2Fstock-photos%2F175352504%2Fstock-photo-full-frame-bright-yellow-wallpaper%2F&psig=AOvVaw0plQdJ9Z02HYaxeOaxHWLq&ust=1636423747980000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCICQ7PrXh_QCFQAAAAAdAAAAABAF -->
+    <ImageView
+        android:id="@+id/sandbackground"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/sand" />
 
     <ListView
         android:id="@+id/flipsListView"

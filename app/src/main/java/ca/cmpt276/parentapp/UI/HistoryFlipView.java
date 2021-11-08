@@ -2,6 +2,8 @@ package ca.cmpt276.parentapp.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,6 +40,10 @@ public class HistoryFlipView extends AppCompatActivity {
         binding = ActivityHistoryFlipViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
+
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#C19A6B"));
+        getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         populateListView();
     }
