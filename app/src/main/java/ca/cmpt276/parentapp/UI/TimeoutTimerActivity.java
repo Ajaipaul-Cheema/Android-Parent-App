@@ -3,8 +3,10 @@ package ca.cmpt276.parentapp.UI;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -30,10 +32,14 @@ import java.util.Locale;
 
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityTimeoutTimerBinding;
+import ca.cmpt276.parentapp.model.NotificationReceiver;
 
 public class TimeoutTimerActivity extends AppCompatActivity {
 
-    private static final String TIMER_NUM = "Timer_Num";
+    private static final String NOTIFICATION_CHANNEL_NAME = "Dismiss Timer";
+    private static final String NOTIFICATION_CHANNEL_DESCRIPTION = "notification for timer";
+    private static final String NOTIFICATION_CHANNEL_ID = "notification timer ID";
+    private static final String ACTION_NAME = "Timer";
     private EditText customTime;
     private ImageButton useCustomTime;
     private TextView timerText;
@@ -47,22 +53,26 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     private static final String timeLeft = "millisLeft";
     private static final String timeRunning = "timerRunning";
     private static final String timeAtEnd = "endTime";
-
     private static CountDownTimer countDownTimer;
-
     private boolean isTimerRunning;
     private long startTime;
     private long endTime;
     private long timeLeftInTimer;
-
-    private Vibrator timerVibrator;
-    private MediaPlayer alarmSound;
-
+    public static Vibrator timerVibrator;
+    public static MediaPlayer alarmSound;
     private ActivityTimeoutTimerBinding binding;
 
     public static Intent makeLaunchIntent(Context c) {
         return new Intent(c, TimeoutTimerActivity.class);
     }
+
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            alarmSound.stop();
+            timerVibrator.cancel();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +85,11 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         timerText = findViewById(R.id.tv_timer);
         startPauseButton = findViewById(R.id.btn_start_and_pause_timer);
         resetButton = findViewById(R.id.btn_reset);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            registerReceiver(broadcastReceiver, new IntentFilter(ACTION_NAME));
+            startService(new Intent(getBaseContext(), BroadcastReceiver.class));
+        }
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -121,17 +136,19 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 
         editor.apply();
 
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        timerText.setText("00:00");
         SharedPreferences prefs = getSharedPreferences(timer_Prefs, MODE_PRIVATE);
-        startTime = prefs.getLong(timeStart, 600000);
+        startTime = prefs.getLong(timeStart, 0);
         timeLeftInTimer = prefs.getLong(timeLeft, startTime);
         isTimerRunning = prefs.getBoolean(timeRunning, false);
 
@@ -264,6 +281,12 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         changeVisibilityPostClick();
     }
 
+    private void playAlarmSound() {
+        alarmSound = MediaPlayer.create(TimeoutTimerActivity.this, R.raw.best_wake_up_tone);
+        alarmSound.setLooping(true);
+        alarmSound.start();
+    }
+
     private void vibrateDevice() {
         timerVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
@@ -278,12 +301,41 @@ public class TimeoutTimerActivity extends AppCompatActivity {
             long[] timerPattern = {0, 5500, 20, 5500};
             timerVibrator.vibrate(timerPattern, -1);
         }
-
     }
 
-    private void playAlarmSound() {
-        alarmSound = MediaPlayer.create(TimeoutTimerActivity.this, R.raw.best_wake_up_tone);
-        alarmSound.start();
+    private void showNotification() {
+           NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
+                        NOTIFICATION_CHANNEL_NAME,
+                        NotificationManager.IMPORTANCE_DEFAULT);
+                notificationChannel.setDescription(NOTIFICATION_CHANNEL_DESCRIPTION);
+                notificationChannel.setImportance(NotificationManager.IMPORTANCE_HIGH);
+                notificationManager.createNotificationChannel(notificationChannel);
+            }
+
+        Intent activityIntent = new Intent(this, TimeoutTimerActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this,
+                0, activityIntent, 0);
+
+        Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
+        broadcastIntent.putExtra(NOTIFICATION_CHANNEL_NAME, "Timer has finished.");
+        PendingIntent actionIntent = PendingIntent.getBroadcast(this,
+                0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.timernotifypicture)
+                    .setContentTitle("Timeout Timer")
+                    .setContentText("Timer has finished.")
+                    .setColor(Color.YELLOW)
+                    .setAutoCancel(true)
+                    .addAction(R.drawable.timernotifypicture, "Dismiss Timer Sound", actionIntent)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setCategory(NotificationCompat.CATEGORY_MESSAGE);
+            mBuilder.setContentIntent(actionIntent);
+            mBuilder.setContentIntent(contentIntent);
+            notificationManager.notify(0, mBuilder.build());
+
     }
 
     private void startCountdown() {
@@ -300,10 +352,10 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                 if (isTimerRunning) {
                     vibrateDevice();
                     playAlarmSound();
+                    showNotification();
                     isTimerRunning = false;
                     changeVisibilityPostClick();
                 }
-
             }
         }.start();
 
