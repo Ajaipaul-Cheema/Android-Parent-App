@@ -70,6 +70,4 @@ public class FlipResultManager implements Iterable<FlipResult> {
             flipHistoryList = new ArrayList<>();
         }
     }
-
-
 }

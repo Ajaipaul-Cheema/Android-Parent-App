@@ -3,10 +3,8 @@ package ca.cmpt276.parentapp.UI;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -86,11 +84,18 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         startPauseButton = findViewById(R.id.btn_start_and_pause_timer);
         resetButton = findViewById(R.id.btn_reset);
 
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                assert true;
+            } else if (extras.getBoolean("StopSound")) {
+                alarmSound.setLooping(false);
+                alarmSound.stop();
+            }
+        }
+
         // alarm sound was taken from this link: https://www.zedge.net/find/ringtones/best%20wakeup%20alarm
         alarmSound = MediaPlayer.create(TimeoutTimerActivity.this, R.raw.best_wake_up_tone);
-
-        // inspired by https://stackoverflow.com/questions/46079067/how-to-stop-playing-notification-sound-programmatically-on-android
-
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -325,10 +330,11 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         }
 
         Intent activityIntent = new Intent(this, TimeoutTimerActivity.class);
+        activityIntent.putExtra("StopSound", true);
         PendingIntent contentIntent = PendingIntent.getActivity(this,
                 0, activityIntent, 0);
 
-        Intent broadcastIntent = new Intent(this, BroadcastReceiver.class);
+        Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
         broadcastIntent.putExtra(NOTIFICATION_CHANNEL_NAME, "Timer has finished.");
         PendingIntent actionIntent = PendingIntent.getBroadcast(this,
                 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -399,14 +405,14 @@ public class TimeoutTimerActivity extends AppCompatActivity {
             resetButton.setVisibility(View.INVISIBLE);
             spinnerTitle.setVisibility(View.INVISIBLE);
             dropDownMenu.setVisibility(View.INVISIBLE);
-            startPauseButton.setText("Pause");
+            startPauseButton.setText(R.string.pause_string);
         } else {
             customTime.setVisibility(View.VISIBLE);
             spinnerTitle.setVisibility(View.VISIBLE);
             customChoiceTitle.setVisibility(View.VISIBLE);
             useCustomTime.setVisibility(View.VISIBLE);
             dropDownMenu.setVisibility(View.VISIBLE);
-            startPauseButton.setText("Start");
+            startPauseButton.setText(R.string.start_string);
 
             if (timeLeftInTimer < 1000) {
                 startPauseButton.setVisibility(View.INVISIBLE);
