@@ -42,8 +42,6 @@ import com.google.gson.reflect.TypeToken;
  */
 public class FlipCoinActivity extends AppCompatActivity {
 
-    private ActivityFlipCoinBinding binding;
-
     private int playerCoinChoice;
     private FlipResultManager resultManager;
     ArrayList<String> childrenNames = new ArrayList<>();
@@ -63,13 +61,13 @@ public class FlipCoinActivity extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        binding = ActivityFlipCoinBinding.inflate(getLayoutInflater());
+        ca.cmpt276.as3.parentapp.databinding.ActivityFlipCoinBinding binding = ActivityFlipCoinBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#C19A6B"));
+                = new ColorDrawable(Color.parseColor(getString(R.string.brown_color)));
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         loadData(this);
@@ -173,18 +171,15 @@ public class FlipCoinActivity extends AppCompatActivity {
             checkIfIdxExits();
 
             if (coinFlipDone) {
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        resultOfFlip.setVisibility(View.VISIBLE);
-                        childNameChoice.setVisibility(View.VISIBLE);
-                        if (tossResult == 1) {
-                            resultOfFlip.setText(R.string.results_heads);
-                        } else {
-                            resultOfFlip.setText(R.string.results_tails);
-                        }
-                        childNameChoice.setText(childrenNames.get(childIdx) + getString(R.string.children_turn_string));
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                    resultOfFlip.setVisibility(View.VISIBLE);
+                    childNameChoice.setVisibility(View.VISIBLE);
+                    if (tossResult == 1) {
+                        resultOfFlip.setText(R.string.results_heads);
+                    } else {
+                        resultOfFlip.setText(R.string.results_tails);
                     }
+                    childNameChoice.setText(childrenNames.get(childIdx) + getString(R.string.children_turn_string));
                 }, 2000);
             }
             playerCoinChoice = -1;
@@ -194,6 +189,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         }
     }
 
+    // save & load inspired by https://www.youtube.com/watch?v=jcliHGR3CHo&t=343s
     private void loadData(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(NAMES_PREF, MODE_PRIVATE);
         Gson gson = new Gson();

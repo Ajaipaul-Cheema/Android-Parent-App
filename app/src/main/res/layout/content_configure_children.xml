@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -12,6 +11,7 @@
         android:id="@+id/nametag"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:contentDescription="@string/brown_paper_picture"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:backgroundTint="@color/button_color"
+        android:layout_marginRight="10dp"
         android:text="@string/add_child"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/editChildName"
@@ -35,8 +36,8 @@
         android:id="@+id/btnRemoveChild"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:backgroundTint="@color/button_color"
+        android:layout_marginStart="15dp"
         android:text="@string/remove_child"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/btnEditChild"

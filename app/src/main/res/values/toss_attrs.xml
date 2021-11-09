@@ -5,25 +5,25 @@
         <attr name="xAxisDirection">
             <flag name="none" value="0" />
             <flag name="clockwise" value="1" />
-            <flag name="abtucclockwise" value="-1" />
+            <flag name="anticlockwise" value="-1" />
         </attr>
         <attr name="yAxisDirection">
             <flag name="none" value="0" />
             <flag name="clockwise" value="1" />
-            <flag name="abtucclockwise" value="-1" />
+            <flag name="anticlockwise" value="-1" />
         </attr>
         <attr name="zAxisDirection">
             <flag name="none" value="0" />
             <flag name="clockwise" value="1" />
-            <flag name="abtucclockwise" value="-1" />
+            <flag name="anticlockwise" value="-1" />
         </attr>
         <attr name="result">
             <flag name="front" value="1" />
             <flag name="reverse" value="-1" />
         </attr>
-        <attr name="frontDrawable" format="reference"/>
-        <attr name="reverseDrawable" format="reference"/>
-        <attr name="duration" format="integer"/>
-        <attr name="startOffset" format="integer"/>
+        <attr name="frontDrawable" format="reference" />
+        <attr name="reverseDrawable" format="reference" />
+        <attr name="duration" format="integer" />
+        <attr name="startOffset" format="integer" />
     </declare-styleable>
 </resources>

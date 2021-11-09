@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:foregroundTint="#C19A6B"
@@ -12,6 +11,7 @@
         android:id="@+id/hourglass"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:contentDescription="@string/hour_glass"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="00:00"
+        android:text="@string/default_time"
         android:textColor="@color/black"
         android:textSize="50sp" />
 
@@ -33,7 +33,7 @@
         android:layout_below="@+id/tv_timer"
         android:layout_centerHorizontal="true"
         android:backgroundTint="@color/button_color"
-        android:text="Start"
+        android:text="@string/start"
         android:textColor="@color/white" />
 
     <Button
@@ -45,7 +45,7 @@
         android:layout_marginTop="-4dp"
         android:layout_toEndOf="@+id/btn_start_and_pause_timer"
         android:backgroundTint="@color/button_color"
-        android:text="Reset"
+        android:text="@string/reset"
         android:textColor="@color/white" />
 
     <Spinner
@@ -68,7 +68,7 @@
         android:layout_marginTop="3dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
-        android:text="Default Timer Settings"
+        android:text="@string/default_timer_settings"
         android:textColor="@color/black"
         android:textStyle="bold" />
 
@@ -82,7 +82,7 @@
         android:layout_marginTop="3dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
-        android:text="Enter Custom Time Here"
+        android:text="@string/enter_custom_time_here"
         android:textColor="@color/black"
         android:textStyle="bold" />
 
@@ -110,8 +110,8 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="173dp"
         android:layout_marginBottom="15dp"
+        android:contentDescription="@string/apply_custom_time"
         android:foregroundTint="#C19A6B"
-        app:srcCompat="@android:drawable/checkbox_on_background"
-        />
+        app:srcCompat="@android:drawable/checkbox_on_background" />
 
 </RelativeLayout>

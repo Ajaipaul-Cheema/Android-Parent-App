@@ -14,10 +14,10 @@ import ca.cmpt276.as3.parentapp.R;
  */
 public class FlipResult {
 
-    private String name;
-    private LocalDateTime timeFlip;
-    private int tossedResult;
-    private int guessedCoin;
+    private final String name;
+    private final LocalDateTime timeFlip;
+    private final int tossedResult;
+    private final int guessedCoin;
 
 
     public FlipResult(String name, LocalDateTime timeFlip, int tossedResult, int guessedCoin) {
@@ -27,20 +27,18 @@ public class FlipResult {
         this.guessedCoin = guessedCoin;
     }
 
-    public String getTimeString(){
+    public String getTimeString() {
         DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HH:mm");
         String timeStr = timeFlip.format(formatTime);
-        LocalDateTime date = timeFlip;
         DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("MMM dd");
-        return date.format(formatDate) + " @ " + timeStr;
+        return timeFlip.format(formatDate) + " @ " + timeStr;
     }
 
-    public int getIcon(){
+    public int getIcon() {
 
-        if (tossedResult == guessedCoin){
+        if (tossedResult == guessedCoin) {
             return R.drawable.ic_baseline_check_24;
-        }
-        else{
+        } else {
             return R.drawable.ic_outline_cancel_24;
         }
     }
@@ -49,20 +47,18 @@ public class FlipResult {
         return name;
     }
 
-    public String getFlippedResultString(){
-        if (tossedResult == 1){
+    public String getFlippedResultString() {
+        if (tossedResult == 1) {
             return "Heads";
-        }
-        else{
+        } else {
             return "Tails";
         }
     }
 
-    public String getChildChoiceString(){
-        if (guessedCoin == 1){
+    public String getChildChoiceString() {
+        if (guessedCoin == 1) {
             return "Heads";
-        }
-        else{
+        } else {
             return "Tails";
         }
     }

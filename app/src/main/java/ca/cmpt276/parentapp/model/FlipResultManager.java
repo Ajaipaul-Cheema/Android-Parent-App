@@ -48,6 +48,7 @@ public class FlipResultManager implements Iterable<FlipResult> {
         return flipHistoryList.iterator();
     }
 
+    // save & load inspired by https://www.youtube.com/watch?v=jcliHGR3CHo&t=343s
     public void saveFlipHistory(Context context) {
         SharedPreferences flipPrefs = context.getSharedPreferences(FLIP_RESULT_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor flipEditor = flipPrefs.edit();

@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityMainBinding;
 
@@ -16,19 +17,17 @@ import ca.cmpt276.as3.parentapp.databinding.ActivityMainBinding;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ca.cmpt276.as3.parentapp.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
 
         ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#C19A6B"));
+                = new ColorDrawable(Color.parseColor(getString(R.string.yellow_brown_color)));
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         launchFlipCoin();

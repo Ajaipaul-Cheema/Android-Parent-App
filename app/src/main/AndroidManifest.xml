@@ -47,7 +47,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name="ca.cmpt276.parentapp.model.NotificationReceiver"></receiver>
+
+        <receiver android:name="ca.cmpt276.parentapp.model.NotificationReceiver" />
     </application>
 
 </manifest>

@@ -33,5 +33,35 @@
     <string name="choose_tails">Choose Tails</string>
     <string name="coin_image">coin image</string>
     <string name="background_image">background_image</string>
+    <string name="hour_glass">hour_glass</string>
+    <string name="default_time">00:00</string>
+    <string name="start">Start</string>
+    <string name="reset">Reset</string>
+    <string name="default_timer_settings">Default Timer Settings</string>
+    <string name="enter_custom_time_here">Enter Custom Time Here</string>
+    <string name="apply_custom_time">apply_custom_time</string>
+    <string name="flip_coin">Flip Coin</string>
+    <string name="timeout_timer">Timeout Timer</string>
+    <string name="configure_children">Configure Children</string>
+    <string name="happy_family_picture">happy_family_picture</string>
+    <string name="practical_parent">Practical Parent</string>
+    <string name="brown_paper_picture">brown_paper_picture</string>
+    <string name="sand_picture">sand_picture</string>
+    <string name="won_or_lost_picture">won_or_lost_picture</string>
+    <string name="non_empty_name">Name entered must be non-empty!</string>
+    <string name="brown_color">#C19A6B</string>
+    <string name="yellow_brown_color">#C19A6B</string>
+    <string name="picked"> Picked: "</string>
+    <string name="notification_title">Timeout Timer</string>
+    <string name="notification_message">Timer has finished.</string>
+    <string name="dismiss_sound_action_button">Dismiss Timer Sound</string>
+    <string name="time_in_hours">%d:%02d:%02d</string>
+    <string name="time_in_minutes">%02d:%02d</string>
+    <string name="broadcast_intent_value">Timer has finished.</string>
+    <string name="choose_timer">Choose a timer option to begin with.</string>
+    <string name="enter_pos_time">Enter a positive number of mins!</string>
+    <string name="non_empty_time">Custom time must be non-empty!</string>
+    <string name="pos_time">Enter a positive number of mins!</string>
+    <string name="pick_timer">Choose a timer option to begin with.</string>
 
 </resources>

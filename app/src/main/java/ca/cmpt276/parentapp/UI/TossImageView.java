@@ -11,7 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.widget.ImageView;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,10 +27,6 @@ import ca.cmpt276.as3.parentapp.R;
  */
 
 public class TossImageView extends android.support.v7.widget.AppCompatImageView {
-
-    public static final int DIRECTION_NONE = 0; // Does not change in that direction
-    public static final int DIRECTION_CLOCKWISE = 1; // Clockwise
-    public static final int DIRECTION_ABTUCCLOCKWISE = -1; // Counterclockwise
 
     public static final int RESULT_FRONT = 1; // front side
     public static final int RESULT_REVERSE = -1; // back side
@@ -83,7 +79,7 @@ public class TossImageView extends android.support.v7.widget.AppCompatImageView 
      */
     private TossAnimation.TossAnimationListener mTossAnimationListener;
 
-    private Set<Animation> mOtherAnimation = new HashSet<Animation>();
+    private final Set<Animation> mOtherAnimation = new HashSet<>();
 
     public TossImageView(Context context) {
         super(context);
@@ -188,7 +184,7 @@ public class TossImageView extends android.support.v7.widget.AppCompatImageView 
      * @return
      */
     public TossImageView setXAxisDirection(int xAxisDirection) {
-        if(Math.abs(xAxisDirection) > 1){
+        if (Math.abs(xAxisDirection) > 1) {
             throw new RuntimeException("Math.abs(Direction) must be less than 1");
         }
         this.mXAxisDirection = xAxisDirection;
@@ -202,7 +198,7 @@ public class TossImageView extends android.support.v7.widget.AppCompatImageView 
      * @return
      */
     public TossImageView setYAxisDirection(int yAxisDirection) {
-        if(Math.abs(yAxisDirection) > 1){
+        if (Math.abs(yAxisDirection) > 1) {
             throw new RuntimeException("Math.abs(Direction) must be less than 1");
         }
         this.mYAxisDirection = yAxisDirection;
@@ -216,7 +212,7 @@ public class TossImageView extends android.support.v7.widget.AppCompatImageView 
      * @return
      */
     public TossImageView setZAxisDirection(int zAxisDirection) {
-        if(Math.abs(zAxisDirection) > 1){
+        if (Math.abs(zAxisDirection) > 1) {
             throw new RuntimeException("Math.abs(Direction) must be less than 1");
         }
         this.mZAxisDirection = zAxisDirection;
@@ -228,36 +224,12 @@ public class TossImageView extends android.support.v7.widget.AppCompatImageView 
      *
      * @param result TossAnimation.RESULT_FRONT
      *               TossAnimation.RESULT_REVERSE
-     * @return
      */
-    public TossImageView setResult(int result) {
-        if(Math.abs(result) != 1){
+    public void setResult(int result) {
+        if (Math.abs(result) != 1) {
             throw new RuntimeException("Math.abs(Direction) must be 1");
         }
         this.mResult = result;
-        return this;
-    }
-
-    /**
-     * Set the front image of the coin
-     *
-     * @param frontDrawable
-     * @return
-     */
-    public TossImageView setFrontDrawable(Drawable frontDrawable) {
-        this.mFrontDrawable = frontDrawable;
-        return this;
-    }
-
-    /**
-     * Set the reverse image of the coin
-     *
-     * @param reversetDrawable
-     * @return
-     */
-    public TossImageView setReversetDrawable(Drawable reversetDrawable) {
-        this.mReversetDrawable = reversetDrawable;
-        return this;
     }
 
     /**
@@ -268,17 +240,6 @@ public class TossImageView extends android.support.v7.widget.AppCompatImageView 
      */
     public TossImageView setDuration(int duration) {
         this.mDuration = duration;
-        return this;
-    }
-
-    /**
-     * Set the animation delay time
-     *
-     * @param startOffset
-     * @return
-     */
-    public TossImageView setStartOffset(int startOffset) {
-        this.mStartOffset = startOffset;
         return this;
     }
 
@@ -297,43 +258,25 @@ public class TossImageView extends android.support.v7.widget.AppCompatImageView 
      * Add an Animation
      *
      * @param animation
-     * @return
      */
-    public TossImageView addOtherAnimation(Animation animation) {
+    public void addOtherAnimation(Animation animation) {
         mOtherAnimation.add(animation);
-        return this;
-    }
-
-    /**
-     * Remove an Animation
-     *
-     * @param animation
-     * @return
-     */
-    public TossImageView removeOtherAnimation(Animation animation) {
-        mOtherAnimation.remove(animation);
-        return this;
     }
 
     /**
      * Empty Animation
-     *
-     * @return
      */
-    public TossImageView cleareOtherAnimation() {
+    public void cleareOtherAnimation() {
         mOtherAnimation.clear();
-        return this;
     }
 
     /**
      * Set the animation callback interface
      *
      * @param tossAnimationListener
-     * @return
      */
-    public TossImageView setTossAnimationListener(TossAnimation.TossAnimationListener tossAnimationListener) {
+    public void setTossAnimationListener(TossAnimation.TossAnimationListener tossAnimationListener) {
         this.mTossAnimationListener = tossAnimationListener;
-        return this;
     }
 
     /**
@@ -365,7 +308,7 @@ public class TossImageView extends android.support.v7.widget.AppCompatImageView 
      */
     public class QTTossAnimationListener implements TossAnimation.TossAnimationListener {
 
-        private TossAnimation.TossAnimationListener mTossAnimationListener;
+        private final TossAnimation.TossAnimationListener mTossAnimationListener;
 
         public QTTossAnimationListener(TossAnimation.TossAnimationListener tossAnimationListener) {
             mTossAnimationListener = tossAnimationListener;
@@ -398,7 +341,6 @@ public class TossImageView extends android.support.v7.widget.AppCompatImageView 
             if (mTossAnimationListener != null) {
                 mTossAnimationListener.onAnimationEnd(animation);
             }
-            Log.e("Hanxi", "end");
         }
 
         @Override

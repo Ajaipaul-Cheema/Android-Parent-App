@@ -34,9 +34,10 @@ import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityTimeoutTimerBinding;
 import ca.cmpt276.parentapp.model.NotificationReceiver;
 
+
 /**
  * The TimeoutTimerActivity is a timer which
- * plays a sound, vibrates and shows a notifcation on
+ * plays a sound, vibrates and shows a notification on
  * expiry. Default times include 1,2,3,5,10
  * as well as functionality for user-input.
  */
@@ -72,13 +73,6 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         return new Intent(c, TimeoutTimerActivity.class);
     }
 
-    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            alarmSound.stop();
-            timerVibrator.cancel();
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,47 +80,44 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 
         binding = ActivityTimeoutTimerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
-
         customTime = findViewById(R.id.editCustomText);
         useCustomTime = findViewById(R.id.useCustomTime);
         timerText = findViewById(R.id.tv_timer);
         startPauseButton = findViewById(R.id.btn_start_and_pause_timer);
         resetButton = findViewById(R.id.btn_reset);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            registerReceiver(broadcastReceiver, new IntentFilter(ACTION_NAME));
-            startService(new Intent(getBaseContext(), BroadcastReceiver.class));
-        }
+        // alarm sound was taken from this link: https://www.zedge.net/find/ringtones/best%20wakeup%20alarm
+        alarmSound = MediaPlayer.create(TimeoutTimerActivity.this, R.raw.best_wake_up_tone);
 
+        // inspired by https://stackoverflow.com/questions/46079067/how-to-stop-playing-notification-sound-programmatically-on-android
 
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // https://www.geeksforgeeks.org/how-to-change-the-color-of-action-bar-in-an-android-app/
         ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#C19A6B"));
+                = new ColorDrawable(Color.parseColor(getString(R.string.yellow_color)));
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
-
 
         handleCustomTimeCheckButton();
         setUpDropDownList();
         setUpTimer();
     }
 
+    // allowing for custom time to be entered and used was inspired by this link: https://www.youtube.com/watch?v=7dQJAkjNEjM&t=629s
     private void handleCustomTimeCheckButton() {
         customChoiceTitle = findViewById(R.id.tvCustomTitle);
         useCustomTime.setOnClickListener(v -> {
             dropDownMenu.setSelection(0);
             String inputTime = customTime.getText().toString();
             if (inputTime.isEmpty()) {
-                Toast.makeText(TimeoutTimerActivity.this, getString(R.string.empty_time_error_text), Toast.LENGTH_SHORT).show();
+                Toast.makeText(TimeoutTimerActivity.this, getString(R.string.non_empty_time), Toast.LENGTH_SHORT).show();
                 return;
             }
             long milliSecsInput = Long.parseLong(inputTime) * 60000;
             if (milliSecsInput == 0) {
-                Toast.makeText(TimeoutTimerActivity.this, getString(R.string.negative_time_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(TimeoutTimerActivity.this, getString(R.string.pos_time), Toast.LENGTH_SHORT).show();
                 return;
             }
             setTime(milliSecsInput);
@@ -134,6 +125,8 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         });
     }
 
+
+    // saving the time and running it in the background was inspired by this link: https://www.youtube.com/watch?v=lvibl8YJfGo&t=545s
     @Override
     protected void onStop() {
         super.onStop();
@@ -152,7 +145,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(broadcastReceiver);
+
     }
 
     @Override
@@ -251,7 +244,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         });
     }
 
-    //  https://www.youtube.com/watch?v=zmjfAcnosS0
+    //  https://www.youtube.com/watch?v=zmjfAcnosS0 <- very helpful in this process
     private void setUpTimer() {
         resetButton.setVisibility(View.INVISIBLE);
 
@@ -266,7 +259,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                 customTime.setVisibility(View.VISIBLE);
                 useCustomTime.setVisibility(View.VISIBLE);
                 if (timeLeftInTimer <= 0) {
-                    Toast.makeText(this, getString(R.string.no_time_inputted_string), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.pick_timer), Toast.LENGTH_SHORT).show();
                 } else {
                     startCountdown();
                 }
@@ -292,12 +285,16 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         changeVisibilityPostClick();
     }
 
+    public static void stopSound() {
+        alarmSound.stop();
+    }
+
     private void playAlarmSound() {
-        alarmSound = MediaPlayer.create(TimeoutTimerActivity.this, R.raw.best_wake_up_tone);
         alarmSound.setLooping(true);
         alarmSound.start();
     }
 
+    // inspired by https://www.youtube.com/watch?v=02xNGQOCOTs
     private void vibrateDevice() {
         timerVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
@@ -314,38 +311,39 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         }
     }
 
+    // creating notification were inspired by these links: https://stackoverflow.com/questions/41888161/how-to-create-a-custom-notification-layout-in-android
+    // and https://stuff.mit.edu/afs/sipb/project/android/docs/guide/topics/ui/notifiers/notifications.html
     private void showNotification() {
-           NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
-                        NOTIFICATION_CHANNEL_NAME,
-                        NotificationManager.IMPORTANCE_DEFAULT);
-                notificationChannel.setDescription(NOTIFICATION_CHANNEL_DESCRIPTION);
-                notificationChannel.setImportance(NotificationManager.IMPORTANCE_HIGH);
-                notificationManager.createNotificationChannel(notificationChannel);
-            }
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
+                    NOTIFICATION_CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notificationChannel.setDescription(NOTIFICATION_CHANNEL_DESCRIPTION);
+            notificationChannel.setImportance(NotificationManager.IMPORTANCE_HIGH);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
 
         Intent activityIntent = new Intent(this, TimeoutTimerActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this,
                 0, activityIntent, 0);
 
-        Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
+        Intent broadcastIntent = new Intent(this, BroadcastReceiver.class);
         broadcastIntent.putExtra(NOTIFICATION_CHANNEL_NAME, "Timer has finished.");
         PendingIntent actionIntent = PendingIntent.getBroadcast(this,
                 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.timernotifypicture)
-                    .setContentTitle("Timeout Timer")
-                    .setContentText("Timer has finished.")
-                    .setColor(Color.YELLOW)
-                    .setAutoCancel(true)
-                    .addAction(R.drawable.timernotifypicture, "Dismiss Timer Sound", actionIntent)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setCategory(NotificationCompat.CATEGORY_MESSAGE);
-            mBuilder.setContentIntent(actionIntent);
-            mBuilder.setContentIntent(contentIntent);
-            notificationManager.notify(0, mBuilder.build());
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID)
+                .setSmallIcon(R.drawable.timernotifypicture)
+                .setContentTitle(getString(R.string.notification_title))
+                .setContentText(getString(R.string.notification_message))
+                .setColor(Color.YELLOW)
+                .setAutoCancel(true)
+                .addAction(R.drawable.timernotifypicture, getString(R.string.dismiss_sound_action_button), actionIntent)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE);
+        mBuilder.setContentIntent(contentIntent);
+        notificationManager.notify(0, mBuilder.build());
 
     }
 
@@ -376,6 +374,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         changeVisibilityPostClick();
     }
 
+    // change timer text & change visibility inspired from https://www.youtube.com/watch?v=LMYQS1dqfo8&t=9s
     private void changeTimerText() {
         int hours = (int) (timeLeftInTimer / 1000) / 3600;
         int mins = (int) ((timeLeftInTimer / 1000) % 3600) / 60;
@@ -400,14 +399,14 @@ public class TimeoutTimerActivity extends AppCompatActivity {
             resetButton.setVisibility(View.INVISIBLE);
             spinnerTitle.setVisibility(View.INVISIBLE);
             dropDownMenu.setVisibility(View.INVISIBLE);
-            startPauseButton.setText(R.string.pause_string);
+            startPauseButton.setText("Pause");
         } else {
             customTime.setVisibility(View.VISIBLE);
             spinnerTitle.setVisibility(View.VISIBLE);
             customChoiceTitle.setVisibility(View.VISIBLE);
             useCustomTime.setVisibility(View.VISIBLE);
             dropDownMenu.setVisibility(View.VISIBLE);
-            startPauseButton.setText(R.string.start_string);
+            startPauseButton.setText("Start");
 
             if (timeLeftInTimer < 1000) {
                 startPauseButton.setVisibility(View.INVISIBLE);
@@ -421,7 +420,5 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                 resetButton.setVisibility(View.INVISIBLE);
             }
         }
-
-
     }
 }

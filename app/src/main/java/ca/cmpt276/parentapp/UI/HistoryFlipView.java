@@ -14,8 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import ca.cmpt276.as3.parentapp.databinding.ActivityHistoryFlipViewBinding;
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.parentapp.model.FlipResult;
@@ -30,9 +32,7 @@ import ca.cmpt276.parentapp.model.FlipResultManager;
  */
 public class HistoryFlipView extends AppCompatActivity {
 
-    private ActivityHistoryFlipViewBinding binding;
     private List<FlipResult> myFlips = new ArrayList<>();
-    private FlipResult currentResult;
     private FlipResultManager resultManager;
 
     @Override
@@ -40,19 +40,19 @@ public class HistoryFlipView extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         resultManager = FlipResultManager.getInstance();
-        binding = ActivityHistoryFlipViewBinding.inflate(getLayoutInflater());
+        ca.cmpt276.as3.parentapp.databinding.ActivityHistoryFlipViewBinding binding = ActivityHistoryFlipViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#C19A6B"));
+                = new ColorDrawable(Color.parseColor(getString(R.string.yellow_brown_color)));
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         populateListView();
     }
 
-    public void getFlipList(){
+    public void getFlipList() {
         myFlips = resultManager.getFlipHistoryList();
     }
 
@@ -68,8 +68,8 @@ public class HistoryFlipView extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    private class MyListAdapter extends ArrayAdapter<FlipResult>{
-        public MyListAdapter(){
+    private class MyListAdapter extends ArrayAdapter<FlipResult> {
+        public MyListAdapter() {
             super(HistoryFlipView.this, R.layout.item_view, myFlips);
         }
 
@@ -78,11 +78,11 @@ public class HistoryFlipView extends AppCompatActivity {
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View itemView = convertView;
 
-            if (itemView == null){
-                itemView = getLayoutInflater().inflate(R.layout.item_view,parent,false);
+            if (itemView == null) {
+                itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
             }
 
-            currentResult = resultManager.getFlipHistoryList().get(position);
+            FlipResult currentResult = resultManager.getFlipHistoryList().get(position);
 
             TextView childName = itemView.findViewById(R.id.tvChildName);
             TextView timeFlip = itemView.findViewById(R.id.tvFlipTime);
@@ -90,7 +90,7 @@ public class HistoryFlipView extends AppCompatActivity {
             TextView childChoice = itemView.findViewById(R.id.tvChildChoice);
             ImageView resultImage = itemView.findViewById(R.id.resultImage);
 
-            childName.setText(currentResult.getNameOfChild() + " Picked: ");
+            childName.setText(currentResult.getNameOfChild() + getString(R.string.picked));
             childChoice.setText(currentResult.getChildChoiceString());
             timeFlip.setText(currentResult.getTimeString());
             flipResult.setText(currentResult.getFlippedResultString());

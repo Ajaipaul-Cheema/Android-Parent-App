@@ -57,10 +57,9 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-
         // https://www.geeksforgeeks.org/how-to-change-the-color-of-action-bar-in-an-android-app/
         ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#C19A6B"));
+                = new ColorDrawable(Color.parseColor(getString(R.string.yellow_color)));
         actionBar.setBackgroundDrawable(colorDrawable);
 
         // load in children data
@@ -96,6 +95,7 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         });
     }
 
+    // save & load inspired by https://www.youtube.com/watch?v=jcliHGR3CHo&t=343s
     private void saveChildrenData() {
         SharedPreferences sharedPreferences = getSharedPreferences(NAMES_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -153,7 +153,7 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
             // refresh
             childAdapter.notifyDataSetChanged();
         } else {
-            Toast.makeText(ConfigureChildrenActivity.this, "Name entered must be non-empty!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ConfigureChildrenActivity.this, getString(R.string.non_empty_name), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -167,7 +167,7 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
             // refresh
             childAdapter.notifyDataSetChanged();
         } else {
-            Toast.makeText(ConfigureChildrenActivity.this, "Name entered must be non-empty!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ConfigureChildrenActivity.this, getString(R.string.non_empty_name), Toast.LENGTH_SHORT).show();
         }
     }
 
