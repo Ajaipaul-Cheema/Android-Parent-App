@@ -12,30 +12,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentApp">
         <activity
+            android:name="ca.cmpt276.parentapp.UI.TasksActivity"
+            android:exported="true"
+            android:label="@string/title_activity_tasks"
+            android:theme="@style/Theme.ParentApp.NoActionBar" />
+        <activity
             android:name="ca.cmpt276.parentapp.UI.HistoryFlipView"
             android:exported="true"
             android:label="@string/title_activity_history_flip_view"
-            android:theme="@style/Theme.ParentApp.NoActionBar"
-            android:parentActivityName="ca.cmpt276.parentapp.UI.FlipCoinActivity"/>
+            android:parentActivityName="ca.cmpt276.parentapp.UI.FlipCoinActivity"
+            android:theme="@style/Theme.ParentApp.NoActionBar" />
         <activity
             android:name="ca.cmpt276.parentapp.UI.TimeoutTimerActivity"
             android:exported="true"
             android:label="@string/title_activity_timeout_timer"
-            android:theme="@style/Theme.ParentApp.NoActionBar"
-            android:parentActivityName="ca.cmpt276.parentapp.UI.MainActivity"/>
+            android:parentActivityName="ca.cmpt276.parentapp.UI.MainActivity"
+            android:theme="@style/Theme.ParentApp.NoActionBar" />
         <activity
             android:name="ca.cmpt276.parentapp.UI.ConfigureChildrenActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing"
             android:label="@string/title_activity_configure_children"
+            android:parentActivityName="ca.cmpt276.parentapp.UI.MainActivity"
             android:theme="@style/Theme.ParentApp.NoActionBar"
-            android:parentActivityName="ca.cmpt276.parentapp.UI.MainActivity" />
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="ca.cmpt276.parentapp.UI.FlipCoinActivity"
             android:exported="true"
             android:label="@string/title_activity_flip_coin"
-            android:theme="@style/Theme.ParentApp.NoActionBar"
-            android:parentActivityName="ca.cmpt276.parentapp.UI.MainActivity"/>
+            android:parentActivityName="ca.cmpt276.parentapp.UI.MainActivity"
+            android:theme="@style/Theme.ParentApp.NoActionBar" />
         <activity
             android:name="ca.cmpt276.parentapp.UI.MainActivity"
             android:exported="true"
