@@ -33,31 +33,42 @@ public class MainActivity extends AppCompatActivity {
         launchFlipCoin();
         launchTimeoutTimer();
         launchConfigureChildren();
+        launchConfigureTasks();
     }
 
     private void launchFlipCoin() {
-        Button launchHelp = findViewById(R.id.flipCoin);
-        launchHelp.setOnClickListener(v -> {
+        Button launchFlipCoin = findViewById(R.id.flipCoin);
+        launchFlipCoin.setOnClickListener(v -> {
             Intent i = FlipCoinActivity.makeLaunchIntent(MainActivity.this);
             startActivity(i);
         });
     }
 
     private void launchTimeoutTimer() {
-        Button launchHelp = findViewById(R.id.timeoutTimer);
-        launchHelp.setOnClickListener(v -> {
+        Button launchTimer = findViewById(R.id.timeoutTimer);
+        launchTimer.setOnClickListener(v -> {
             Intent i = TimeoutTimerActivity.makeLaunchIntent(MainActivity.this);
             startActivity(i);
         });
     }
 
     private void launchConfigureChildren() {
-        Button launchHelp = findViewById(R.id.configureChildren);
-        launchHelp.setOnClickListener(v -> {
+        Button launchConfigChildren = findViewById(R.id.configureChildren);
+        launchConfigChildren.setOnClickListener(v -> {
             Intent i = ConfigureChildrenActivity.makeLaunchIntent(MainActivity.this);
             startActivity(i);
 
         });
     }
+
+    private void launchConfigureTasks() {
+        Button launchConfigTasks = findViewById(R.id.configureTasks);
+        launchConfigTasks.setOnClickListener(v -> {
+            Intent i = TasksActivity.makeLaunchIntent(MainActivity.this);
+            startActivity(i);
+
+        });
+    }
+
 
 }
