@@ -12,6 +12,8 @@ import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import java.lang.reflect.Type;
@@ -26,6 +28,7 @@ import ca.cmpt276.parentapp.model.FlipResultManager;
 
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +48,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     private int playerCoinChoice;
     private FlipResultManager resultManager;
     ArrayList<String> childrenNames = new ArrayList<>();
+    ArrayList<String> childrenNames1 = new ArrayList<>();
     private static final String CHILDREN_INDEX_PREF = "children_pref";
     private static final String INDEX_PREF = "index_pref";
     private Boolean coinFlipDone;
@@ -55,6 +59,9 @@ public class FlipCoinActivity extends AppCompatActivity {
     private static final String NAMES_PREF = "NamesSizePref";
     private TossImageView mTossImageView;
     MediaPlayer player = new MediaPlayer();
+
+    private Spinner spinner;
+    private String selectChild="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +98,46 @@ public class FlipCoinActivity extends AppCompatActivity {
         setUpHistoryButton();
 
         saveChildrenData();
+
+        spinner = findViewById(R.id.spinner);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.myspinner, childrenNames1);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectChild=childrenNames1.get(i);
+                if(!selectChild.equals("nobody")) {
+                    for (int n = i-1 ; n > 0; n--) {
+                        String temp = childrenNames1.get(n);
+                        childrenNames1.remove(n+1);
+                        childrenNames1.add(n + 1, temp);
+                    }
+                    childrenNames1.remove(1);
+                    childrenNames1.add(1, selectChild);
+
+                    int ii=i-1;
+                    for (int n=ii-1;n>-1;n--){
+                        String temp=childrenNames.get(n);
+                        childrenNames.remove(n+1);
+                        childrenNames.add(n+1,temp);
+                    }
+                    childrenNames.remove(0);
+                    childrenNames.add(0,selectChild);
+                    childIdx = 0;
+                    saveChildrenData();
+                    spinner.setSelection(1);
+                }else {
+                    childNameChoice.setVisibility(View.GONE);
+                }
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+        spinner.setSelection(1);
     }
 
     @Override
@@ -111,13 +158,19 @@ public class FlipCoinActivity extends AppCompatActivity {
         Button flipCoinBtn = findViewById(R.id.btnFlipCoin);
         flipCoinBtn.setOnClickListener(view -> {
             if (childrenNames.size() <= 0) {
-                resultManager.saveFlipHistory(this);
+                if(!selectChild.equals("nobody")) {
+                    resultManager.saveFlipHistory(this);
+                }
                 coinToss();
             } else if (playerCoinChoice == -1) {
-                resultManager.saveFlipHistory(this);
+                if(!selectChild.equals("nobody")) {
+                    resultManager.saveFlipHistory(this);
+                }
                 Toast.makeText(this, getString(R.string.choose_head_or_tail_str), Toast.LENGTH_SHORT).show();
             } else {
-                resultManager.saveFlipHistory(this);
+                if(!selectChild.equals("nobody")) {
+                    resultManager.saveFlipHistory(this);
+                }
                 coinToss();
             }
         });
@@ -161,31 +214,38 @@ public class FlipCoinActivity extends AppCompatActivity {
         resultOfFlip.setVisibility(View.INVISIBLE);
         childNameChoice.setVisibility(View.INVISIBLE);
         toStart(tossResult);
+        if(!selectChild.equals("nobody")) {
+            if (childrenNames.size() > 0) {
 
-        if (childrenNames.size() > 0) {
+                FlipResult toss = new FlipResult("" + childrenNames.get(childIdx), LocalDateTime.now(), tossResult, playerCoinChoice);
+                resultManager.add(toss);
 
-            FlipResult toss = new FlipResult("" + childrenNames.get(childIdx), LocalDateTime.now(), tossResult, playerCoinChoice);
-            resultManager.add(toss);
+                childIdx++;
+                checkIfIdxExits();
 
-            childIdx++;
-            checkIfIdxExits();
+                if (coinFlipDone) {
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                        resultOfFlip.setVisibility(View.VISIBLE);
+                        childNameChoice.setVisibility(View.VISIBLE);
+                        if (tossResult == 1) {
+                            resultOfFlip.setText(R.string.results_heads);
+                        } else {
+                            resultOfFlip.setText(R.string.results_tails);
+                        }
+                        childNameChoice.setText(childrenNames.get(childIdx) + getString(R.string.children_turn_string));
+                    }, 2000);
+                }
+                playerCoinChoice = -1;
 
-            if (coinFlipDone) {
-                new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                    resultOfFlip.setVisibility(View.VISIBLE);
-                    childNameChoice.setVisibility(View.VISIBLE);
-                    if (tossResult == 1) {
-                        resultOfFlip.setText(R.string.results_heads);
-                    } else {
-                        resultOfFlip.setText(R.string.results_tails);
-                    }
-                    childNameChoice.setText(childrenNames.get(childIdx) + getString(R.string.children_turn_string));
-                }, 2000);
+                saveChildrenData();
+                resultManager.saveFlipHistory(this);
             }
-            playerCoinChoice = -1;
-            saveChildrenData();
-            resultManager.saveFlipHistory(this);
-
+        }else{
+            if (tossResult == 1) {
+                resultOfFlip.setText(R.string.results_heads);
+            } else {
+                resultOfFlip.setText(R.string.results_tails);
+            }
         }
     }
 
@@ -200,6 +260,11 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         if (childrenNames == null) {
             childrenNames = new ArrayList<>();
+        }
+
+        childrenNames1.add(0,"nobody");
+        for(int i=0;i<childrenNames.size();i++){
+            childrenNames1.add(i+1,childrenNames.get(i));
         }
     }
 

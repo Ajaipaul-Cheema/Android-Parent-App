@@ -44,6 +44,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintTop_toBottomOf="@+id/tvChildChoice"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/spinner_style"/>
+
     <Button
         android:id="@+id/btnFlipCoin"
         android:layout_width="wrap_content"
@@ -55,7 +67,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btnChooseTails"
         app:layout_constraintStart_toStartOf="@+id/btnChooseHeads"
-        app:layout_constraintTop_toBottomOf="@+id/tvChildChoice"
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.674" />
 
@@ -125,5 +137,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnFlipCoin"
         app:layout_constraintTop_toTopOf="@+id/viewButton" />
+
+
 
 </android.support.constraint.ConstraintLayout>
