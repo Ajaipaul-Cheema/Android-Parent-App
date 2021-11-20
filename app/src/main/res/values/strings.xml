@@ -64,20 +64,24 @@
     <string name="pos_time">Enter a positive number of mins!</string>
     <string name="pick_timer">Choose a timer option to begin with.</string>
     <string name="title_activity_tasks">TasksActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hyperlink"><a href="https://www.iconfinder.com/icons/4490120/clock_countdown_done_success_tick_time_watch_icon">Timer Notification</a></string>
+    <string name="hyperlink2"><a href="https://www.istockphoto.com/photos/family-vertical?phrase=family%20vertical&amp;servicecontext=srp-related&amp;sort=mostpopular">Main Menu Background photo</a></string>
+    <string name="hyperlink3"><a href="https://www.dreamstime.com/hourglass-sand-time-golden-light-close-up-warm-morning-sunlight-sandy-beach-starting-new-day-running-e-image108684103">Hourglass Photo</a></string>
+    <string name="hyperlink4"><a href="https://www.publicdomainpictures.net/en/view-image.php?image=154620&amp;picture=floral-frame-background-4">Flip Coin Background</a></string>
+    <string name="hyperlink5"><a href="https://www.pinterest.es/pin/512284526368432202/">Help Menu Background</a></string>
+    <string name="hyperlink6"><a href="https://en.numista.com/catalogue/pieces1588.html">Coin</a></string>
+    <string name="hyperlink7"><a href="https://www.vectorstock.com/royalty-free-vector/old-brown-paper-notebook-vector-1049105">Configure Children Background</a></string>
+    <string name="hyperlink8"><a href="https://www.freepik.com/premium-photo/blank-page-old-brown-paper-beige-antique-paper-texture_10845674.htm">Flip History Background</a></string>
     <string name="configure_tasks">Configure Tasks</string>
     <string name="task_name">Task Name:</string>
     <string name="enter_task_here">Enter task here:</string>
     <string name="edit_task">Edit task</string>
     <string name="remove_task">Remove task</string>
     <string name="add_task">Add task</string>
+    <string name="title_activity_help_menu">HelpMenu</string>
+    <string name="help">help</string>
+    <string name="resources_used">Resources used:</string>
+    <string name="devlopers">This program was developed by Ajaipaul Cheema, Matthew Hamilton, Hanxi Chen, and Sameer Ali</string>
     <string name="add_photo">Add photo</string>
 
 </resources>

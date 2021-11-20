@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         launchTimeoutTimer();
         launchConfigureChildren();
         launchConfigureTasks();
+        launchHelpMenu();
     }
 
     private void launchFlipCoin() {
@@ -67,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
             Intent i = TasksActivity.makeLaunchIntent(MainActivity.this);
             startActivity(i);
 
+        });
+    }
+
+    private void launchHelpMenu() {
+        Button help = findViewById(R.id.help);
+        help.setOnClickListener(view -> {
+            Intent i = new Intent(MainActivity.this, HelpMenu.class);
+            startActivity(i);
         });
     }
 }
