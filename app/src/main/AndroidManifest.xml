@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentApp">
         <activity
+            android:name="ca.cmpt276.parentapp.UI.HelpMenu"
+            android:exported="true"
+            android:label="@string/title_activity_help_menu"
+            android:parentActivityName="ca.cmpt276.parentapp.UI.MainActivity"
+            android:theme="@style/Theme.ParentApp.NoActionBar" />
+        <activity
             android:name="ca.cmpt276.parentapp.UI.TasksActivity"
             android:exported="true"
             android:label="@string/title_activity_tasks"
