@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +33,8 @@ public class TasksActivity extends AppCompatActivity {
     ArrayList<String> childrenNames = new ArrayList<>();
     private static final String NAME_PREF = "NamePrefs";
     private static final String NAMES_PREF = "NamesSizePref";
+    private static final String CHILDREN_INDEX_PREF = "children_pref";
+    private static final String INDEX_PREF = "index_pref";
     private Button addTaskButton;
     private Button removeTaskButton;
     private Button editTaskButton;
@@ -38,6 +42,8 @@ public class TasksActivity extends AppCompatActivity {
     private ListView tasksList;
     private String nameOfTask;
     private int positionOfTask;
+    private int childIdx;
+    private int nextChildIdx;
     ArrayAdapter<String> tasksAdapter;
 
 
@@ -62,6 +68,7 @@ public class TasksActivity extends AppCompatActivity {
 
         loadTasksNames();
         loadChildrenData();
+        childIdx = loadChildrenIdx();
 
         tasksList = findViewById(R.id.listTasks);
         taskName = findViewById(R.id.editTaskName);
@@ -78,6 +85,7 @@ public class TasksActivity extends AppCompatActivity {
 
         saveTasksNames();
         saveChildrenData();
+        saveChildrenIdx();
     }
 
     private void saveTasksNames() {
@@ -110,6 +118,7 @@ public class TasksActivity extends AppCompatActivity {
             // sets cursor to the right of name when name is clicked upon
             if (taskName.getText().length() > 0) {
                 taskName.setSelection(taskName.getText().length());
+                taskFinshedPopup(position);
             }
         });
     }
@@ -200,4 +209,67 @@ public class TasksActivity extends AppCompatActivity {
         }
     }
 
+    private void saveChildrenIdx() {
+        SharedPreferences prefs = this.getSharedPreferences(CHILDREN_INDEX_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(INDEX_PREF, childIdx);
+        editor.apply();
+    }
+
+    private int loadChildrenIdx() {
+        SharedPreferences prefs = this.getSharedPreferences(CHILDREN_INDEX_PREF, MODE_PRIVATE);
+        if (childIdx > childrenNames.size()) {
+            childIdx = 0;
+        }
+        return prefs.getInt(INDEX_PREF, childIdx);
+    }
+
+    // https://developer.android.com/guide/topics/ui/dialogs
+    private void taskFinshedPopup(int pos){
+        nextChildIdx = childIdx+1;
+        if (nextChildIdx >= childrenNames.size()){
+            nextChildIdx = 0;
+        }
+
+        System.out.println("Size of list = " + childrenNames.size());
+        System.out.println("Next child = " + nextChildIdx);
+        System.out.println("Current child = " + childIdx);
+
+        AlertDialog confirmPopup = new AlertDialog.Builder(TasksActivity.this)
+                .setTitle(childrenNames.get(nextChildIdx) + "'s turn next!")
+                .setMessage("Clicking confirm will end " + childrenNames.get(childIdx) +
+                        "'s turn for the task " + tasksNames.get(pos) +
+                " and it will be " + childrenNames.get(nextChildIdx) + "'s turn next.")
+                .setIcon(R.drawable.ic_baseline_person_24)
+                .setPositiveButton("Confirm",null)
+                .setNegativeButton("Cancel",null).show();
+        Button confirmButton = confirmPopup.getButton(AlertDialog.BUTTON_POSITIVE);
+
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                childIdx = nextChildIdx;
+                confirmPopup.cancel();
+            }
+        });
+    }
+
+    /*
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadChildrenData();
+        loadChildrenIdx();
+        loadTasksNames();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        saveChildrenIdx();
+        saveChildrenData();
+        saveTasksNames();
+    }
+
+     */
 }
