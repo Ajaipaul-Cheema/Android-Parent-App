@@ -96,7 +96,6 @@ public class HistoryFlipView extends AppCompatActivity {
             flipResult.setText(currentResult.getFlippedResultString());
             resultImage.setImageResource(currentResult.getIcon());
 
-
             return itemView;
         }
     }
