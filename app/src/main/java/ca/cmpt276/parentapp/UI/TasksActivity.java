@@ -6,14 +6,19 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -24,6 +29,7 @@ import java.util.ArrayList;
 
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityTasksBinding;
+import ca.cmpt276.parentapp.model.FlipResult;
 
 public class TasksActivity extends AppCompatActivity {
 
@@ -44,7 +50,7 @@ public class TasksActivity extends AppCompatActivity {
     private int positionOfTask;
     private int childIdx;
     private int nextChildIdx;
-    ArrayAdapter<String> tasksAdapter;
+    ArrayAdapter<String> adapter;
 
 
     public static Intent makeLaunchIntent(Context c) {
@@ -77,7 +83,10 @@ public class TasksActivity extends AppCompatActivity {
         editTaskButton = findViewById(R.id.btnEditTask);
 
         // populate list of tasks
-        populateTasksList();
+       // populateTasksList();
+        populateListView();
+
+
 
         handleAddTaskButton();
         handleEditTaskButton();
@@ -110,18 +119,7 @@ public class TasksActivity extends AppCompatActivity {
         }
     }
 
-    private void populateTasksList() {
-        tasksAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tasksNames);
-        tasksList.setAdapter(tasksAdapter);
-        tasksList.setOnItemClickListener((parent, view, position, id) -> {
-            taskName.setText(tasksNames.get(position));
-            // sets cursor to the right of name when name is clicked upon
-            if (taskName.getText().length() > 0) {
-                taskName.setSelection(taskName.getText().length());
-                taskFinshedPopup(position);
-            }
-        });
-    }
+
 
     private void handleAddTaskButton() {
         addTaskButton.setOnClickListener(v -> {
@@ -154,9 +152,9 @@ public class TasksActivity extends AppCompatActivity {
         nameOfTask = taskName.getText().toString();
 
         if (!nameOfTask.equals("")) {
-            tasksAdapter.add(nameOfTask);
+            adapter.add(nameOfTask);
             // refresh
-            tasksAdapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
         } else {
             Toast.makeText(this, getString(R.string.non_empty_name), Toast.LENGTH_SHORT).show();
         }
@@ -167,10 +165,10 @@ public class TasksActivity extends AppCompatActivity {
         positionOfTask = tasksList.getCheckedItemPosition();
 
         if (!nameOfTask.equals("")) {
-            tasksAdapter.remove(tasksNames.get(positionOfTask));
-            tasksAdapter.insert(nameOfTask, positionOfTask);
+            adapter.remove(tasksNames.get(positionOfTask));
+            adapter.insert(nameOfTask, positionOfTask);
             // refresh
-            tasksAdapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
         } else {
             Toast.makeText(this, getString(R.string.non_empty_name), Toast.LENGTH_SHORT).show();
         }
@@ -180,9 +178,9 @@ public class TasksActivity extends AppCompatActivity {
         positionOfTask = tasksList.getCheckedItemPosition();
 
         if (positionOfTask >= 0) {
-            tasksAdapter.remove(tasksNames.get(positionOfTask));
+            adapter.remove(tasksNames.get(positionOfTask));
             // refresh
-            tasksAdapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -265,6 +263,50 @@ public class TasksActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         saveChildrenIdx();
+    }
+
+
+
+
+    private void populateListView() {
+        adapter = new TasksActivity.MyListAdapter();
+        ListView list = findViewById(R.id.listTasks);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener((parent, view, position, id) -> {
+            taskName.setText(tasksNames.get(position));
+            // sets cursor to the right of name when name is clicked upon
+            if (taskName.getText().length() > 0) {
+                taskName.setSelection(taskName.getText().length());
+                taskFinshedPopup(position);
+            }
+        });
+        adapter.notifyDataSetChanged();
+    }
+
+    private class MyListAdapter extends ArrayAdapter<String> {
+        public MyListAdapter() {
+            super(TasksActivity.this, R.layout.task_view, tasksNames);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View itemView = convertView;
+
+            if (itemView == null) {
+                itemView = getLayoutInflater().inflate(R.layout.task_view, parent, false);
+            }
+
+            String currentTask = tasksNames.get(position);
+
+            TextView taskName = itemView.findViewById(R.id.tvTaskName);
+            TextView childName = itemView.findViewById(R.id.tvChildNameTask);
+
+            taskName.setText(""+currentTask);
+            childName.setText(""+childrenNames.get(childIdx));
+
+            return itemView;
+        }
     }
 
 
