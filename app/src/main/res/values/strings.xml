@@ -82,5 +82,6 @@
     <string name="help">help</string>
     <string name="resources_used">Resources used:</string>
     <string name="devlopers">This program was developed by Ajaipaul Cheema, Matthew Hamilton, Hanxi Chen, and Sameer Ali</string>
+    <string name="add_photo">Add photo</string>
 
 </resources>
