@@ -6,12 +6,18 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -38,7 +44,7 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
     private static final String NAMES_PREF = "NamesSizePref";
     ListView childrenList;
     EditText childName;
-    Button addChild, removeChild, editChild;
+    Button addChild, removeChild, editChild, launchPhotos;
     ArrayAdapter<String> childAdapter;
     String nameOfChild;
     int positionOfChild;
@@ -83,8 +89,31 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         saveChildrenData();
     }
 
+    public class ListAdapter extends ArrayAdapter<String> {
+
+        public ListAdapter(Context context, ArrayList<String> userArrayList) {
+            super(context, R.layout.list_children_view, userArrayList);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_children_view, parent, false);
+            }
+
+            TextView name = convertView.findViewById(R.id.personName);
+            launchPhotos = convertView.findViewById(R.id.addChildPicture);
+
+            name.setText(childrenNames.get(position));
+
+            return convertView;
+        }
+    }
+
     private void populateChildrenList() {
-        childAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, childrenNames);
+        childAdapter = new ListAdapter(ConfigureChildrenActivity.this, childrenNames);
         childrenList.setAdapter(childAdapter);
         childrenList.setOnItemClickListener((parent, view, position, id) -> {
             childName.setText(childrenNames.get(position));
@@ -180,6 +209,4 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
             childAdapter.notifyDataSetChanged();
         }
     }
-
-
 }
