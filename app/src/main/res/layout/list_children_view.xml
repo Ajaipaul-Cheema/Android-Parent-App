@@ -54,7 +54,7 @@
             android:textColor="@color/white"
             android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
-            android:text="Add photo"/>
+            android:text="@string/add_photo"/>
 
     </RelativeLayout>
 
