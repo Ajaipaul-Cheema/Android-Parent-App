@@ -48,33 +48,29 @@ public class HelpMenu extends AppCompatActivity {
     }
 
 
-        private void hyperLink() {
-            TextView linkText = findViewById(R.id.hyperlink_class);
-            linkText.setMovementMethod(LinkMovementMethod.getInstance());
+    private void hyperLink() {
+        TextView linkText = findViewById(R.id.hyperlink_class);
+        linkText.setMovementMethod(LinkMovementMethod.getInstance());
 
-            TextView linkText2 = findViewById(R.id.hyperlink_class2);
-            linkText2.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView linkText2 = findViewById(R.id.hyperlink_class2);
+        linkText2.setMovementMethod(LinkMovementMethod.getInstance());
 
-            TextView linkText3 = findViewById(R.id.hyperlink_class3);
-            linkText3.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView linkText3 = findViewById(R.id.hyperlink_class3);
+        linkText3.setMovementMethod(LinkMovementMethod.getInstance());
 
-            TextView linkText4 = findViewById(R.id.hyperlink_class4);
-            linkText4.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView linkText4 = findViewById(R.id.hyperlink_class4);
+        linkText4.setMovementMethod(LinkMovementMethod.getInstance());
 
-            TextView linkText5 = findViewById(R.id.hyperlink_class5);
-            linkText5.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView linkText5 = findViewById(R.id.hyperlink_class5);
+        linkText5.setMovementMethod(LinkMovementMethod.getInstance());
 
-            TextView linkText6 = findViewById(R.id.hyperlink_class6);
-            linkText6.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView linkText6 = findViewById(R.id.hyperlink_class6);
+        linkText6.setMovementMethod(LinkMovementMethod.getInstance());
 
-            TextView linkText7 = findViewById(R.id.hyperlink_class7);
-            linkText7.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView linkText7 = findViewById(R.id.hyperlink_class7);
+        linkText7.setMovementMethod(LinkMovementMethod.getInstance());
 
-            TextView linkText8 = findViewById(R.id.hyperlink_class8);
-            linkText8.setMovementMethod(LinkMovementMethod.getInstance());
-
-
-
-
-        }
+        TextView linkText8 = findViewById(R.id.hyperlink_class8);
+        linkText8.setMovementMethod(LinkMovementMethod.getInstance());
+    }
 }

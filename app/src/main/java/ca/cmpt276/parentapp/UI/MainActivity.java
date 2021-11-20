@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void launchHelpMenu() {
         Button help = findViewById(R.id.help);
-        help.setOnClickListener(view ->  {
+        help.setOnClickListener(view -> {
             Intent i = new Intent(MainActivity.this, HelpMenu.class);
             startActivity(i);
         });

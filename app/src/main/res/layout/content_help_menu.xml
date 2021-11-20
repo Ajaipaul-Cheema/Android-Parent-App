@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    >
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
     <ImageView
@@ -141,9 +140,9 @@
         android:layout_width="272dp"
         android:layout_height="103dp"
         android:text="@string/devlopers"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
