@@ -254,22 +254,18 @@ public class TasksActivity extends AppCompatActivity {
         });
     }
 
-    /*
+
     @Override
     protected void onStart() {
         super.onStart();
-        loadChildrenData();
         loadChildrenIdx();
-        loadTasksNames();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         saveChildrenIdx();
-        saveChildrenData();
-        saveTasksNames();
     }
 
-     */
+
 }
