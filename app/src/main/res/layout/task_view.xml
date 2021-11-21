@@ -2,43 +2,66 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    >
 
     <TextView
         android:id="@+id/tvTaskName"
-        android:text="TASK HERE"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_weight="1"
+        android:descendantFocusability="blocksDescendants"
         android:gravity="center"
+        android:text="TASK HERE"
         android:textColor="@color/black"
-        android:textSize="14sp"
-        android:descendantFocusability="blocksDescendants"/>
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tvChildNameTask"
-        android:text="NAME HERE"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="15dp"
         android:layout_weight="1"
+        android:descendantFocusability="blocksDescendants"
         android:gravity="center"
+        android:text="NAME HERE"
         android:textColor="@color/black"
-        android:textSize="14sp"
-        android:descendantFocusability="blocksDescendants"/>
+        android:textSize="14sp" />
 
 
     <ImageView
         android:id="@+id/childImage"
         android:layout_width="36dp"
         android:layout_height="46dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/btnEditTask"
         android:contentDescription="child pic"
         android:descendantFocusability="blocksDescendants"
         android:gravity="center"
         app:srcCompat="@drawable/happychild" />
+
+    <ImageButton
+        android:id="@+id/btnDeleteTask"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_centerHorizontal="true"
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="false"
+        android:layout_alignParentRight="true"
+        app:srcCompat="@drawable/ic_baseline_delete_outline_24" />
+
+    <ImageButton
+        android:id="@+id/btnEditTask"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="0dp"
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="false"
+        android:layout_toLeftOf="@+id/btnDeleteTask"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
 
 </RelativeLayout>
