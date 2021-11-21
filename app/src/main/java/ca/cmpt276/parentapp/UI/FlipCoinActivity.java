@@ -62,6 +62,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private Spinner spinner;
     private String selectChild="";
+    private String isFlag="y";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +87,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         childIdx = loadChildrenData();
 
         childNameChoice = findViewById(R.id.tvChildChoice);
-        if (childrenNames.size() > 0) {
-            childNameChoice.setText(childrenNames.get(childIdx) + getString(R.string.children_turn_string));
-        }
 
         mTossImageView = findViewById(R.id.tiv);
         resultOfFlip = findViewById(R.id.tv_result);
@@ -107,37 +105,50 @@ public class FlipCoinActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectChild=childrenNames1.get(i);
-                if(!selectChild.equals("nobody")) {
-                    for (int n = i-1 ; n > 0; n--) {
-                        String temp = childrenNames1.get(n);
-                        childrenNames1.remove(n+1);
-                        childrenNames1.add(n + 1, temp);
-                    }
-                    childrenNames1.remove(1);
-                    childrenNames1.add(1, selectChild);
+                if(isFlag.equals("y")) {
+                    selectChild = childrenNames1.get(i);
+                    if (!selectChild.equals("nobody")) {
+                        for (int n = i - 1; n > 0; n--) {
+                            String temp = childrenNames1.get(n);
+                            childrenNames1.remove(n + 1);
+                            childrenNames1.add(n + 1, temp);
+                        }
+                        childrenNames1.remove(1);
+                        childrenNames1.add(1, selectChild);
 
-                    int ii=i-1;
-                    for (int n=ii-1;n>-1;n--){
-                        String temp=childrenNames.get(n);
-                        childrenNames.remove(n+1);
-                        childrenNames.add(n+1,temp);
+                        int ii = i - 1;
+                        for (int n = ii - 1; n > -1; n--) {
+                            String temp = childrenNames.get(n);
+                            childrenNames.remove(n + 1);
+                            childrenNames.add(n + 1, temp);
+                        }
+                        childrenNames.remove(0);
+                        childrenNames.add(0, selectChild);
+                        childIdx = 0;
+                        saveChildrenData();
+                        spinner.setSelection(1);
+                    } else {
+                        childNameChoice.setVisibility(View.GONE);
                     }
-                    childrenNames.remove(0);
-                    childrenNames.add(0,selectChild);
-                    childIdx = 0;
-                    saveChildrenData();
-                    spinner.setSelection(1);
-                }else {
-                    childNameChoice.setVisibility(View.GONE);
+                    adapter.notifyDataSetChanged();
+                }else{
+                    isFlag="y";
                 }
-                adapter.notifyDataSetChanged();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-        spinner.setSelection(1);
+        if (childrenNames.size() > 0) {
+            childNameChoice.setText(childrenNames.get(childIdx) + getString(R.string.children_turn_string));
+            spinner.setSelection(childIdx + 1);
+        }else{
+            if(childrenNames.size()==0){
+                spinner.setSelection(0);
+            }else {
+                spinner.setSelection(1);
+            }
+        }
     }
 
     @Override
@@ -224,6 +235,7 @@ public class FlipCoinActivity extends AppCompatActivity {
                 checkIfIdxExits();
 
                 if (coinFlipDone) {
+
                     new Handler(Looper.getMainLooper()).postDelayed(() -> {
                         resultOfFlip.setVisibility(View.VISIBLE);
                         childNameChoice.setVisibility(View.VISIBLE);
@@ -233,6 +245,9 @@ public class FlipCoinActivity extends AppCompatActivity {
                             resultOfFlip.setText(R.string.results_tails);
                         }
                         childNameChoice.setText(childrenNames.get(childIdx) + getString(R.string.children_turn_string));
+                        isFlag="n";
+                        spinner.setSelection(childIdx + 1);
+
                     }, 2000);
                 }
                 playerCoinChoice = -1;
