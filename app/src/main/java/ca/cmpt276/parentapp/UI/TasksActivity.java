@@ -1,6 +1,8 @@
 package ca.cmpt276.parentapp.UI;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -11,11 +13,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,22 +40,19 @@ import ca.cmpt276.parentapp.model.TaskManager;
 public class TasksActivity extends AppCompatActivity {
 
 
-    private static final String TASKS_NAMES_PREFS = "TasksNamesPrefs";
-    private static final String TASKS_PREFS = "TasksPrefs";
     ArrayList<String> childrenNames = new ArrayList<>();
     private static final String NAME_PREF = "NamePrefs";
     private static final String NAMES_PREF = "NamesSizePref";
-    private static final String CHILDREN_INDEX_PREF = "children_pref";
-    private static final String INDEX_PREF = "index_pref";
     private Button addTaskButton;
-    private Button removeTaskButton;
-    private Button editTaskButton;
     private EditText taskName;
     private ListView tasksListView;
     private String nameOfTask;
     private int positionOfTask;
     private String currChildName;
     private int nextChildIdx;
+    private boolean isEditing;
+    private ImageButton deleteTask;
+    private ImageButton editTask;
     ArrayAdapter<Task> adapter;
 
     TaskManager taskManager;
@@ -78,53 +79,28 @@ public class TasksActivity extends AppCompatActivity {
                 = new ColorDrawable(Color.parseColor(getString(R.string.yellow_brown_color)));
         actionBar.setBackgroundDrawable(colorDrawable);
 
-       // loadTasksNames();
+
         loadChildrenData();
-       // childIdx = loadChildrenIdx();
+
 
         tasksListView = findViewById(R.id.listTasks);
         taskName = findViewById(R.id.editTaskName);
         addTaskButton = findViewById(R.id.btnAddTask);
-        removeTaskButton = findViewById(R.id.btnRemoveTask);
-        editTaskButton = findViewById(R.id.btnEditTask);
+
 
         taskManager = TaskManager.getInstance();
+        taskManager.loadTaskHistory(this);
 
         // populate list of tasks
-       // populateTasksList();
         populateListView();
 
 
 
         handleAddTaskButton();
-       // handleEditTaskButton();
-        handleRemoveTaskButton();
 
-        saveTasksNames();
+
         saveChildrenData();
-        //saveChildrenIdx();
-    }
-
-    private void saveTasksNames() {
-        SharedPreferences sharedPreferences = getSharedPreferences(TASKS_NAMES_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(taskListNew);
-        editor.putString(TASKS_PREFS, json);
-        editor.apply();
-    }
-
-    private void loadTasksNames() {
-        SharedPreferences sharedPreferences = getSharedPreferences(TASKS_NAMES_PREFS, MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString(TASKS_PREFS, null);
-        Type type = new TypeToken<ArrayList<String>>() {
-        }.getType();
-        taskListNew = gson.fromJson(json, type);
-
-        if (taskListNew == null) {
-            taskListNew = new ArrayList<>();
-        }
+        taskManager.saveTaskHistory(this);
     }
 
 
@@ -134,78 +110,30 @@ public class TasksActivity extends AppCompatActivity {
             addTask();
             // clear edit text after adding name
             taskName.getText().clear();
-            saveTasksNames();
         });
     }
 
-    private void handleEditTaskButton() {
-        editTaskButton.setOnClickListener(v -> {
-            editTask();
-            // clear edit text after editing name
-            taskName.getText().clear();
-            saveTasksNames();
-        });
-    }
 
-    private void handleRemoveTaskButton() {
-        removeTaskButton.setOnClickListener(v -> {
-            removeTask();
-            // clear edit text after removing name
-            taskName.getText().clear();
-            saveTasksNames();
-        });
-    }
 
     private void addTask() {
         nameOfTask = taskName.getText().toString();
 
         if (!nameOfTask.equals("")) {
             if (childrenNames.size()<=0){
-                Task newTask = new Task(nameOfTask, "No availible child");
+                Task newTask = new Task(nameOfTask, "No child available");
                 taskManager.addTask(newTask);
             }
-            Task newTask = new Task(nameOfTask, childrenNames.get(0));
-            taskManager.addTask(newTask);
+            else {
+                Task newTask = new Task(nameOfTask, childrenNames.get(0));
+                taskManager.addTask(newTask);
+            }
 
-            // refresh
-            adapter.notifyDataSetChanged();
+            populateListView();
         } else {
             Toast.makeText(this, getString(R.string.non_empty_name), Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void editTask() {
-        nameOfTask = taskName.getText().toString();
-        positionOfTask = tasksListView.getCheckedItemPosition();
-
-        if (!nameOfTask.equals("")) {
-          //  adapter.remove(tasksNames.get(positionOfTask));
-          //  adapter.insert(nameOfTask, positionOfTask);
-            // refresh
-            adapter.notifyDataSetChanged();
-        } else {
-            Toast.makeText(this, getString(R.string.non_empty_name), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void removeTask() {
-        positionOfTask = tasksListView.getCheckedItemPosition();
-        nameOfTask = taskName.getText().toString();
-        if (positionOfTask >= 0) {
-
-            taskManager.removeTask(positionOfTask);
-
-            // refresh
-            adapter.notifyDataSetChanged();
-        }
-        else if (taskManager.doesTaskExist(nameOfTask)!=-1){
-            taskListNew.remove(taskManager.doesTaskExist(nameOfTask));
-            adapter.notifyDataSetChanged();
-        }
-        else {
-            Toast.makeText(this, "Error, task doesn't exist", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     // save & load inspired by https://www.youtube.com/watch?v=jcliHGR3CHo&t=343s
     private void saveChildrenData() {
@@ -229,23 +157,7 @@ public class TasksActivity extends AppCompatActivity {
             childrenNames = new ArrayList<>();
         }
     }
-/*
-    private void saveChildrenIdx() {
-        SharedPreferences prefs = this.getSharedPreferences(CHILDREN_INDEX_PREF, MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(INDEX_PREF, childIdx);
-        editor.apply();
-    }
 
-    private int loadChildrenIdx() {
-        SharedPreferences prefs = this.getSharedPreferences(CHILDREN_INDEX_PREF, MODE_PRIVATE);
-        if (childIdx > childrenNames.size()) {
-            childIdx = 0;
-        }
-        return prefs.getInt(INDEX_PREF, childIdx);
-    }
-
- */
 
     // https://developer.android.com/guide/topics/ui/dialogs
     private void taskFinshedPopup(int pos){
@@ -255,16 +167,11 @@ public class TasksActivity extends AppCompatActivity {
         if (nextChildIdx >= childrenNames.size()){
             nextChildIdx = 0;
         }
-
-        System.out.println("Size of list = " + childrenNames.size());
-        System.out.println("Next child = " + childrenNames.get(nextChildIdx));
-        System.out.println("Current child = " + taskListNew.get(pos).getChildTurn());
-
         AlertDialog confirmPopup = new AlertDialog.Builder(TasksActivity.this)
                 .setTitle(childrenNames.get(nextChildIdx) + "'s turn next!")
                 .setMessage("Clicking confirm will end " + currChildName +
                         "'s turn for the task " + taskListNew.get(pos).getTaskName() +
-                " and it will be " + childrenNames.get(nextChildIdx) + "'s turn next.")
+                        " and it will be " + childrenNames.get(nextChildIdx) + "'s turn next.")
                 .setIcon(R.drawable.ic_baseline_person_24)
                 .setPositiveButton("Confirm",null)
                 .setNegativeButton("Cancel",null).show();
@@ -275,13 +182,20 @@ public class TasksActivity extends AppCompatActivity {
             public void onClick(View view) {
                 taskListNew.get(pos).setChildTurn(childrenNames.get(nextChildIdx));
                 adapter.notifyDataSetChanged();
+                taskManager.saveTaskHistory(TasksActivity.this);
                 confirmPopup.cancel();
             }
         });
+    }
 
-
-
-
+    private void deleteTask(int position){
+        deleteTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                taskManager.removeTask(position);
+                populateListView();
+            }
+        });
     }
 
 
@@ -289,31 +203,33 @@ public class TasksActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         loadChildrenData();
-       // loadTasksNames();
-      //  loadChildrenIdx();
+        taskManager.loadTaskHistory(this);
+        taskManager.ifEmptyFixChild(childrenNames);
+        populateListView();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        saveTasksNames();
-       // saveChildrenIdx();
+        taskManager.saveTaskHistory(this);
     }
-
-
-
 
     private void populateListView() {
         taskListNew = taskManager.getTaskList();
         adapter = new TasksActivity.MyListAdapter();
-        ListView list = findViewById(R.id.listTasks);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener((parent, view, position, id) -> {
+        tasksListView.setAdapter(adapter);
+        tasksListView.setOnItemClickListener((parent, view, position, id) -> {
             taskName.setText(taskListNew.get(position).getTaskName());
             // sets cursor to the right of name when name is clicked upon
             if (taskName.getText().length() > 0) {
-                taskName.setSelection(taskName.getText().length());
-                taskFinshedPopup(position);
+                if (!isEditing && childrenNames.size()>0) {
+                    taskName.setSelection(taskName.getText().length());
+                    taskFinshedPopup(position);
+                }
+                else{
+                    taskName.setSelection(taskName.getText().length());
+                }
             }
         });
         adapter.notifyDataSetChanged();
@@ -339,6 +255,16 @@ public class TasksActivity extends AppCompatActivity {
 
             TextView taskName = itemView.findViewById(R.id.tvTaskName);
             TextView childName = itemView.findViewById(R.id.tvChildNameTask);
+            deleteTask =  itemView.findViewById(R.id.btnDeleteTask);
+            editTask = itemView.findViewById(R.id.btnEditTask);
+
+            deleteTask.setFocusable(false);
+            editTask.setFocusable(false);
+
+            deleteTask.setFocusableInTouchMode(false);
+            editTask.setFocusableInTouchMode(false);
+
+            deleteTask(position);
 
             taskName.setText(""+task.getTaskName());
             childName.setText(""+task.getChildTurn());
@@ -346,6 +272,4 @@ public class TasksActivity extends AppCompatActivity {
             return itemView;
         }
     }
-
-
 }
