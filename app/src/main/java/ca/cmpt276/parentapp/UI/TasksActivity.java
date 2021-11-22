@@ -171,7 +171,7 @@ public class TasksActivity extends AppCompatActivity {
                 .setMessage("Clicking confirm will end " + currChildName +
                         "'s turn for the task " + taskList.get(pos).getTaskName() +
                         " and it will be " + childrenNames.get(nextChildIdx) + "'s turn next.")
-                .setIcon(R.drawable.ic_baseline_person_24)
+                .setIcon(R.drawable.happychild)
                 .setPositiveButton("Confirm",null)
                 .setNegativeButton("Cancel",null).show();
         Button confirmButton = confirmPopup.getButton(AlertDialog.BUTTON_POSITIVE);
@@ -214,6 +214,7 @@ public class TasksActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
     @Override
@@ -275,6 +276,8 @@ public class TasksActivity extends AppCompatActivity {
             deleteTask =  itemView.findViewById(R.id.btnDeleteTask);
             editTask = itemView.findViewById(R.id.btnEditTask);
 
+
+
             deleteTask.setFocusable(false);
             editTask.setFocusable(false);
 
@@ -283,6 +286,7 @@ public class TasksActivity extends AppCompatActivity {
 
             deleteTask(position);
             editTask(position);
+
 
             taskName.setText(""+task.getTaskName());
             childName.setText(""+task.getChildTurn());
