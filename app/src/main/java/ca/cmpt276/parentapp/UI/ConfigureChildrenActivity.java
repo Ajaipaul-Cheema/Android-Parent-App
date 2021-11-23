@@ -1,15 +1,14 @@
 package ca.cmpt276.parentapp.UI;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,34 +19,47 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityConfigureChildrenBinding;
+import ca.cmpt276.parentapp.model.DataHolder;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
  * The ConfigureChildrenActivity contains
  * the user-inputted children names. Names
- * can be added, editted and deleted from this
+ * can be added, edited and deleted from this
  * activity. The names are saved/loaded between application
  * uses.
  */
 public class ConfigureChildrenActivity extends AppCompatActivity {
 
-    ArrayList<String> childrenNames = new ArrayList<>();
     private static final String NAME_PREF = "NamePrefs";
     private static final String NAMES_PREF = "NamesSizePref";
+    ArrayList<String> childNames = new ArrayList<>();
+    ArrayList<String> image_path = new ArrayList<>();
     ListView childrenList;
     EditText childName;
     Button addChild, removeChild, editChild, launchPhotos;
     ArrayAdapter<String> childAdapter;
     String nameOfChild;
     int positionOfChild;
+    CircleImageView circleImageView;
+    private DataHolder childIdxData;
 
     public static Intent makeLaunchIntent(Context c) {
         return new Intent(c, ConfigureChildrenActivity.class);
@@ -62,6 +74,9 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        circleImageView = findViewById(R.id.profile_pic);
+
+        childIdxData = DataHolder.getInstance();
 
         // https://www.geeksforgeeks.org/how-to-change-the-color-of-action-bar-in-an-android-app/
         ColorDrawable colorDrawable
@@ -89,34 +104,11 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         saveChildrenData();
     }
 
-    public class ListAdapter extends ArrayAdapter<String> {
-
-        public ListAdapter(Context context, ArrayList<String> userArrayList) {
-            super(context, R.layout.list_children_view, userArrayList);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_children_view, parent, false);
-            }
-
-            TextView name = convertView.findViewById(R.id.personName);
-            launchPhotos = convertView.findViewById(R.id.addChildPicture);
-
-            name.setText(childrenNames.get(position));
-
-            return convertView;
-        }
-    }
-
     private void populateChildrenList() {
-        childAdapter = new ListAdapter(ConfigureChildrenActivity.this, childrenNames);
+        childAdapter = new ListAdapter(ConfigureChildrenActivity.this, childNames);
         childrenList.setAdapter(childAdapter);
         childrenList.setOnItemClickListener((parent, view, position, id) -> {
-            childName.setText(childrenNames.get(position));
+            childName.setText(childNames.get(position));
             // sets cursor to the right of name when name is clicked upon
             if (childName.getText().length() > 0) {
                 childName.setSelection(childName.getText().length());
@@ -129,7 +121,7 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(NAMES_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(childrenNames);
+        String json = gson.toJson(childNames);
         editor.putString(NAME_PREF, json);
         editor.apply();
     }
@@ -140,10 +132,10 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         String json = sharedPreferences.getString(NAME_PREF, null);
         Type type = new TypeToken<ArrayList<String>>() {
         }.getType();
-        childrenNames = gson.fromJson(json, type);
+        childNames = gson.fromJson(json, type);
 
-        if (childrenNames == null) {
-            childrenNames = new ArrayList<>();
+        if (childNames == null) {
+            childNames = new ArrayList<>();
         }
     }
 
@@ -191,7 +183,7 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         positionOfChild = childrenList.getCheckedItemPosition();
 
         if (!nameOfChild.equals("")) {
-            childAdapter.remove(childrenNames.get(positionOfChild));
+            childAdapter.remove(childNames.get(positionOfChild));
             childAdapter.insert(nameOfChild, positionOfChild);
             // refresh
             childAdapter.notifyDataSetChanged();
@@ -204,9 +196,63 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         positionOfChild = childrenList.getCheckedItemPosition();
 
         if (positionOfChild >= 0) {
-            childAdapter.remove(childrenNames.get(positionOfChild));
+            childAdapter.remove(childNames.get(positionOfChild));
             // refresh
             childAdapter.notifyDataSetChanged();
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    public class ListAdapter extends ArrayAdapter<String> {
+
+        public ListAdapter(Context context, ArrayList<String> userArrayList) {
+
+            super(context, R.layout.list_children_view, userArrayList);
+
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_children_view, parent, false);
+            }
+
+            TextView userName = convertView.findViewById(R.id.personName);
+            launchPhotos = convertView.findViewById(R.id.addChildPicture);
+            CircleImageView circleImageView = convertView.findViewById(R.id.profile_pic);
+
+            image_path = getIntent().getStringArrayListExtra("IMAGE_PATH_LIST");
+
+            if (image_path != null) {
+                if (image_path.size() != 0 && childNames.size() != 0) {
+                    try {
+                        File f = new File(image_path.get(0), childNames.get(0) + ".jpg");
+                        Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+                        circleImageView.setImageBitmap(b);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            launchPhotos.setOnClickListener(v -> {
+                Intent i = PhotosActivity.makeLaunchIntent(ConfigureChildrenActivity.this);
+                childIdxData.setIdx(position);
+                startActivity(i);
+                finish();
+            });
+
+            userName.setText(childNames.get(position));
+
+            return convertView;
+        }
+    }
+
+
 }

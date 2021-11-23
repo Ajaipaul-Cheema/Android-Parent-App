@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.cmpt276.parentapp.UI.HistoryFlipView">
+    tools:context="ca.cmpt276.parentapp.UI.PhotosActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +20,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_history_flip_view" />
+    <include layout="@layout/content_photos" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,10 +1,11 @@
 package ca.cmpt276.parentapp.model;
 
+/**
+ * This class handles creating a task
+ * and managing its attributes
+ */
 public class Task {
-
-
     private String taskName;
-
     private String childTurn;
 
     public Task(String taskName, String childTurn) {

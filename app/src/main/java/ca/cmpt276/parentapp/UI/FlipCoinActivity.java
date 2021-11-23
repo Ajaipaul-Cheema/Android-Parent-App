@@ -9,7 +9,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.AdapterView;
@@ -23,6 +22,7 @@ import java.util.Random;
 
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityFlipCoinBinding;
+import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.FlipResult;
 import ca.cmpt276.parentapp.model.FlipResultManager;
 
@@ -31,6 +31,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -58,10 +60,10 @@ public class FlipCoinActivity extends AppCompatActivity {
     private static final String NAMES_PREF = "NamesSizePref";
     private TossImageView mTossImageView;
     MediaPlayer player = new MediaPlayer();
-
+    ChildManager childManager;
     private Spinner spinner;
-    private String selectChild="";
-    private String isFlag="y";
+    private String selectChild = "";
+    private String isFlag = "y";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +78,9 @@ public class FlipCoinActivity extends AppCompatActivity {
         ColorDrawable colorDrawable
                 = new ColorDrawable(Color.parseColor(getString(R.string.brown_color)));
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
+        childManager = ChildManager.getInstance();
 
-        loadData(this);
+        loadChildrenNames(this);
         resultManager = FlipResultManager.getInstance();
         resultManager.loadFlipHistory(this);
 
@@ -93,17 +96,22 @@ public class FlipCoinActivity extends AppCompatActivity {
         setUpFlipCoinButton();
         setUpHistoryButton();
 
-        saveChildrenData();
+        updateQueueOfChildren();
 
+        saveChildrenData();
+        saveChildrenNames();
+    }
+
+    private void updateQueueOfChildren() {
         spinner = findViewById(R.id.spinner);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.myspinner, childrenNames1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.myspinner, childrenNames1);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(isFlag.equals("y")) {
+                if (isFlag.equals("y")) {
                     selectChild = childrenNames1.get(i);
                     if (!selectChild.equals("nobody")) {
                         for (int n = i - 1; n > 0; n--) {
@@ -127,20 +135,21 @@ public class FlipCoinActivity extends AppCompatActivity {
                         spinner.setSelection(1);
                     }
                     adapter.notifyDataSetChanged();
-                }else{
-                    isFlag="y";
+                } else {
+                    isFlag = "y";
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
         if (childrenNames.size() > 0) {
             spinner.setSelection(childIdx + 1);
-        }else{
-            if(childrenNames.size()==0){
+        } else {
+            if (childrenNames.size() == 0) {
                 spinner.setSelection(0);
-            }else {
+            } else {
                 spinner.setSelection(1);
             }
         }
@@ -164,17 +173,17 @@ public class FlipCoinActivity extends AppCompatActivity {
         Button flipCoinBtn = findViewById(R.id.btnFlipCoin);
         flipCoinBtn.setOnClickListener(view -> {
             if (childrenNames.size() <= 0) {
-                if(!selectChild.equals("nobody")) {
+                if (!selectChild.equals("nobody")) {
                     resultManager.saveFlipHistory(this);
                 }
                 coinToss();
             } else if (playerCoinChoice == -1) {
-                if(!selectChild.equals("nobody")) {
+                if (!selectChild.equals("nobody")) {
                     resultManager.saveFlipHistory(this);
                 }
                 Toast.makeText(this, getString(R.string.choose_head_or_tail_str), Toast.LENGTH_SHORT).show();
             } else {
-                if(!selectChild.equals("nobody")) {
+                if (!selectChild.equals("nobody")) {
                     resultManager.saveFlipHistory(this);
                 }
                 coinToss();
@@ -198,13 +207,9 @@ public class FlipCoinActivity extends AppCompatActivity {
         Button headsBtn = findViewById(R.id.btnChooseHeads);
         Button tailsBtn = findViewById(R.id.btnChooseTails);
 
-        headsBtn.setOnClickListener(view -> {
-            playerCoinChoice = 1;
-        });
+        headsBtn.setOnClickListener(view -> playerCoinChoice = 1);
 
-        tailsBtn.setOnClickListener(view -> {
-            playerCoinChoice = 0;
-        });
+        tailsBtn.setOnClickListener(view -> playerCoinChoice = 0);
     }
 
     private void playCoinFlipSound() {
@@ -219,7 +224,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         int tossResult = random.nextInt(2);
         resultOfFlip.setVisibility(View.INVISIBLE);
         toStart(tossResult);
-        if(!selectChild.equals("nobody")) {
+        if (!selectChild.equals("nobody")) {
             if (childrenNames.size() > 0) {
 
                 FlipResult toss = new FlipResult("" + childrenNames.get(childIdx), LocalDateTime.now(), tossResult, playerCoinChoice);
@@ -237,7 +242,7 @@ public class FlipCoinActivity extends AppCompatActivity {
                         } else {
                             resultOfFlip.setText(R.string.results_tails);
                         }
-                        isFlag="n";
+                        isFlag = "n";
                         spinner.setSelection(childIdx + 1);
 
                     }, 2000);
@@ -247,7 +252,7 @@ public class FlipCoinActivity extends AppCompatActivity {
                 saveChildrenData();
                 resultManager.saveFlipHistory(this);
             }
-        }else{
+        } else {
             if (tossResult == 1) {
                 resultOfFlip.setText(R.string.results_heads);
             } else {
@@ -257,7 +262,16 @@ public class FlipCoinActivity extends AppCompatActivity {
     }
 
     // save & load inspired by https://www.youtube.com/watch?v=jcliHGR3CHo&t=343s
-    private void loadData(Context context) {
+    private void saveChildrenNames() {
+        SharedPreferences sharedPreferences = getSharedPreferences(NAMES_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(childrenNames);
+        editor.putString(NAME_PREF, json);
+        editor.apply();
+    }
+
+    private void loadChildrenNames(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(NAMES_PREF, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(NAME_PREF, null);
@@ -269,9 +283,9 @@ public class FlipCoinActivity extends AppCompatActivity {
             childrenNames = new ArrayList<>();
         }
 
-        childrenNames1.add(0,"nobody");
-        for(int i=0;i<childrenNames.size();i++){
-            childrenNames1.add(i+1,childrenNames.get(i));
+        childrenNames1.add(0, "nobody");
+        for (int i = 0; i < childrenNames.size(); i++) {
+            childrenNames1.add(i + 1, childrenNames.get(i));
         }
     }
 

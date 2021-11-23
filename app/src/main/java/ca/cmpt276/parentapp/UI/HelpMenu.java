@@ -1,37 +1,28 @@
 package ca.cmpt276.parentapp.UI;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
-import android.view.View;
 import android.widget.TextView;
 
-
-import androidx.navigation.ui.AppBarConfiguration;
-
-
-import ca.cmpt276.as3.parentapp.databinding.ActivityHelpMenuBinding;
-
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import ca.cmpt276.as3.parentapp.R;
+import ca.cmpt276.as3.parentapp.databinding.ActivityHelpMenuBinding;
 
+/**
+ * This class shows the citations for this project and the creators
+ */
 public class HelpMenu extends AppCompatActivity {
-
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityHelpMenuBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityHelpMenuBinding.inflate(getLayoutInflater());
+        ca.cmpt276.as3.parentapp.databinding.ActivityHelpMenuBinding binding = ActivityHelpMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
 

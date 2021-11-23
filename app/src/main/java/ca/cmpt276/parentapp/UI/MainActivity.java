@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityMainBinding;
