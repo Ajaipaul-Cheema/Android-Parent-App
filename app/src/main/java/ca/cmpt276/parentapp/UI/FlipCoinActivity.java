@@ -52,7 +52,6 @@ public class FlipCoinActivity extends AppCompatActivity {
     private static final String CHILDREN_INDEX_PREF = "children_pref";
     private static final String INDEX_PREF = "index_pref";
     private Boolean coinFlipDone;
-    TextView childNameChoice;
     TextView resultOfFlip;
     private int childIdx;
     private static final String NAME_PREF = "NamePrefs";
@@ -86,7 +85,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         coinFlipDone = false;
         childIdx = loadChildrenData();
 
-        childNameChoice = findViewById(R.id.tvChildChoice);
 
         mTossImageView = findViewById(R.id.tiv);
         resultOfFlip = findViewById(R.id.tv_result);
@@ -127,8 +125,6 @@ public class FlipCoinActivity extends AppCompatActivity {
                         childIdx = 0;
                         saveChildrenData();
                         spinner.setSelection(1);
-                    } else {
-                        childNameChoice.setVisibility(View.GONE);
                     }
                     adapter.notifyDataSetChanged();
                 }else{
@@ -140,7 +136,6 @@ public class FlipCoinActivity extends AppCompatActivity {
             }
         });
         if (childrenNames.size() > 0) {
-            childNameChoice.setText(childrenNames.get(childIdx) + getString(R.string.children_turn_string));
             spinner.setSelection(childIdx + 1);
         }else{
             if(childrenNames.size()==0){
@@ -223,7 +218,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         loadChildrenData();
         int tossResult = random.nextInt(2);
         resultOfFlip.setVisibility(View.INVISIBLE);
-        childNameChoice.setVisibility(View.INVISIBLE);
         toStart(tossResult);
         if(!selectChild.equals("nobody")) {
             if (childrenNames.size() > 0) {
@@ -238,13 +232,11 @@ public class FlipCoinActivity extends AppCompatActivity {
 
                     new Handler(Looper.getMainLooper()).postDelayed(() -> {
                         resultOfFlip.setVisibility(View.VISIBLE);
-                        childNameChoice.setVisibility(View.VISIBLE);
                         if (tossResult == 1) {
                             resultOfFlip.setText(R.string.results_heads);
                         } else {
                             resultOfFlip.setText(R.string.results_tails);
                         }
-                        childNameChoice.setText(childrenNames.get(childIdx) + getString(R.string.children_turn_string));
                         isFlag="n";
                         spinner.setSelection(childIdx + 1);
 
