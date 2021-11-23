@@ -1,0 +1,6 @@
+<resources>
+    <!-- spinner -->
+    <style name="spinner_style">
+        <item name="android:background">@color/button_color</item>
+    </style>
+</resources>
