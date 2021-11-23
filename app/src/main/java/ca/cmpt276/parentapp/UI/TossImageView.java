@@ -12,6 +12,8 @@ import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
+import androidx.appcompat.widget.AppCompatImageView;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,7 +28,7 @@ import ca.cmpt276.as3.parentapp.R;
  * and return the result of tossing the coin to FlipCoinActivity through the callback function.
  */
 
-public class TossImageView extends android.support.v7.widget.AppCompatImageView {
+public class TossImageView extends AppCompatImageView {
 
     public static final int RESULT_FRONT = 1; // front side
     public static final int RESULT_REVERSE = -1; // back side

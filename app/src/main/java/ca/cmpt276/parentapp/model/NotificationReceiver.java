@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import java.sql.Time;
-
 import ca.cmpt276.parentapp.UI.TimeoutTimerActivity;
 
 /**
@@ -19,7 +17,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // inspired by https://www.youtube.com/watch?v=rRoHBWKQoRE
         String sound = intent.getStringExtra("Dismiss Timer");
-        if(sound.equals("Timer has finished.")){
+        if (sound.equals("Timer has finished.")) {
             TimeoutTimerActivity.stopSound();
         }
 

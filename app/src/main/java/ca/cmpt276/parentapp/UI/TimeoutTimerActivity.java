@@ -14,8 +14,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,6 +23,9 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import java.util.Locale;
 
@@ -44,7 +45,6 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     private static final String NOTIFICATION_CHANNEL_NAME = "Dismiss Timer";
     private static final String NOTIFICATION_CHANNEL_DESCRIPTION = "notification for timer";
     private static final String NOTIFICATION_CHANNEL_ID = "notification timer ID";
-    private static final String ACTION_NAME = "Timer";
     private EditText customTime;
     private ImageButton useCustomTime;
     private TextView timerText;

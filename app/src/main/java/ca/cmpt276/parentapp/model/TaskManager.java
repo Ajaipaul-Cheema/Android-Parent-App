@@ -9,6 +9,11 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+/**
+ * This class handles managing multiple tasks
+ * adding, editing and deleting tasks
+ * and checking next child and saving & loading tasks
+ */
 public class TaskManager {
 
     private static final String TASKS_NAMES_PREFS = "TasksNamesPrefs";
@@ -64,7 +69,7 @@ public class TaskManager {
 
     public boolean doesChildExist(String childName, ArrayList<String> childList) {
 
-        if (childName != "") {
+        if (!childName.equals("")) {
             for (String child : childList) {
                 if (child.equals(childName)) {
                     return true;
