@@ -83,5 +83,14 @@
     <string name="resources_used">Resources used:</string>
     <string name="devlopers">This program was developed by Ajaipaul Cheema, Matthew Hamilton, Hanxi Chen, and Sameer Ali</string>
     <string name="add_photo">Add photo</string>
+    <string name="editTaskHelpToast">To edit task name, enter new task above, and click this button again to confirm changes</string>
+    <string name="noChildString">No child available</string>
+    <string name="NextTurnString">\'s turn next!</string>
+    <string name="ConfirmationStringEndTurn">\"Clicking confirm will end \"</string>
+    <string name="WhichTaskString">\"\'s turn for the task \"</string>
+    <string name="ChildNameString">\" and it will be \"</string>
+    <string name="NextChildString">\'s turn next.</string>
+    <string name="StringConfirmButton">Confirm</string>
+    <string name="StringCancelButton">Cancel</string>
 
 </resources>
