@@ -21,7 +21,9 @@
             android:name="ca.cmpt276.parentapp.UI.TasksActivity"
             android:exported="true"
             android:label="@string/title_activity_tasks"
-            android:theme="@style/Theme.ParentApp.NoActionBar" />
+            android:parentActivityName="ca.cmpt276.parentapp.UI.FlipCoinActivity"
+            android:theme="@style/Theme.ParentApp.NoActionBar"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name="ca.cmpt276.parentapp.UI.HistoryFlipView"
             android:exported="true"
