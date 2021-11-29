@@ -48,6 +48,12 @@
         android:text="@string/reset"
         android:textColor="@color/white" />
 
+    <ca.cmpt276.parentapp.UI.PieChart
+        android:id="@+id/pieChar"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="30dp"/>
+
     <Spinner
         android:id="@+id/spinDropDownChoices"
         android:layout_width="wrap_content"
