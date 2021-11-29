@@ -1,5 +1,7 @@
 package ca.cmpt276.parentapp.model;
 
+import java.time.LocalDate;
+
 /**
  * This class handles creating a task
  * and managing its attributes
@@ -7,10 +9,12 @@ package ca.cmpt276.parentapp.model;
 public class Task {
     private String taskName;
     private String childTurn;
+    private LocalDate dateOfTask;
 
-    public Task(String taskName, String childTurn) {
+    public Task(String taskName, String childTurn, LocalDate dateOfTask) {
         this.taskName = taskName;
         this.childTurn = childTurn;
+        this.dateOfTask = dateOfTask;
     }
 
     public String getChildTurn() {
