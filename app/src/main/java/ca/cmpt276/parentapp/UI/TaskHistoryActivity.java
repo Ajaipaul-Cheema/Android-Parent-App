@@ -62,7 +62,6 @@ public class TaskHistoryActivity extends AppCompatActivity {
         title = findViewById(R.id.tvTaskHistoryName);
         title.setText(nameOfTask);
 
-        Toast.makeText(this, "Index: " + indexOfTask, Toast.LENGTH_SHORT).show();
         populateListView();
     }
 
@@ -77,7 +76,6 @@ public class TaskHistoryActivity extends AppCompatActivity {
         Intent intent = getIntent();
         indexOfTask = intent.getIntExtra("Index",0);
         nameOfTask = taskManager.getTaskList().get(indexOfTask).getTaskName();
-        System.out.println("Task picked: " + nameOfTask + ", size list: " + historyManager.getHistoryOfTask(nameOfTask).size());
     }
 
     private void populateListView() {
@@ -122,7 +120,6 @@ public class TaskHistoryActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        System.out.println("Up selected");
         finish();
         return true;
     }
