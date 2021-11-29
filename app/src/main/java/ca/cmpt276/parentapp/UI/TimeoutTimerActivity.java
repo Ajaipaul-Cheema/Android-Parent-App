@@ -1,5 +1,6 @@
 package ca.cmpt276.parentapp.UI;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,7 +15,11 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
@@ -66,11 +72,13 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     public static Vibrator timerVibrator;
     public static MediaPlayer alarmSound;
     private ActivityTimeoutTimerBinding binding;
+    private TextView showSpeedOfTimer;
+    private long countDownTimerTime;
+    private double speedFactorNum;
 
     public static Intent makeLaunchIntent(Context c) {
         return new Intent(c, TimeoutTimerActivity.class);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +91,10 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         timerText = findViewById(R.id.tv_timer);
         startPauseButton = findViewById(R.id.btn_start_and_pause_timer);
         resetButton = findViewById(R.id.btn_reset);
+        showSpeedOfTimer = findViewById(R.id.showSpeedOfTimer);
+
+        // inspired by https://developer.android.com/training/scheduling/wakelock
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -130,6 +142,92 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         });
     }
 
+    //  https://www.youtube.com/watch?v=zmjfAcnosS0 <- very helpful in this process
+    private void setUpTimer() {
+        resetButton.setVisibility(View.INVISIBLE);
+
+        startPauseButton.setOnClickListener(v -> {
+            dropDownMenu.setSelection(0);
+            if (isTimerRunning) {
+                customTime.setVisibility(View.VISIBLE);
+                useCustomTime.setVisibility(View.VISIBLE);
+                // Pause Button pressed
+                pauseCountdown();
+            } else {
+                customTime.setVisibility(View.VISIBLE);
+                useCustomTime.setVisibility(View.VISIBLE);
+                if (timeLeftInTimer <= 0) {
+                    Toast.makeText(this, getString(R.string.pick_timer), Toast.LENGTH_SHORT).show();
+                } else {
+                    startCountdown();
+                }
+
+            }
+        });
+
+        resetButton.setOnClickListener(v -> {
+            resetCountdown();
+        });
+        changeTimerText();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.timer_speed_options, menu);
+        return true;
+    }
+
+    // https://stackoverflow.com/questions/23533946/how-do-i-change-the-speed-of-a-countdowntimer
+    // https://stackoverflow.com/questions/31228223/countdown-timer-that-that-increases-speed-after-button-press
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.twentyFivePercent:
+                updateSpeedOfTimer(0.25);
+                showSpeedOfTimer.setText(getString(R.string.time) + getString(R.string.twentyFive));
+                return true;
+            case R.id.fiftyPercent:
+                updateSpeedOfTimer(0.5);
+                showSpeedOfTimer.setText(getString(R.string.time) + getString(R.string.fifty));
+                return true;
+            case R.id.seventyFivePercent:
+                updateSpeedOfTimer(0.75);
+                showSpeedOfTimer.setText(getString(R.string.time) + getString(R.string.seventyFive));
+                return true;
+            case R.id.hundredPercent:
+                updateSpeedOfTimer(1);
+                showSpeedOfTimer.setText(getString(R.string.time) + getString(R.string.hundred));
+                return true;
+            case R.id.twoHundredPercent:
+                updateSpeedOfTimer(2);
+                showSpeedOfTimer.setText(getString(R.string.time) + getString(R.string.twoHundred));
+                return true;
+            case R.id.threeHundredPercent:
+                updateSpeedOfTimer(3);
+                showSpeedOfTimer.setText(getString(R.string.time) + getString(R.string.threeHundred));
+                return true;
+            case R.id.fourHundredPercent:
+                updateSpeedOfTimer(4);
+                showSpeedOfTimer.setText(getString(R.string.time) + getString(R.string.fourHundred));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void updateSpeedOfTimer(double factorSpeed) {
+        countDownTimerTime = (long) (timeLeftInTimer / factorSpeed);
+        speedFactorNum = factorSpeed;
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+        if (isTimerRunning) {
+            startCountdown();
+        }
+    }
 
     // saving the time and running it in the background was inspired by this link: https://www.youtube.com/watch?v=lvibl8YJfGo&t=545s
     @Override
@@ -144,7 +242,6 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         editor.putLong(timeAtEnd, endTime);
 
         editor.apply();
-
     }
 
     @Override
@@ -160,6 +257,8 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         startTime = prefs.getLong(timeStart, 0);
         timeLeftInTimer = prefs.getLong(timeLeft, startTime);
         isTimerRunning = prefs.getBoolean(timeRunning, false);
+        countDownTimerTime = timeLeftInTimer;
+        speedFactorNum = 1;
 
         changeTimerText();
         changeVisibilityPostClick();
@@ -249,43 +348,22 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         });
     }
 
-    //  https://www.youtube.com/watch?v=zmjfAcnosS0 <- very helpful in this process
-    private void setUpTimer() {
-        resetButton.setVisibility(View.INVISIBLE);
-
-        startPauseButton.setOnClickListener(v -> {
-            dropDownMenu.setSelection(0);
-            if (isTimerRunning) {
-                customTime.setVisibility(View.VISIBLE);
-                useCustomTime.setVisibility(View.VISIBLE);
-                // Pause Button pressed
-                pauseCountdown();
-            } else {
-                customTime.setVisibility(View.VISIBLE);
-                useCustomTime.setVisibility(View.VISIBLE);
-                if (timeLeftInTimer <= 0) {
-                    Toast.makeText(this, getString(R.string.pick_timer), Toast.LENGTH_SHORT).show();
-                } else {
-                    startCountdown();
-                }
-
-            }
-        });
-
-        resetButton.setOnClickListener(v -> {
-            resetCountdown();
-        });
-        changeTimerText();
-    }
-
     private void pauseCountdown() {
         countDownTimer.cancel();
         isTimerRunning = false;
         changeVisibilityPostClick();
     }
 
+    @SuppressLint("SetTextI18n")
     private void resetCountdown() {
+        if (isTimerRunning) {
+            countDownTimer.cancel();
+            isTimerRunning = false;
+        }
+        countDownTimerTime = startTime;
         timeLeftInTimer = startTime;
+        speedFactorNum = 1.0;
+        showSpeedOfTimer.setText(getString(R.string.time) + getString(R.string.hundred));
         changeTimerText();
         changeVisibilityPostClick();
     }
@@ -350,15 +428,17 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE);
         mBuilder.setContentIntent(contentIntent);
         notificationManager.notify(0, mBuilder.build());
-
     }
 
     private void startCountdown() {
         endTime = System.currentTimeMillis() + timeLeftInTimer;
-        countDownTimer = new CountDownTimer(timeLeftInTimer, 1000) {
+        countDownTimer = new CountDownTimer(countDownTimerTime, (long) (1000 / speedFactorNum)) {
             @Override
             public void onTick(long l) {
-                timeLeftInTimer = l;
+                timeLeftInTimer -= 1000;
+                if (timeLeftInTimer < 0) {
+                    timeLeftInTimer = 0;
+                }
                 changeTimerText();
             }
 
@@ -370,6 +450,8 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                     showNotification();
                     isTimerRunning = false;
                     changeVisibilityPostClick();
+                    pauseCountdown();
+                    resetCountdown();
                 }
             }
         }.start();
@@ -394,7 +476,6 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         }
 
         timerText.setText(updatedTextStr);
-
     }
 
     private void changeVisibilityPostClick() {
@@ -416,6 +497,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 
             if (timeLeftInTimer < 1000) {
                 startPauseButton.setVisibility(View.INVISIBLE);
+
             } else {
                 startPauseButton.setVisibility(View.VISIBLE);
             }
