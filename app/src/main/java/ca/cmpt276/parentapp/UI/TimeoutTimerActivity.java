@@ -33,6 +33,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import java.math.BigDecimal;
 import java.util.Locale;
 
 import ca.cmpt276.as3.parentapp.R;
@@ -120,6 +121,14 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         handleCustomTimeCheckButton();
         setUpDropDownList();
         setUpTimer();
+
+        mChart = (PieChart) findViewById(R.id.pieChar);
+        String[] titles = new String[] {"Elapsed time","Remaining time"};
+        mChart.setTitles(titles);
+        int[] colors = new int[]{0xfff5a002,0xfffb5a2f};
+        mChart.setColors(colors);
+        mChart.setValues(chartValue);
+        mChart.postInvalidate();
     }
 
     // allowing for custom time to be entered and used was inspired by this link: https://www.youtube.com/watch?v=7dQJAkjNEjM&t=629s
