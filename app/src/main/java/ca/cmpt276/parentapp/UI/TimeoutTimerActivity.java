@@ -27,6 +27,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import java.math.BigDecimal;
 import java.util.Locale;
 
 import ca.cmpt276.as3.parentapp.R;
@@ -66,6 +67,8 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     public static Vibrator timerVibrator;
     public static MediaPlayer alarmSound;
     private ActivityTimeoutTimerBinding binding;
+    private PieChart mChart;
+    private double [] chartValue=new double[]{0,0};
 
     public static Intent makeLaunchIntent(Context c) {
         return new Intent(c, TimeoutTimerActivity.class);
@@ -108,6 +111,14 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         handleCustomTimeCheckButton();
         setUpDropDownList();
         setUpTimer();
+
+        mChart = (PieChart) findViewById(R.id.pieChar);
+        String[] titles = new String[] {"Elapsed time","Remaining time"};
+        mChart.setTitles(titles);
+        int[] colors = new int[]{0xfff5a002,0xfffb5a2f};
+        mChart.setColors(colors);
+        mChart.setValues(chartValue);
+        mChart.postInvalidate();
     }
 
     // allowing for custom time to be entered and used was inspired by this link: https://www.youtube.com/watch?v=7dQJAkjNEjM&t=629s
@@ -370,6 +381,10 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                     showNotification();
                     isTimerRunning = false;
                     changeVisibilityPostClick();
+                    chartValue[0] = 100;
+                    chartValue[1] = 0;
+                    mChart.setValues(chartValue);
+                    mChart.postInvalidate();
                 }
             }
         }.start();
@@ -394,6 +409,16 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         }
 
         timerText.setText(updatedTextStr);
+        if(startTime!=0) {
+            BigDecimal b1=new BigDecimal((float)timeLeftInTimer/startTime).setScale(2, BigDecimal.ROUND_DOWN);
+            BigDecimal b2 = new BigDecimal(100);
+            double havetime=b1.multiply(b2).doubleValue();
+            double usetime = 100-havetime;
+            chartValue[0] = usetime;
+            chartValue[1] = havetime;
+            mChart.setValues(chartValue);
+            mChart.postInvalidate();
+        }
 
     }
 
