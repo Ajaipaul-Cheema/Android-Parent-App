@@ -10,20 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
-
 import java.util.ArrayList;
-
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityTaskHistoryBinding;
 import ca.cmpt276.parentapp.model.ChildTurnData;
-import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.TaskHistoryManager;
 import ca.cmpt276.parentapp.model.TaskManager;
 
@@ -65,7 +60,6 @@ public class TaskHistoryActivity extends AppCompatActivity {
         populateListView();
     }
 
-
     public static Intent makeLaunchIntent(Context c, int index) {
         Intent intent = new Intent(c, TaskHistoryActivity.class);
         intent.putExtra("Index",index);
@@ -97,8 +91,6 @@ public class TaskHistoryActivity extends AppCompatActivity {
 
             View itemView = convertView;
 
-
-
             if (itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.task_history_view, parent, false);
             }
@@ -112,7 +104,6 @@ public class TaskHistoryActivity extends AppCompatActivity {
             childName.setText("" +turnData.getChild());
 
             date.setText("" + turnData.getDate().toString());
-
 
             return itemView;
         }

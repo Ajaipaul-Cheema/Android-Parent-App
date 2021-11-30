@@ -191,6 +191,7 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
             childAdapter.insert(nameOfChild, positionOfChild);
             // refresh
             childAdapter.notifyDataSetChanged();
+            taskHistory.saveTaskHistory(this);
         } else {
             Toast.makeText(ConfigureChildrenActivity.this, getString(R.string.non_empty_name), Toast.LENGTH_SHORT).show();
         }

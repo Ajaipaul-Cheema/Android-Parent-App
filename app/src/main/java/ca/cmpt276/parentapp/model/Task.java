@@ -9,12 +9,10 @@ import java.time.LocalDate;
 public class Task {
     private String taskName;
     private String childTurn;
-    private LocalDate dateOfTask;
 
-    public Task(String taskName, String childTurn, LocalDate dateOfTask) {
+    public Task(String taskName, String childTurn) {
         this.taskName = taskName;
         this.childTurn = childTurn;
-        this.dateOfTask = dateOfTask;
     }
 
     public String getChildTurn() {

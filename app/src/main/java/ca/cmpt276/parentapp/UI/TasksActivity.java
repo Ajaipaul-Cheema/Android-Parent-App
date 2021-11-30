@@ -118,14 +118,15 @@ public class TasksActivity extends AppCompatActivity {
 
         if (!nameOfTask.equals("")) {
             if (childrenNames.size() <= 0) {
-                Task newTask = new Task(nameOfTask, getString(R.string.noChildString),LocalDate.now());
+                Task newTask = new Task(nameOfTask, getString(R.string.noChildString));
                 taskManager.addTask(newTask);
             } else {
-                Task newTask = new Task(nameOfTask, childrenNames.get(0),LocalDate.now());
+                Task newTask = new Task(nameOfTask, childrenNames.get(0));
                 taskHistory.addChild(new ChildTurnData(childrenNames.get(0),nameOfTask,LocalDate.now()));
                 taskManager.addTask(newTask);
             }
             taskManager.saveTaskHistory(this);
+            taskHistory.saveTaskHistory(this);
             populateListView();
         } else {
             Toast.makeText(this, getString(R.string.non_empty_name), Toast.LENGTH_SHORT).show();
