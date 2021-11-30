@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/twentyFivePercent"
+        android:title="@string/set_speed_to_25"
+        app:showAsAction="never"
+        />
+    <item android:id="@+id/fiftyPercent"
+        android:title="@string/set_speed_to_50"
+        app:showAsAction="never"
+        />
+    <item android:id="@+id/seventyFivePercent"
+        android:title="@string/set_speed_to_75"
+        app:showAsAction="never"
+        />
+    <item android:id="@+id/hundredPercent"
+        android:title="@string/set_speed_to_100"
+        app:showAsAction="never"
+        />
+    <item android:id="@+id/twoHundredPercent"
+        android:title="@string/set_speed_to_200"
+        app:showAsAction="never"
+        />
+    <item android:id="@+id/threeHundredPercent"
+        android:title="@string/set_speed_to_300"
+        app:showAsAction="never"
+        />
+    <item android:id="@+id/fourHundredPercent"
+        android:title="@string/set_speed_to_400"
+        app:showAsAction="never"
+        />
+</menu>
