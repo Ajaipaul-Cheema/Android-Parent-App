@@ -76,6 +76,8 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     private TextView showSpeedOfTimer;
     private long countDownTimerTime;
     private double speedFactorNum;
+    private PieChart mChart;
+    private double[] chartValue = new double[]{0, 0};
 
     public static Intent makeLaunchIntent(Context c) {
         return new Intent(c, TimeoutTimerActivity.class);
@@ -122,7 +124,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         setUpDropDownList();
         setUpTimer();
 
-        mChart = (PieChart) findViewById(R.id.pieChar);
+        mChart = findViewById(R.id.pieChar);
         String[] titles = new String[] {"Elapsed time","Remaining time"};
         mChart.setTitles(titles);
         int[] colors = new int[]{0xfff5a002,0xfffb5a2f};
@@ -461,6 +463,10 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                     changeVisibilityPostClick();
                     pauseCountdown();
                     resetCountdown();
+                    chartValue[0] = 100;
+                    chartValue[1] = 0;
+                    mChart.setValues(chartValue);
+                    mChart.postInvalidate();
                 }
             }
         }.start();
@@ -482,6 +488,16 @@ public class TimeoutTimerActivity extends AppCompatActivity {
             updatedTextStr = String.format(Locale.getDefault(), "%d:%02d:%02d", hours, mins, secs);
         } else {
             updatedTextStr = String.format(Locale.getDefault(), "%02d:%02d", mins, secs);
+        }
+        if (startTime != 0) {
+            BigDecimal b1 = new BigDecimal((float) timeLeftInTimer / startTime).setScale(2, BigDecimal.ROUND_DOWN);
+            BigDecimal b2 = new BigDecimal(100);
+            double haveTime = b1.multiply(b2).doubleValue();
+            double useTime = 100 - haveTime;
+            chartValue[0] = useTime;
+            chartValue[1] = haveTime;
+            mChart.setValues(chartValue);
+            mChart.postInvalidate();
         }
 
         timerText.setText(updatedTextStr);

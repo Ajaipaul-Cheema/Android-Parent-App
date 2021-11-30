@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_timer"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
         android:backgroundTint="@color/button_color"
         android:text="@string/start"
         android:textColor="@color/white" />
@@ -42,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_start_and_pause_timer"
         android:layout_marginStart="-89dp"
-        android:layout_marginTop="-4dp"
+        android:layout_marginTop="40dp"
         android:layout_toEndOf="@+id/btn_start_and_pause_timer"
         android:backgroundTint="@color/button_color"
         android:text="@string/reset"
@@ -51,8 +52,8 @@
     <ca.cmpt276.parentapp.UI.PieChart
         android:id="@+id/pieChar"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="30dp"/>
+        android:layout_height="200dp"
+        android:layout_marginTop="40dp" />
 
     <Spinner
         android:id="@+id/spinDropDownChoices"
