@@ -10,4 +10,7 @@
     <color name="title_color">#D4CDCD</color>
     <color name="button_color">#C19A6B</color>
     <string name="yellow_color">#C19A6B</string>
+    <color name="colorPrimary">#151515</color>
+    <color name="colorPrimaryDark">#1e1e1e</color>
+    <color name="colorAccent">#FF4081</color>
 </resources>

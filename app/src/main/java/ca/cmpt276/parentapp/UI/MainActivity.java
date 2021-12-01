@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         launchConfigureChildren();
         launchConfigureTasks();
         launchHelpMenu();
+        launchBreathing();
     }
 
     private void launchFlipCoin() {
@@ -79,4 +80,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         });
     }
+
+    private void launchBreathing() {
+        Button breathing = findViewById(R.id.breahingApp);
+        breathing.setOnClickListener(view -> {
+            Intent i = new Intent(MainActivity.this, Breathing.class);
+            startActivity(i);
+        });
+    }
+
 }

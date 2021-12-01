@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentApp">
         <activity
+            android:name="ca.cmpt276.parentapp.UI.Breathing"
+            android:exported="false"
+            android:parentActivityName="ca.cmpt276.parentapp.UI.MainActivity"
+            />
+        <activity
             android:name="ca.cmpt276.parentapp.UI.TaskHistoryActivity"
             android:exported="true"
             android:label="History of Tasks"
