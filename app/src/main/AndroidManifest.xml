@@ -12,11 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentApp">
         <activity
+            android:name="ca.cmpt276.parentapp.UI.Breathing"
+            android:exported="false"
+            android:parentActivityName="ca.cmpt276.parentapp.UI.MainActivity"
+            />
+        <activity
             android:name="ca.cmpt276.parentapp.UI.PhotosActivity"
             android:exported="true"
             android:label="@string/title_activity_photos"
-            android:theme="@style/Theme.ParentApp.NoActionBar"
-            android:parentActivityName="ca.cmpt276.parentapp.UI.ConfigureChildrenActivity"/>
+            android:parentActivityName="ca.cmpt276.parentapp.UI.ConfigureChildrenActivity"
+            android:theme="@style/Theme.ParentApp.NoActionBar" />
         <activity
             android:name="ca.cmpt276.parentapp.UI.HelpMenu"
             android:exported="true"
