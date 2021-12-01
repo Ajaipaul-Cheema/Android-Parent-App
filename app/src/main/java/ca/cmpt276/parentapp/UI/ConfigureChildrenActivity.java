@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityConfigureChildrenBinding;
 import ca.cmpt276.parentapp.model.DataHolder;
+import ca.cmpt276.parentapp.model.TaskHistoryManager;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -54,6 +55,7 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
     ArrayList<String> image_path = new ArrayList<>();
     ListView childrenList;
     EditText childName;
+    TaskHistoryManager taskHistory;
     Button addChild, removeChild, editChild, launchPhotos;
     ArrayAdapter<String> childAdapter;
     String nameOfChild;
@@ -75,6 +77,7 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         circleImageView = findViewById(R.id.profile_pic);
+        taskHistory = TaskHistoryManager.getInstance();
 
         childIdxData = DataHolder.getInstance();
 
@@ -183,10 +186,12 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         positionOfChild = childrenList.getCheckedItemPosition();
 
         if (!nameOfChild.equals("")) {
+            taskHistory.editChild(childNames.get(positionOfChild),nameOfChild);
             childAdapter.remove(childNames.get(positionOfChild));
             childAdapter.insert(nameOfChild, positionOfChild);
             // refresh
             childAdapter.notifyDataSetChanged();
+            taskHistory.saveTaskHistory(this);
         } else {
             Toast.makeText(ConfigureChildrenActivity.this, getString(R.string.non_empty_name), Toast.LENGTH_SHORT).show();
         }

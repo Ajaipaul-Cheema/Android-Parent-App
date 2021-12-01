@@ -1,5 +1,7 @@
 package ca.cmpt276.parentapp.model;
 
+import java.time.LocalDate;
+
 /**
  * This class handles creating a task
  * and managing its attributes

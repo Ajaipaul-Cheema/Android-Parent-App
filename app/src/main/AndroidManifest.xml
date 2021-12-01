@@ -17,6 +17,12 @@
             android:parentActivityName="ca.cmpt276.parentapp.UI.MainActivity"
             />
         <activity
+            android:name="ca.cmpt276.parentapp.UI.TaskHistoryActivity"
+            android:exported="true"
+            android:label="History of Tasks"
+            android:theme="@style/Theme.ParentApp.NoActionBar"
+            android:parentActivityName="ca.cmpt276.parentapp.UI.TasksActivity"/>
+        <activity
             android:name="ca.cmpt276.parentapp.UI.PhotosActivity"
             android:exported="true"
             android:label="@string/title_activity_photos"

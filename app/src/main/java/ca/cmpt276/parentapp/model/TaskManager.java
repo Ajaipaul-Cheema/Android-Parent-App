@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -102,16 +103,20 @@ public class TaskManager {
         }
     }
 
-    public void ifEmptyFixChild(ArrayList<String> childrenList) {
+    public void ifEmptyFixChild(ArrayList<String> childrenList, TaskHistoryManager historyManager) {
         if (childrenList.size() <= 0) {
             for (Task t : taskArrayList) {
                 t.setChildTurn("No child available");
             }
         } else {
             for (Task t : taskArrayList) {
-                if (t.getChildTurn().equals("No child available") || !doesChildExist(t.getChildTurn(), childrenList)) {
-                    t.setChildTurn(childrenList.get(0));
-                }
+                    if (t.getChildTurn().equals("No child available")) {
+                        t.setChildTurn(childrenList.get(0));
+                        historyManager.addChild(new ChildTurnData(t.getChildTurn(),t.getTaskName(), LocalDate.now()));
+                    }
+                    else if(!doesChildExist(t.getChildTurn(), childrenList)){
+                        t.setChildTurn(childrenList.get(0));
+                    }
 
             }
         }
