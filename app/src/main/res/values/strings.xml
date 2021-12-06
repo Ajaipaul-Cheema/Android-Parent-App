@@ -93,10 +93,6 @@
     <string name="StringConfirmButton">Confirm</string>
     <string name="StringCancelButton">Cancel</string>
     <string name="title_activity_photos">PhotosActivity</string>
-
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="take_picture_from_camera">Take picture from camera</string>
     <string name="take_picture_from_gallery">Take picture from gallery</string>
     <string name="apply_photo">Apply photo</string>
@@ -116,5 +112,8 @@
     <string name="twoHundred">200%</string>
     <string name="threeHundred">300%</string>
     <string name="fourHundred">400%</string>
-
+    <string name="begin">Begin</string>
+    <string name="enter_num_of_breaths">Enter num of breaths:</string>
+    <string name="apply_breaths">Apply breaths</string>
+    <string name="let_s_take_n_breaths_together_choose_between_1_10_breaths">Let\'s take N breaths together. Choose between 1-10 breaths.</string>
 </resources>
