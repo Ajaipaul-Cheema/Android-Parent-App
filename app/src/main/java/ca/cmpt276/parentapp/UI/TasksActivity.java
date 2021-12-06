@@ -122,7 +122,7 @@ public class TasksActivity extends AppCompatActivity {
                 taskManager.addTask(newTask);
             } else {
                 Task newTask = new Task(nameOfTask, childrenNames.get(0));
-                taskHistory.addChild(new ChildTurnData(childrenNames.get(0),nameOfTask,LocalDate.now()));
+                taskHistory.addChild(new ChildTurnData(childrenNames.get(0), nameOfTask, LocalDate.now()));
                 taskManager.addTask(newTask);
             }
             taskManager.saveTaskHistory(this);
@@ -174,7 +174,7 @@ public class TasksActivity extends AppCompatActivity {
                         getString(R.string.ChildNameString) + childrenNames.get(nextChildIdx) + getString(R.string.NextChildString))
                 .setIcon(R.drawable.happychild)
                 .setPositiveButton(R.string.StringConfirmButton, null)
-                .setNeutralButton("Task History",null)
+                .setNeutralButton("Task History", null)
                 .setNegativeButton(R.string.StringCancelButton, null).show();
         Button confirmButton = confirmPopup.getButton(AlertDialog.BUTTON_POSITIVE);
         Button taskHistoryButton = confirmPopup.getButton(AlertDialog.BUTTON_NEUTRAL);
@@ -189,13 +189,13 @@ public class TasksActivity extends AppCompatActivity {
 
         taskHistoryButton.setOnClickListener(view -> {
             confirmPopup.cancel();
-            Intent i = TaskHistoryActivity.makeLaunchIntent(TasksActivity.this,pos);
+            Intent i = TaskHistoryActivity.makeLaunchIntent(TasksActivity.this, pos);
             startActivity(i);
         });
     }
 
-    private void updateTaskHistory(int pos){
-        if (childrenNames.size()>1) {
+    private void updateTaskHistory(int pos) {
+        if (childrenNames.size() > 1) {
             taskHistory.getTaskList().get(pos).setDate(LocalDate.now());
             taskHistory.addChild(new ChildTurnData(childrenNames.get(nextChildIdx), taskList.get(pos).getTaskName(), LocalDate.now()));
         }
@@ -216,7 +216,7 @@ public class TasksActivity extends AppCompatActivity {
         editTask.setOnClickListener(view -> {
             nameOfTask = taskName.getText().toString();
             if (!nameOfTask.equals("")) {
-                taskHistory.editTask(taskManager.getTaskList().get(position).getTaskName(),nameOfTask);
+                taskHistory.editTask(taskManager.getTaskList().get(position).getTaskName(), nameOfTask);
                 taskManager.editTask(position, nameOfTask);
                 populateListView();
                 taskManager.saveTaskHistory(this);
@@ -233,7 +233,7 @@ public class TasksActivity extends AppCompatActivity {
         super.onStart();
         loadChildrenData();
         taskManager.loadTaskHistory(this);
-        taskManager.ifEmptyFixChild(childrenNames,taskHistory);
+        taskManager.ifEmptyFixChild(childrenNames, taskHistory);
         taskManager.saveTaskHistory(this);
         populateListView();
     }
@@ -256,12 +256,10 @@ public class TasksActivity extends AppCompatActivity {
                 if (childrenNames.size() > 0) {
                     taskName.setSelection(taskName.getText().length());
                     taskFinishedPopUp(position);
-                }
-                else if(childrenNames.size() == 0 && taskHistory.getTaskList().size() > 0){
-                    Intent i = TaskHistoryActivity.makeLaunchIntent(TasksActivity.this,position);
+                } else if (childrenNames.size() == 0 && taskHistory.getTaskList().size() > 0) {
+                    Intent i = TaskHistoryActivity.makeLaunchIntent(TasksActivity.this, position);
                     startActivity(i);
-                }
-                else{
+                } else {
                     Toast.makeText(this, "No children & no history available", Toast.LENGTH_SHORT).show();
                     taskName.setSelection(taskName.getText().length());
                 }

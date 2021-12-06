@@ -125,9 +125,9 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         setUpTimer();
 
         mChart = findViewById(R.id.pieChar);
-        String[] titles = new String[] {"Elapsed time","Remaining time"};
+        String[] titles = new String[]{"Elapsed time", "Remaining time"};
         mChart.setTitles(titles);
-        int[] colors = new int[]{0xfff5a002,0xfffb5a2f};
+        int[] colors = new int[]{0xfff5a002, 0xfffb5a2f};
         mChart.setColors(colors);
         mChart.setValues(chartValue);
         mChart.postInvalidate();

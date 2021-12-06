@@ -67,8 +67,6 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         ca.cmpt276.as3.parentapp.databinding.ActivityFlipCoinBinding binding = ActivityFlipCoinBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

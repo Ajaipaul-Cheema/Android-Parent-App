@@ -3,6 +3,8 @@ package ca.cmpt276.parentapp.UI;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,21 +12,25 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.ui.AppBarConfiguration;
+
 import java.util.ArrayList;
+
 import ca.cmpt276.as3.parentapp.R;
 import ca.cmpt276.as3.parentapp.databinding.ActivityTaskHistoryBinding;
 import ca.cmpt276.parentapp.model.ChildTurnData;
 import ca.cmpt276.parentapp.model.TaskHistoryManager;
 import ca.cmpt276.parentapp.model.TaskManager;
 
+/**
+ * This class handles populating the history of tasks
+ */
 public class TaskHistoryActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
     private ActivityTaskHistoryBinding binding;
 
     private int indexOfTask;
@@ -41,13 +47,15 @@ public class TaskHistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityTaskHistoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor(getString(R.string.brown_color)));
+        getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         historyListView = findViewById(R.id.historyTasksList);
         historyManager = TaskHistoryManager.getInstance();
@@ -62,19 +70,19 @@ public class TaskHistoryActivity extends AppCompatActivity {
 
     public static Intent makeLaunchIntent(Context c, int index) {
         Intent intent = new Intent(c, TaskHistoryActivity.class);
-        intent.putExtra("Index",index);
+        intent.putExtra("Index", index);
         return intent;
     }
 
-    private void extractIntentData(){
+    private void extractIntentData() {
         Intent intent = getIntent();
-        indexOfTask = intent.getIntExtra("Index",0);
+        indexOfTask = intent.getIntExtra("Index", 0);
         nameOfTask = taskManager.getTaskList().get(indexOfTask).getTaskName();
     }
 
     private void populateListView() {
         historyList = historyManager.getHistoryOfTask(nameOfTask);
-        adapter = new  TaskHistoryActivity.MyListAdapter();
+        adapter = new TaskHistoryActivity.MyListAdapter();
         historyListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -101,7 +109,7 @@ public class TaskHistoryActivity extends AppCompatActivity {
 
             TextView date = itemView.findViewById(R.id.tvTaskCompletionDate);
 
-            childName.setText("" +turnData.getChild());
+            childName.setText("" + turnData.getChild());
 
             date.setText("" + turnData.getDate().toString());
 

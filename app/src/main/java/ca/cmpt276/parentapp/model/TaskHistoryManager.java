@@ -10,6 +10,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * This class handles showing the task history for
+ * each task, updating and also saving the history
+ */
 public class TaskHistoryManager {
 
     private static final String TASKS_HISTORY_NAMES_PREFS = "TasksHistoryNamesPrefs";
@@ -35,18 +39,18 @@ public class TaskHistoryManager {
     }
 
     // https://stackoverflow.com/questions/8104692/how-to-avoid-java-util-concurrentmodificationexception-when-iterating-through-an
-    public void remove(String task){
-        for (Iterator<ChildTurnData> iterator = taskHistoryList.iterator(); iterator.hasNext();){
+    public void remove(String task) {
+        for (Iterator<ChildTurnData> iterator = taskHistoryList.iterator(); iterator.hasNext(); ) {
             ChildTurnData child = iterator.next();
-            if (child.getTask().equals(task)){
+            if (child.getTask().equals(task)) {
                 iterator.remove();
             }
         }
     }
 
-    public void editTask(String oldTask, String newTask){
-        for (ChildTurnData child : taskHistoryList){
-            if (child.getTask().equals(oldTask)){
+    public void editTask(String oldTask, String newTask) {
+        for (ChildTurnData child : taskHistoryList) {
+            if (child.getTask().equals(oldTask)) {
                 child.setTask(newTask);
             }
         }
@@ -56,20 +60,20 @@ public class TaskHistoryManager {
         return taskHistoryList;
     }
 
-    public void editChild(String oldName, String newName){
-        for (ChildTurnData child : taskHistoryList){
-            if(child.getChild().equals(oldName)){
+    public void editChild(String oldName, String newName) {
+        for (ChildTurnData child : taskHistoryList) {
+            if (child.getChild().equals(oldName)) {
                 child.setChild(newName);
             }
         }
     }
 
-    public ArrayList<ChildTurnData> getHistoryOfTask(String taskName){
+    public ArrayList<ChildTurnData> getHistoryOfTask(String taskName) {
 
         ArrayList<ChildTurnData> newTaskList = new ArrayList<>();
 
-        for(ChildTurnData c : taskHistoryList){
-            if(c.getTask().equals(taskName)){
+        for (ChildTurnData c : taskHistoryList) {
+            if (c.getTask().equals(taskName)) {
                 newTaskList.add(c);
             }
         }

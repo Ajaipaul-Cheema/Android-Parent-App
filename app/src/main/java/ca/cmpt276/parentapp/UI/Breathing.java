@@ -2,6 +2,8 @@ package ca.cmpt276.parentapp.UI;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +25,12 @@ import java.util.Objects;
 
 import ca.cmpt276.as3.parentapp.R;
 
+/**
+ * This class handles showing animations & playing sounds
+ * while breathing in and out
+ * It also allows for multiple breaths to be taken and
+ * saves those number of breaths left
+ */
 public class Breathing extends AppCompatActivity {
     private static final String BREATHS_INDEX_PREFS = "BREATHS_INDEX_PREFS";
     private static final String BREATH_PREF = "BREATH_PREF";
@@ -44,6 +52,9 @@ public class Breathing extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle("Breathe");
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor(getString(R.string.brown_color)));
+        getSupportActionBar().setBackgroundDrawable(colorDrawable);
         breatheImage = findViewById(R.id.breathe);
         guideText = findViewById(R.id.guideText);
         applyBreatheNum = findViewById(R.id.editBreatheNum);

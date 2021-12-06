@@ -186,7 +186,7 @@ public class ConfigureChildrenActivity extends AppCompatActivity {
         positionOfChild = childrenList.getCheckedItemPosition();
 
         if (!nameOfChild.equals("")) {
-            taskHistory.editChild(childNames.get(positionOfChild),nameOfChild);
+            taskHistory.editChild(childNames.get(positionOfChild), nameOfChild);
             childAdapter.remove(childNames.get(positionOfChild));
             childAdapter.insert(nameOfChild, positionOfChild);
             // refresh

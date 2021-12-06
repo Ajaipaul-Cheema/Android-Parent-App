@@ -11,7 +11,6 @@ import android.view.animation.Transformation;
  * Can adjust the direction of the coin from the outside.
  * also can set the front and back of the coin toss.
  */
-
 public class TossAnimation extends Animation {
 
     public static final int DIRECTION_NONE = 0; // Does not change in that direction

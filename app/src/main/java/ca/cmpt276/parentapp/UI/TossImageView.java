@@ -26,7 +26,6 @@ import ca.cmpt276.as3.parentapp.R;
  * Can set the movement trajectory of the coin parabola X axis, Y axis and Z axis,
  * and return the result of tossing the coin to FlipCoinActivity through the callback function.
  */
-
 public class TossImageView extends AppCompatImageView {
 
     public static final int RESULT_FRONT = 1; // front side

@@ -2,6 +2,9 @@ package ca.cmpt276.parentapp.model;
 
 import java.time.LocalDate;
 
+/**
+ * This class handles the history of a child's turn
+ */
 public class ChildTurnData {
 
     private String name;

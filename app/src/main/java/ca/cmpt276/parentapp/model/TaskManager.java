@@ -110,13 +110,12 @@ public class TaskManager {
             }
         } else {
             for (Task t : taskArrayList) {
-                    if (t.getChildTurn().equals("No child available")) {
-                        t.setChildTurn(childrenList.get(0));
-                        historyManager.addChild(new ChildTurnData(t.getChildTurn(),t.getTaskName(), LocalDate.now()));
-                    }
-                    else if(!doesChildExist(t.getChildTurn(), childrenList)){
-                        t.setChildTurn(childrenList.get(0));
-                    }
+                if (t.getChildTurn().equals("No child available")) {
+                    t.setChildTurn(childrenList.get(0));
+                    historyManager.addChild(new ChildTurnData(t.getChildTurn(), t.getTaskName(), LocalDate.now()));
+                } else if (!doesChildExist(t.getChildTurn(), childrenList)) {
+                    t.setChildTurn(childrenList.get(0));
+                }
 
             }
         }

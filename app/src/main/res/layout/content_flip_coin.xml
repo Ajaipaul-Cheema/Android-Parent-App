@@ -43,7 +43,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Select a child to play"/>
+        android:text="@string/select_a_child_to_play"/>
 
     <Spinner
         android:id="@+id/spinner"

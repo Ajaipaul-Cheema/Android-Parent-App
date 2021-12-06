@@ -116,4 +116,14 @@
     <string name="enter_num_of_breaths">Enter num of breaths:</string>
     <string name="apply_breaths">Apply breaths</string>
     <string name="let_s_take_n_breaths_together_choose_between_1_10_breaths">Let\'s take N breaths together. Choose between 1-10 breaths.</string>
+    <string name="select_a_child_to_play">Select a child to play</string>
+    <string name="background_image_of_helpScreen">background_image_of_helpScreen</string>
+    <string name="breathing">Breathing</string>
+    <string name="previewPicture">previewPicture</string>
+    <string name="history_of_task">History of Task:</string>
+    <string name="task">Task</string>
+    <string name="date_here">Date Here</string>
+    <string name="name_here">NAME HERE</string>
+    <string name="child_pic">child pic</string>
+    <string name="task_here">TASK HERE</string>
 </resources>
