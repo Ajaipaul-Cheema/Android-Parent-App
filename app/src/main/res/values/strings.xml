@@ -72,6 +72,11 @@
     <string name="hyperlink6"><a href="https://en.numista.com/catalogue/pieces1588.html">Coin</a></string>
     <string name="hyperlink7"><a href="https://www.vectorstock.com/royalty-free-vector/old-brown-paper-notebook-vector-1049105">Configure Children Background</a></string>
     <string name="hyperlink8"><a href="https://www.freepik.com/premium-photo/blank-page-old-brown-paper-beige-antique-paper-texture_10845674.htm">Flip History Background</a></string>
+    <string name="hyperlink9"><a href="https://mixkit.co/free-sound-effects/bell/">Bell sound</a></string>
+    <string name="hyperlink10"><a href="https://mixkit.co/free-sound-effects/bird/">Bird sound</a></string>
+
+
+
     <string name="configure_tasks">Configure Tasks</string>
     <string name="task_name">Task Name:</string>
     <string name="enter_task_here">Enter task here:</string>

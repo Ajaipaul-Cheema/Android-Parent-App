@@ -63,5 +63,11 @@ public class HelpMenu extends AppCompatActivity {
 
         TextView linkText8 = findViewById(R.id.hyperlink_class8);
         linkText8.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView linkText9 = findViewById(R.id.hyperlink_class9);
+        linkText9.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView linkText10 = findViewById(R.id.hyperlink_class10);
+        linkText10.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }
